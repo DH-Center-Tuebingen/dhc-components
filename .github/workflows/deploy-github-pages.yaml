@@ -26,7 +26,7 @@ jobs:
       # Set up Node
       - uses: actions/setup-node@v4
         with:
-          node-version: '16.x'
+          node-version: '>=18.12'
       - run: corepack enable
  
       #👇 Add Storybook build and deploy to GitHub Pages as a step in the workflow
