@@ -2,6 +2,13 @@
   "name": "dhc-components",
   "version": "0.0.0",
   "private": true,
+  "files": [
+    "dist"
+  ],
+  "exports":{ 
+    "./Alert": "./src/components/Alert/Alert.vue",
+    "./Login": "./src/components/Login/Login.vue"
+  },
   "scripts": {
     "dev": "vite",
     "build": "run-p type-check \"build-only {@}\" --",
