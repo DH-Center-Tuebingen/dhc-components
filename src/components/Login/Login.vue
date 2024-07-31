@@ -2,33 +2,37 @@
     <div class="card p-3">
         <div class="card-body">
             <h2 class="fw-bold card-title mb-4">
-                {{ title }}
+                {{ t('global.login_title') }}
             </h2>
             <form
-                @submit.prevent="login"
-                class="d-flex flex-column gap-2"
+                @submit.stop.prevent="submit"
+                class="d-flex flex-column gap-2 needs-validation"
+                :class="{ 'was-validated': validated }"
+                novalidate
             >
                 <div class="mb-2">
                     <label
-                        for="email"
+                        for="username"
                         class="mb-2"
                     >
                         <i class="text-muted fas fa-fw fa-user me-2"></i>
-                        {{ userLabel.text }}
+                        {{ t('global.email_or_nick') }}
                     </label>
 
                     <input
-                        id="email"
+                        id="username"
                         type="text"
                         class="form-control"
-                        :class="errorClass"
-                        :value="username"
-                        @input="updateUsername"
-                        name="email"
+                        name="username"
+                        v-model="username"
+                        :disabled="loading"
                         autocomplete="username"
                         required
                         autofocus
                     >
+                    <div class="invalid-feedback">
+                        {{ t('validation.field_is_required') }}
+                    </div>
                 </div>
 
                 <div>
@@ -37,27 +41,31 @@
                         class="mb-2"
                     >
                         <i class="text-muted fas fa-fw fa-unlock-alt me-2"></i>
-                        {{ passwordLabel.text }}
+                        {{ t('global.password') }}
                     </label>
 
                     <input
                         id="password"
                         type="password"
                         class="form-control"
-                        :class="errorClass"
-                        :value="password"
-                        @input="updatePassword"
+                        v-model="password"
+                        :disabled="loading"
                         name="password"
                         autocomplete="current-password"
                         required
                     >
+                    <div class="invalid-feedback">
+                        {{ t('validation.field_is_required') }}
+                    </div>
                 </div>
 
-                <div class="mt-3">
+                <div
+                    class="mt-3"
+                    v-if="error"
+                >
                     <Alert
-                        v-if="error"
-                        :type="message.type"
-                        :message="message.text"
+                        type="error"
+                        :message="errorMessage"
                     />
                 </div>
 
@@ -66,87 +74,90 @@
                         <div class="checkbox">
                             <label>
                                 <input
+                                    id="remember-me"
+                                    class="form-check-input me-2"
                                     type="checkbox"
                                     name="remember"
+                                    :disabled="loading"
                                     v-model="stayLoggedIn"
                                 >
-                                {{ stayLoggedIn.text }}
+                                <label
+                                    class="form-check-label"
+                                    for="remember-me"
+                                >
+                                    {{ t('global.remember_me') }}
+                                </label>
                             </label>
                         </div>
                     </div>
-                    <!-- 
-                        <LoadingButton
-                            class="btn btn-primary"
-                            :loading="loading"
-                        >
-                            {{ submitLabelText }}
-                        </LoadingButton> -->
+                    <LoadingButton
+                        :loading="loading"
+                        :color="'primary'"
+                    >
+                        {{ t('global.login') }}
+                    </LoadingButton>
                 </div>
             </form>
         </div>
     </div>
 </template>
 
-<script
-    lang='ts'
-    setup
->
-
-
-    export interface TextWithIcon {
-        text: string;
-        icon: string;
-    }
-
-    interface LoginProps {
-        invalidClass?: string;
-        loading: boolean;
-        error: boolean
-        username: string;
-        password: string;
-        message?: string;
-        passwordLabel: TextWithIcon;
-        stayLoggedIn: boolean;
-        stayLoggedInText: string;
-        submitText: string;
-        title: string;
-        userLabel: TextWithIcon;
-    }
-
+<script lang='ts' setup>
+    const { t } = useI18n()
 
     import {
-        computed
+        computed,
+        ref
     } from 'vue'
 
-    // import { defineProps } from 'vue'
-    // import type { LoginProps } from './Login.d.ts'
+    import { useI18n } from 'vue-i18n';
 
-    const props = withDefaults(defineProps<LoginProps>(), {
+    import Alert from '../Alert/Alert.vue';
+    import LoadingButton from '../Button/LoadingButton/LoadingButton.vue';
+
+    const props = withDefaults(defineProps<{
+        invalidClass?: string;
+        loading: boolean;
+        errorMessage?: string;
+    }>(), {
+        errorMessage: '',
         invalidClass: 'is-invalid'
     })
 
     const emit = defineEmits([
-        'update:username',
-        'update:password',
         'login'
     ])
 
+    const username = ref('')
+    const password = ref('')
+    const stayLoggedIn = ref(false)
+    const validated = ref(false);
 
-    const errorClass = computed(() => {
-        return props.error ? props.invalidClass : ''
-    })
-    
-    function updatePassword(event: Event){
-        
-        const target = event.currentTarget as HTMLInputElement
-        if(target){
-            emit('update:password',target.value)
+    const submit = (event: Event) => {
+        const form: HTMLFormElement = event.currentTarget as HTMLFormElement;
+
+        validated.value = true;
+        if (form.checkValidity()) {
+            login();
         }
+
     }
+
+    const login = () => {
+        console.log('login')
+        emit('login', {
+            username: username.value,
+            password: password.value,
+            stayLoggedIn: stayLoggedIn.value
+        })
+    }
+
+    const error = computed(_ => {
+        return props.errorMessage !== undefined && props.errorMessage.length > 0
+    })
+
+
 
 </script>
 
-<style
-    lang='scss'
-    scoped
-></style>
+<style lang='scss' scoped></style>

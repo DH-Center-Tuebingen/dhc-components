@@ -1,8 +1,23 @@
-import type { Preview } from "@storybook/vue3";
+import { setup, type Preview } from "@storybook/vue3";
+import { fn } from "@storybook/test";
+import i18n from "./i18n";
+
+setup((app) => {
+  app.use(i18n)
+})
 
 const preview: Preview = {
   parameters: {
-    actions: { argTypesRegex: "^on[A-Z].*" },
+    backgrounds: {
+      default: 'gray',
+      values: [
+        { name: 'gray', value: '#999999' },
+        { name: 'dark', value: '#000000' },
+      ],
+    },
+    args: {
+      onClick: fn(),
+    },
     controls: {
       matchers: {
         color: /(background|color)$/i,

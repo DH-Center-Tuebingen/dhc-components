@@ -6,16 +6,19 @@ const config: StorybookConfig = {
     "../src/**/*.stories.@(js|jsx|ts|tsx|vue)",
   ],
   addons: [
+    "storybook-addon-vue-slots",
     "@storybook/addon-links",
     "@storybook/addon-essentials",
     "@storybook/addon-interactions",
+    "@chromatic-com/storybook",
   ],
   framework: {
     name: "@storybook/vue3-vite",
     options: {},
   },
-  docs: {
-    autodocs: "tag",
+  core: {
+    builder: "@storybook/builder-vite",
   },
+  docs: {},
 };
 export default config;

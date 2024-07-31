@@ -5,7 +5,7 @@ export enum MessageType {
     Warning,
 }
 
-export interface ErrorMessage {
+export type ErrorMessage = {
     text: string;
     type: MessageType;
 }

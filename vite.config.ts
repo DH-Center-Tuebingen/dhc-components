@@ -11,6 +11,9 @@ const name = 'dhc-components'
 export default defineConfig({
   plugins: [vue()],
   build: {
+    target: 'esnext',
+    cssCodeSplit: true,
+    sourcemap: true,
     lib: {
       entry: path.resolve(__dirname, 'src/index.ts'),
       name,
@@ -20,7 +23,8 @@ export default defineConfig({
       external: ['vue'],
       output: {
         globals: {
-          vue: 'Vue'
+          vue: 'Vue',
+          t: 't'
         }
       }
     }
