@@ -10,7 +10,7 @@
             v-if="loading"
             class="position-absolute top-50 start-50 translate-middle"
         >
-            <Spinner :size="'lg'" />
+            <LoadingSpinner :size="'lg'" />
         </span>
         <slot
             v-else
@@ -25,7 +25,7 @@
 
 <script lang="ts" setup>
     import { computed } from 'vue';
-    import Spinner from '../../Spinner/Spinner.vue';
+    import LoadingSpinner from '../../LoadingSpinner/LoadingSpinner.vue';
     import { ColorName } from '../../../types/Colors';
     const props = defineProps<{
         outlined?: boolean
