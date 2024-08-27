@@ -1,7 +1,7 @@
 export type HorizontalPosition = 'left' | 'center' | 'right';  
 export type VerticalPosition = 'top' | 'middle' | 'bottom';
 
-export interface Position {
+export type Position = {
     horizontal: HorizontalPosition;
     vertical: VerticalPosition;
 }

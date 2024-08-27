@@ -1,0 +1,1 @@
+export type ColorName = 'primary' | 'secondary' | 'tertiary' | 'success' | 'danger' | 'warning' | 'info' | 'light' | 'dark' | 'black' | 'white';
