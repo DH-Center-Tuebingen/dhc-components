@@ -2,6 +2,9 @@ import { setup, type Preview } from "@storybook/vue3";
 import { fn } from "@storybook/test";
 import i18n from "./i18n";
 
+import 'bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 setup((app) => {
   app.use(i18n)
 })
