@@ -1,7 +1,5 @@
 import { createI18n } from "vue-i18n";
 
-import 'bootstrap/dist/css/bootstrap.min.css';
-
 const messages = {
     en: {
         global: {
