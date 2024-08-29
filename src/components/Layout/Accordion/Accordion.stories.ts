@@ -65,7 +65,7 @@ export const Dynamic: Story = {
     await about.click();
     await sleep(accordionDelay);
 
-    expect(homeContent).not.toBeVisible();
+    expect(homeContent).toBeVisible();
     expect(aboutContent).toBeVisible();
     expect(contactContent).not.toBeVisible();
 
@@ -74,12 +74,28 @@ export const Dynamic: Story = {
     await contact.click();
     await sleep(accordionDelay);
     
-    expect(homeContent).not.toBeVisible();
-    expect(aboutContent).not.toBeVisible();
+    expect(homeContent).toBeVisible();
+    expect(aboutContent).toBeVisible();
     expect(contactContent).toBeVisible();
 
     await sleep(accordionDelay);
     await contact.click();
+    await sleep(accordionDelay);
+    
+    expect(homeContent).toBeVisible();
+    expect(aboutContent).toBeVisible();
+    expect(contactContent).not.toBeVisible();
+    
+    await sleep(accordionDelay);
+    await about.click();
+    await sleep(accordionDelay);
+    
+    expect(homeContent).toBeVisible();
+    expect(aboutContent).not.toBeVisible();
+    expect(contactContent).not.toBeVisible();
+    
+    await sleep(accordionDelay);
+    await home.click();
     await sleep(accordionDelay);
     
     expect(homeContent).not.toBeVisible();

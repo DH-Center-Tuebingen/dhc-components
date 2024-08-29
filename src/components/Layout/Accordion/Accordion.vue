@@ -3,6 +3,7 @@
         class="accordion"
         :id="name"
     >
+        <slot></slot>
         <AccordionItem
             v-for="(section, index) in sections"
             :key="`accordion-item-${index}`"
@@ -25,7 +26,7 @@
     }>(), {
         titles: null,
     });
-    
+
     console.log(props.titles);
 
     const getTitle = (index: number): string => {
