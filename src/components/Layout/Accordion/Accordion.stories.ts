@@ -8,9 +8,9 @@ import Accordion from './Accordion.vue';
 const accordionDelay = 400;
 
 const accordionContent = {
-  Home: '<h1>Home</h1><p>Home content</p>',
-  About: '<h1>About</h1> <ul><li>Storybook</li><li>Component: Accordion</li></ul>',
-  Contact: '<h1>Contact</h1><p>Contact content</p>',
+  ['home-section']: '<h1>Home</h1><p>Home content</p>',
+  ['about-section']: '<h1>About</h1> <ul><li>Storybook</li><li>Component: Accordion</li></ul>',
+  ['contact-section']: '<h1>Contact</h1><p>Contact content</p>',
 }
 
 function createSlotsFromObject(obj: { [key: string]: string }) {
@@ -30,7 +30,7 @@ const meta: Meta<typeof Accordion> = {
       return { args };
     },
     template: `
-      <Accordion :name="args.name" :titles="args.titles">
+      <Accordion :name="args.name" :sections="args.sections" :titles="args.titles">
           ${createSlotsFromObject(accordionContent)}
       </Accordion>
     `
@@ -43,6 +43,7 @@ type Story = StoryObj<typeof Accordion>;
 export const Dynamic: Story = {
   args: {
     name: 'dynamic-accordion',
+    sections: ['home-section', 'about-section', 'contact-section'],
     titles: ['Home', 'About', 'Contact'],
   },
   play: async ({ canvas }) => {

@@ -4,12 +4,13 @@
         :id="name"
     >
         <AccordionItem
-            v-for="(title, index) in titles"
+            v-for="(section, index) in sections"
             :key="`accordion-item-${index}`"
-            :title="title"
+            :title="getTitle(index)"
+            :section="section"
             :parent-name="name"
         >
-            <slot :name="title"></slot>
+            <slot :name="section"></slot>
         </AccordionItem>
     </div>
 </template>
@@ -17,10 +18,19 @@
 <script setup lang="ts">
     import AccordionItem from './AccordionItem.vue';
 
-    defineProps<{
+    const props = withDefaults(defineProps<{
         name: string;
-        titles: Array<string>;
-    }>();
+        sections: Array<string>;
+        titles?: Array<string> | null;
+    }>(), {
+        titles: null,
+    });
+    
+    console.log(props.titles);
+
+    const getTitle = (index: number): string => {
+        return props.titles ? props.titles[index] : props.sections[index];
+    }
 
 
 </script>
