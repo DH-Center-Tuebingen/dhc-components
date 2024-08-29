@@ -13,14 +13,24 @@
             :aria-expanded="open"
             aria-controls="sidebar"
         >
-            <FontAwesomeIcon
-                :icon="icon"
-                class="fas fa-fw"
-                title="Toggle Sidebar"
-            />
+            <span v-show="!open">
+                <FontAwesomeIcon
+                    :icon="faBars"
+                    class="fas fa-fw"
+                    title="Toggle Sidebar"
+                />
+            </span>
+
+            <span v-show="open">
+                <FontAwesomeIcon
+                    :icon="faCaretRight"
+                    class="fas fa-fw"
+                    title="Toggle Sidebar"
+                />
+            </span>
         </button>
         <div
-            class="sidebar-container h-100 position-absolute top-0 start-0"
+            class="sidebar-container w-100 h-100 position-absolute top-0 start-0"
             :style="{ maxWidth: containerMaxWidth, overflowX: 'clip' }"
         >
             <div
@@ -43,10 +53,12 @@
 
     type SidebarOptions = {
         /** Maximum extend on the parent container in %. */
-        maxExtend:string,
+        maxExtend: string,
         /** Minimum extend on the parent container in px. Atmost 100% of the parent container. */
         minWidth: string,
     }
+
+    const emits = defineEmits(['changed'])
 
     defineProps<{
         options: SidebarOptions
@@ -59,9 +71,8 @@
 
     const toggle = () => {
         open.value = !open.value
+        emits('changed', open.value)
     }
-
-    const icon = computed(() => open.value ? faCaretRight : faBars)
 
     const dynamicWrapperClasses = computed(() => {
         return {
