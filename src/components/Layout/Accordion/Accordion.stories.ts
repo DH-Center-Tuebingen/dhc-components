@@ -30,7 +30,7 @@ const meta: Meta<typeof Accordion> = {
       return { args };
     },
     template: `
-      <Accordion :name="args.name" :sections="args.sections" :titles="args.titles">
+      <Accordion :name="args.name" :items="args.items">
           ${createSlotsFromObject(accordionContent)}
       </Accordion>
     `
@@ -43,8 +43,11 @@ type Story = StoryObj<typeof Accordion>;
 export const Dynamic: Story = {
   args: {
     name: 'dynamic-accordion',
-    sections: ['home-section', 'about-section', 'contact-section'],
-    titles: ['Home', 'About', 'Contact'],
+    items: [
+      { name: 'home-section', title: 'Home' },
+      { name: 'about-section', title: 'About' },
+      { name: 'contact-section', title: 'Contact' },
+    ],
   },
   play: async ({ canvas }) => {
     
