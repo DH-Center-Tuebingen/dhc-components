@@ -2,7 +2,7 @@
     <div
         class="sidebar position-relative"
         :class="dynamicWrapperClasses"
-        :style="{ minWidth: options.minWidth, width: width }"
+        :style="{ minWidth: minWidth, width: width }"
     >
         <button
             class="position-absolute top-0 right-0 btn bg-white border-secondary"
@@ -68,6 +68,7 @@
 
     const width = computed(() => open.value ? '30%' : '0')
     const containerMaxWidth = computed(() => open.value ? '100%' : '0')
+    const minWidth = computed(() => open.value ? '300px' : '0')
 
     const toggle = () => {
         open.value = !open.value
