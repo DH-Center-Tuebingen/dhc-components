@@ -8,8 +8,6 @@ const meta: Meta<typeof Alert> = {
 
 export default meta;
 
-const shortMessage = 'The requested ressource is ready now!';
-
 type Story = StoryObj<typeof Alert>;
 
 const types = ['success', 'note', 'info', 'warning', 'error', 'mono'] as const;
@@ -17,11 +15,13 @@ const types = ['success', 'note', 'info', 'warning', 'error', 'mono'] as const;
 type AlertProps = {
   type: (typeof types)[number];
   message: string;
+  showIcon: boolean;
 };
 
 function createAlert({
   type = 'success',
-  message = shortMessage
+  message = null,
+  showIcon = false,
 }: AlertProps) {
   const optionalProps = [];
 
@@ -31,16 +31,17 @@ function createAlert({
       optionalProps.push(`${key}="${value}"`);
     }
   }
-  return `<Alert type="${type}" message="${message}" ${optionalProps.join(' ')} ></Alert>`;
+  return `<Alert type="${type}" message="${message}" :showIcon="${showIcon}" ${optionalProps.join(' ')} ></Alert>`;
 }
 
-function createAlerts({ message = shortMessage} = {}) {
+function createAlerts({ message = null, showIcon = false} = {}) {
   const templates: string[] = [];
   for (const type of types) {
     templates.push(
       createAlert({
         type,
-        message: `<b>[${type.toUpperCase()}]</b> ${message}`,
+        showIcon,
+        message: message ??`This is message signifies <b>${type.toUpperCase()}</b>.`,
       }),
     );
   }
@@ -54,9 +55,9 @@ export const Info: Story = {
   }),
 };
 
-// export const Icons: Story = {
-//   render: () => ({
-//     components: { Alert },
-//     template: createAlerts({ message: 'This is a message with an icon', noicon: false }), 
-//   })
-// }
+export const Icons: Story = {
+  render: () => ({
+    components: { Alert },
+    template: createAlerts({ showIcon: true }), 
+  })
+}

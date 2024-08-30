@@ -4,14 +4,12 @@
         :class="classes"
         role="alert"
     >
+
         <div
             v-if="hasIcon"
             :class="iconWrapperClasses"
         >
-            <i
-                class="fas"
-                :class="iconClasses"
-            ></i>
+            <FontAwesomeIcon :icon="icon" />
             <span class="fw-medium">
                 {{ icontext }}
             </span>
@@ -23,15 +21,29 @@
     </div>
 </template>
 
-<script lang="ts" setup>
+<script
+    lang="ts"
+    setup
+>
 
     export type AlertType = 'success' | 'note' | 'info' | 'warning' | 'error' | 'mono';
 
     import { computed } from 'vue';
+
+    import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+    import {
+        faCheckCircle,
+        faInfoCircle,
+        faExclamationTriangle,
+        faExclamationCircle,
+        IconDefinition
+    } from '@fortawesome/free-solid-svg-icons';
+    
+
     const props = defineProps<{
         message: string
         type?: AlertType
-        noicon?: boolean
+        showIcon?: boolean
         icontext?: string
     }>();
 
@@ -50,12 +62,12 @@
     })
 
     const hasIcon = computed(_ => {
-        return !props.noicon && supportsIcon;
-    }),
+        return props.showIcon && supportsIcon.value;
+    });
 
-        hasIconText = computed(_ => {
-            return hasIcon.value && props.icontext;
-        })
+    const hasIconText = computed(_ => {
+        return hasIcon.value && props.icontext;
+    });
 
     const classes = computed(_ => {
         let classes = [];
@@ -90,32 +102,23 @@
         }
 
         return classes;
-    })
+    });
 
-    const iconClasses = computed(_ => {
-        let classes: String[] = [];
-        if (!hasIcon.value) { return classes; }
+    const icon = computed<IconDefinition>(() => { 
         switch (props.type) {
             case 'success':
-                classes.push('fa-check');
-                break;
+                return faCheckCircle;
             case 'note':
-                classes.push('fa-lightbulb');
-                break;
             case 'info':
-                classes.push('fa-info-circle');
-                break;
+                return faInfoCircle;
             case 'warning':
-                classes.push('fa-exclamation-triangle');
-                break;
+                return faExclamationTriangle;
             case 'error':
-                classes.push('fa-times');
-                break;
+                return faExclamationCircle;
+            default:
+                console.warn('No icon for type:', props.type);
+                return faInfoCircle;
         }
-        if (hasIconText.value) {
-            classes.push('me-2');
-        }
-        return classes;
     })
 
     const iconWrapperClasses = computed(_ => {
