@@ -2,7 +2,7 @@
     <div
         class="sidebar position-relative"
         :class="dynamicWrapperClasses"
-        :style="{ minWidth: width, width: width }"
+        :style="{ minWidth: options.minWidth, width: width }"
     >
         <button
             class="position-absolute top-0 right-0 btn bg-white border-secondary"

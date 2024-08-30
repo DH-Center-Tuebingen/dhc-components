@@ -8,6 +8,7 @@
                 :data-bs-target="`#${identifier}`"
                 aria-expanded="false"
                 :aria-controls="`${identifier}`"
+                :disabled="options.disabled"
             >
                 {{ title }}
             </button>
@@ -25,18 +26,27 @@
 
 </template>
 
-<script setup lang="ts">
+<script
+    setup
+    lang="ts"
+>
     import { computed } from 'vue';
 
-   const props =  defineProps<{
-        title: string;
-        section: string;
-        parentName: string;
+    export type AccordionItemOptions = {
+        title?: string;
+        name: string;
+        disabled?: boolean;
+    }
+
+    const props = defineProps<{
         onlyOneOpen?: boolean;
+        parentName: string;
+        options: AccordionItemOptions;
     }>();
 
-    const identifier = computed(_ => `${ props.parentName.toLowerCase()}-${ props.section.toLowerCase()}`);
-    
+    const title = computed(_ => props.options.title ?? props.options.name);
+    const identifier = computed(_ => `${props.parentName.toLowerCase()}-${props.options.name.toLowerCase()}`);
+
     // We recommend not using the onlyOneOpen prop, as Bootstrap has a Bug, when clicked quickly 
     // on multiple accordion items, the accordion will not close properly and multiple items will be opened anyways.
     // See: https://github.com/twbs/bootstrap/issues/35685
