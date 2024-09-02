@@ -54,10 +54,24 @@
 
         if (props.vertical) {
             thumbStyle.left = undefined;
-            thumbStyle.top = `${thumbPosition.value}%`;
+            thumbStyle.bottom = `${thumbPosition.value}%`;
         }
 
         return thumbStyle
+    });
+    
+    
+    const activeTrailStyle = computed(() => {
+        const activeTrailStyle: Partial<CSSStyleDeclaration> = {
+            width: `${thumbPosition.value}%`
+        };
+
+        if (props.vertical) {
+            activeTrailStyle.width = undefined;
+            activeTrailStyle.height = `${thumbPosition.value}%`;
+        }
+
+        return activeTrailStyle;
     });
 
     const innerTrackRef = ref<HTMLElement | null>(null);
@@ -66,7 +80,7 @@
 
         const currentTarget = innerTrackRef.value as HTMLElement;
         const rect = currentTarget.getBoundingClientRect();
-        const pos = props.vertical ? position.y - rect.top : position.x - rect.left;
+        const pos = props.vertical ? rect.height - (position.y - rect.top) : position.x - rect.left;
         const length = props.vertical ? rect.height : rect.width;
         const ratio = pos / length;
         let value = ratio * (props.max - props.min) + props.min;
@@ -117,9 +131,16 @@
     >
         <div class="outer-track bg-white border rounded">
             <div
+                class="active-trail background-primary"
+                :style="activeTrailStyle"
+            >
+
+            </div>
+            <div
                 class="inner-track"
                 ref="innerTrackRef"
             >
+
                 <div
                     class="thumb bg-light border rounded"
                     :style="thumbStyle"
@@ -215,9 +236,17 @@
         }
     }
 
+    .active-trail {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        height: 100%;
+        background-color: #007bff;
+    }
+
     .style-line {
         pointer-events: none;
-        height: 60%;            
+        height: 60%;
         border-left: 1px solid #dee2e6;
     }
 
@@ -238,21 +267,27 @@
 
         .thumb {
             left: 0;
+            top: auto;
             height: $thumb-size;
             width: calc(100% - $border-width);
-            transform: translateY(-50%);
+            transform: translateY(50%);
 
             flex-direction: column;
             align-items: center;
             justify-content: space-evenly;
         }
-        
+
         .style-line {
             border-left: 0;
             border-bottom: 1px solid #dee2e6;
             width: 60%;
             height: 0;
-            
+        }
+        
+        .active-trail {
+            width: 100%;
+            height: 0px;
+            bottom: 0;
         }
     }
 </style>
