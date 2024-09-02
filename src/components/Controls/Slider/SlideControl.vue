@@ -59,8 +59,8 @@
 
         return thumbStyle
     });
-    
-    
+
+
     const activeTrailStyle = computed(() => {
         const activeTrailStyle: Partial<CSSStyleDeclaration> = {
             width: `${thumbPosition.value}%`
@@ -103,6 +103,7 @@
     const startDrag = (e: MouseEvent) => {
         dragging.value = true;
         start.value = props.vertical ? e.clientY : e.clientX;
+        updateValueFromPosition({ x: e.clientX, y: e.clientY });
     }
 
     const handleDrag = (e: MouseEvent) => {
@@ -192,6 +193,24 @@
     .slider {
         display: inline-block;
         padding: 10px;
+
+        &:hover {
+
+            .active-trail {
+                filter: brightness(1.1);
+            }
+
+        }
+
+        &:active {
+            .thumb {
+                filter: brightness(0.80);
+            }
+
+            .active-trail {
+                filter: brightness(1.2);
+            }
+        }
     }
 
     .outer-track {
@@ -231,9 +250,7 @@
             filter: brightness(0.85);
         }
 
-        &:active {
-            filter: brightness(0.80);
-        }
+
     }
 
     .active-trail {
@@ -283,7 +300,7 @@
             width: 60%;
             height: 0;
         }
-        
+
         .active-trail {
             width: 100%;
             height: 0px;
