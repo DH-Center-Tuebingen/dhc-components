@@ -88,7 +88,7 @@
         value = Math.min(Math.max(value, props.min), props.max);
         emit('update:modelValue', value);
     }
-
+    
     const handleClick = (e: MouseEvent) => {
         if (e.currentTarget === null) {
             return;
@@ -117,6 +117,14 @@
     const endDrag = () => {
         dragging.value = false;
     }
+    
+    const onScroll = (e: WheelEvent) => {
+        e.preventDefault();        
+        const delta = e.deltaY;
+        const step = props.step * (e.shiftKey ? 10 : 1);
+        const value = fixedPosition.value + (delta > 0 ? -step : step);
+        emit('update:modelValue', value);
+    }
 
 </script>
 
@@ -129,6 +137,7 @@
         @mousemove.stop.prevent="handleDrag"
         @mouseup.stop.prevent="endDrag"
         @mouseleave.stop.prevent="endDrag"
+        @wheel.stop.prevent="onScroll"
     >
         <div class="outer-track bg-white border rounded">
             <div
