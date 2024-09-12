@@ -25,14 +25,32 @@ export const Default: Story = {
 export const Vertical: Story = {
     args: {
         vertical: true,
-          step: 10,
+        step: 10,
     },
     render: (args) => ({
         components: { SlideControl },
         setup() {
             const modelValue = ref(30);
-            return { args,modelValue };
+            return { args, modelValue };
         },
         template: `<SlideControl v-bind="args" v-model="modelValue" />`,
     }),
 };
+
+export const WithCenterOrigin: Story = {
+    args: {
+        step: 10,
+        origin: 30,
+        min: -100,
+        max: 100,
+    },
+    render: (args) => ({
+        components: { SlideControl },
+        setup() {
+            const modelValue = ref(30);
+            return { args, modelValue };
+        },
+        template: `<SlideControl v-bind="args" v-model="modelValue" :vertical="true" /><SlideControl v-bind="args" v-model="modelValue" />`,
+    }),
+};
+
