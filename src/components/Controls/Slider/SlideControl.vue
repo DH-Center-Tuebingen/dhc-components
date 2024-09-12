@@ -19,15 +19,24 @@
         modelValue: number
         min?: number
         max?: number
+        origin?: number
         step?: number
         vertical?: boolean
+        trail?: boolean
+        thumb?: boolean
     }
 
     const props = withDefaults(defineProps<SlideControlProps>(), {
         min: 0,
         max: 100,
         step: 1,
-        vertical: false
+        vertical: false,
+        trail: true,
+        thumb: true
+    });
+
+    const origin = computed(() => {
+        return props.origin ?? props.min;
     });
 
     const sliderClasses = computed(() => {
@@ -60,15 +69,48 @@
         return thumbStyle
     });
 
+    const getRelativeSliderPositionCss = (value: number) => {
+        return `${(value) / (props.max - props.min) * 100}%`;
+    }
 
-    const activeTrailStyle = computed(() => {
-        const activeTrailStyle: Partial<CSSStyleDeclaration> = {
-            width: `${thumbPosition.value}%`
+    const originCssPosition = computed(() => {
+        return getRelativeSliderPositionCss(origin.value - props.min);
+    });
+
+    const originStyle = computed(() => {
+        const originStyle: Partial<CSSStyleDeclaration> = {
+            left: originCssPosition.value
         };
 
         if (props.vertical) {
+            originStyle.left = undefined;
+            originStyle.bottom = originCssPosition.value;
+        }
+
+        return originStyle;
+    });
+
+    const activeTrailStyle = computed(() => {
+
+
+        // props.modelValue - origin.value;
+        const length = fixedPosition.value - origin.value;
+        const translateAmount = length < 0 ? '100%' : '0';
+
+        const lengthCss = getRelativeSliderPositionCss(Math.abs(length));
+
+        const activeTrailStyle: Partial<CSSStyleDeclaration> = {
+            width: lengthCss,
+            left: originCssPosition.value,
+            transform: `translateX(-${translateAmount})`,
+        };
+
+        if (props.vertical) {
+            activeTrailStyle.left = undefined;
             activeTrailStyle.width = undefined;
-            activeTrailStyle.height = `${thumbPosition.value}%`;
+            activeTrailStyle.height = lengthCss;
+            activeTrailStyle.bottom = originCssPosition.value;
+            activeTrailStyle.transform = `translateY(${translateAmount})`;
         }
 
         return activeTrailStyle;
@@ -88,7 +130,7 @@
         value = Math.min(Math.max(value, props.min), props.max);
         emit('update:modelValue', value);
     }
-    
+
     const handleClick = (e: MouseEvent) => {
         if (e.currentTarget === null) {
             return;
@@ -117,9 +159,9 @@
     const endDrag = () => {
         dragging.value = false;
     }
-    
+
     const onScroll = (e: WheelEvent) => {
-        e.preventDefault();        
+        e.preventDefault();
         const delta = e.deltaY;
         const step = props.step * (e.shiftKey ? 10 : 1);
         const value = fixedPosition.value + (delta > 0 ? -step : step);
@@ -129,44 +171,56 @@
 </script>
 
 <template>
-    <div
-        class='slider'
-        :class="sliderClasses"
-        @click="handleClick"
-        @mousedown.stop.prevent="startDrag"
-        @mousemove.stop.prevent="handleDrag"
-        @mouseup.stop.prevent="endDrag"
-        @mouseleave.stop.prevent="endDrag"
-        @wheel.stop.prevent="onScroll"
-    >
-        <div class="outer-track bg-white border rounded">
-            <div
-                class="active-trail background-primary"
-                :style="activeTrailStyle"
-            >
+    <div class='slider-context d-flex flex-column' >
+        <div
+            class="slider"
+            :class="sliderClasses"
+            @click="handleClick"
+            @mousedown.stop.prevent="startDrag"
+            @mousemove.stop.prevent="handleDrag"
+            @mouseup.stop.prevent="endDrag"
+            @mouseleave.stop.prevent="endDrag"
+            @wheel.stop.prevent="onScroll"
+        >
 
-            </div>
-            <div
-                class="inner-track"
-                ref="innerTrackRef"
-            >
-
+            <div class="outer-track bg-white border rounded">
                 <div
-                    class="thumb bg-light border rounded"
-                    :style="thumbStyle"
+                    class="active-trail background-primary"
+                    v-show="trail"
+                    :style="activeTrailStyle"
                 >
-                    <div class="style-line"></div>
-                    <div class="style-line"></div>
 
                 </div>
+                <div
+                    class="inner-track"
+                    ref="innerTrackRef"
+                >
+                    <div
+                        class="origin border-bottom-1"
+                        :style="originStyle"
+                    >
+                    </div>
+
+                    <div
+                        v-show="thumb"
+                        class="thumb bg-light border rounded"
+                        :style="thumbStyle"
+                    >
+                        <div class="style-line"></div>
+                        <div class="style-line"></div>
+
+                    </div>
+                </div>
+
+                <input
+                    type='range'
+                    style="display: none;"
+                    :min="min"
+                    :max="max"
+                    :value="modelValue"
+                />
             </div>
-            <input
-                type='range'
-                style="display: none;"
-                :min="min"
-                :max="max"
-                :value="modelValue"
-            />
+
         </div>
     </div>
 
@@ -191,7 +245,7 @@
         }
 
         .inner-track {
-            background-color: yellow;
+            background-color: rgba(255, 255, 0, 0.5);
         }
 
         .thumb {
@@ -251,15 +305,11 @@
         transform: translateX(-50%);
         box-sizing: border-box;
         box-shadow: 0 2px 2px rgba($color: #000000, $alpha: .2);
-
-
         filter: brightness(0.90);
 
         &:hover {
             filter: brightness(0.85);
         }
-
-
     }
 
     .active-trail {
@@ -276,7 +326,21 @@
         border-left: 1px solid #dee2e6;
     }
 
+    .origin {
+        position: absolute;
+        height: 100%;
+        width: 2px;
+        transform: translateX(50%);
+        background-color: #007bff;
+    }
+
     .vertical {
+
+        .origin {
+            transform: translateY(-50%);
+            width: 100%;
+            height: 2px;
+        }
 
         .outer-track {
             width: $width;
