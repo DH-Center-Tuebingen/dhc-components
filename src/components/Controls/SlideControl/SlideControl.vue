@@ -3,6 +3,7 @@
     setup
 >
     import { computed, ref } from 'vue'
+    import type { CSSProperties } from 'vue';
 
     /**
      * Slider component for special purposes:
@@ -22,8 +23,14 @@
         origin?: number
         step?: number
         vertical?: boolean
+        // Show the trail
         trail?: boolean
+        // Show the thumb
         thumb?: boolean
+        width: string
+        length?: string
+        thumbSize?: string
+        borderWidth?: string
     }
 
     const props = withDefaults(defineProps<SlideControlProps>(), {
@@ -32,11 +39,20 @@
         step: 1,
         vertical: false,
         trail: true,
-        thumb: true
+        thumb: true,
+        width: '20px',
+        length: '100px',
+        thumbSize: '18px',
+        borderWidth: '1px',
     });
 
     const origin = computed(() => {
         return props.origin ?? props.min;
+    });
+    
+    
+    const useOrigin = computed(() => {
+        return props.origin != null;
     });
 
     const sliderClasses = computed(() => {
@@ -55,15 +71,61 @@
         return (fixedPosition.value - props.min) / (props.max - props.min) * 100;
     });
 
-    const thumbStyle = computed(() => {
+    // .thumb {
+    //     display: flex;
+    //     flex-direction: row;
+    //     align-items: center;
+    //     justify-content: space-evenly;
 
-        const thumbStyle: Partial<CSSStyleDeclaration> = {
-            left: `${thumbPosition.value}%`
+    //     position: absolute;
+    //     top: -$border-width;
+    //     left: 0;
+    //     width: calc($thumb-size);
+    //     height: 100%;
+    //     transform: translateX(-50%);
+    //     box-sizing: border-box;
+    //     box-shadow: 0 2px 2px rgba($color: #000000, $alpha: .2);
+    //     filter: brightness(0.90);
+
+    //     &:hover {
+    //         filter: brightness(0.85);
+    //     }
+    // }
+
+
+    // .vertical {
+
+
+    //     .thumb {
+    //         left: 0;
+    //         top: auto;
+    //         height: $thumb-size;
+    //         width: calc(100% - $border-width);
+    //         transform: translateY(50%);
+
+    //         flex-direction: column;
+    //         align-items: center;
+    //         justify-content: space-evenly;
+    //     }
+
+    // }
+
+    const thumbStyle = computed(() => {
+        
+        const thumbStyle: CSSProperties = {
+            position: 'absolute',
+            left: `${thumbPosition.value}%`,
+            width: props.thumbSize,
+            height: '100%',
+            transform: 'translateX(-50%)',
         };
 
         if (props.vertical) {
             thumbStyle.left = undefined;
             thumbStyle.bottom = `${thumbPosition.value}%`;
+            thumbStyle.height = props.thumbSize;
+            thumbStyle.width = `100%`;
+            thumbStyle.transform = 'translateY(50%)';
         }
 
         return thumbStyle
@@ -77,29 +139,74 @@
         return getRelativeSliderPositionCss(origin.value - props.min);
     });
 
+    const sliderStyle = computed(() => {
+
+        return {
+            display: 'inline-block',
+        }
+    })
+
+    const outerTrackStyle = computed(() => {
+        const width = props.vertical ? props.width : props.length
+        const height = props.vertical ? props.length : props.width
+
+        return {
+            width,
+            height,
+        }
+    })
+
+    const innerTrackStyle = computed(() => {
+
+        if (props.vertical) {
+            return {
+                width: '100%', //CHECK  was => width: calc($width - $border-width);
+                left: 0,
+                top: `calc(${props.thumbSize} / 2)`,
+                height: `calc(${props.length} - ${props.thumbSize} - 2 * ${props.borderWidth})`,
+            }
+        } else {
+            return {
+                left: `calc(${props.thumbSize} / 2)`,
+                width: `calc(${props.length} - ${props.thumbSize})`,
+                height: props.width,
+            }
+        }
+
+    })
+    
     const originStyle = computed(() => {
-        const originStyle: Partial<CSSStyleDeclaration> = {
+        const originStyle: CSSProperties = {
+            position: 'absolute',
+            backgroundColor: 'rgb(59, 68, 122)',
+            height: '100%',
+            width: '2px',
+            transform: 'translateX(-50%)', // This should be -50% but there is 1 px space between the line and the activeTrack.
             left: originCssPosition.value
         };
 
         if (props.vertical) {
             originStyle.left = undefined;
             originStyle.bottom = originCssPosition.value;
+            originStyle.width = '100%';
+            originStyle.height = '2px';
+            originStyle.transform = 'translateY(50%)';
         }
 
         return originStyle;
     });
 
     const activeTrailStyle = computed(() => {
-
-
-        // props.modelValue - origin.value;
         const length = fixedPosition.value - origin.value;
         const translateAmount = length < 0 ? '100%' : '0';
 
         const lengthCss = getRelativeSliderPositionCss(Math.abs(length));
 
-        const activeTrailStyle: Partial<CSSStyleDeclaration> = {
+        const activeTrailStyle: CSSProperties = {
+            position: 'absolute',
+            bottom: '0',
+            backgroundColor: '#007bff',
+            height: '100%',
             width: lengthCss,
             left: originCssPosition.value,
             transform: `translateX(-${translateAmount})`,
@@ -107,7 +214,7 @@
 
         if (props.vertical) {
             activeTrailStyle.left = undefined;
-            activeTrailStyle.width = undefined;
+            activeTrailStyle.width = '100%';
             activeTrailStyle.height = lengthCss;
             activeTrailStyle.bottom = originCssPosition.value;
             activeTrailStyle.transform = `translateY(${translateAmount})`;
@@ -116,11 +223,16 @@
         return activeTrailStyle;
     });
 
+
+
+
+
     const innerTrackRef = ref<HTMLElement | null>(null);
 
     const updateValueFromPosition = (position: { x: number, y: number }) => {
 
         const currentTarget = innerTrackRef.value as HTMLElement;
+
         const rect = currentTarget.getBoundingClientRect();
         const pos = props.vertical ? rect.height - (position.y - rect.top) : position.x - rect.left;
         const length = props.vertical ? rect.height : rect.width;
@@ -128,6 +240,7 @@
         let value = ratio * (props.max - props.min) + props.min;
         value = Math.round(value / props.step) * props.step;
         value = Math.min(Math.max(value, props.min), props.max);
+        console.log('value', value);
         emit('update:modelValue', value);
     }
 
@@ -171,57 +284,61 @@
 </script>
 
 <template>
-    <div class='slider-context d-flex flex-column' >
+    <div
+        class="slider"
+        :class="sliderClasses"
+        :style="sliderStyle"
+        @click="handleClick"
+        @mousedown.stop.prevent="startDrag"
+        @mousemove.stop.prevent="handleDrag"
+        @mouseup.stop.prevent="endDrag"
+        @mouseleave.stop.prevent="endDrag"
+        @wheel.stop.prevent="onScroll"
+    >
+
         <div
-            class="slider"
-            :class="sliderClasses"
-            @click="handleClick"
-            @mousedown.stop.prevent="startDrag"
-            @mousemove.stop.prevent="handleDrag"
-            @mouseup.stop.prevent="endDrag"
-            @mouseleave.stop.prevent="endDrag"
-            @wheel.stop.prevent="onScroll"
+            class="outer-track bg-white border rounded position-relative overflow-hidden"
+            :style="outerTrackStyle"
         >
+            <div
+                class="active-trail background-primary"
+                v-show="trail"
+                :style="activeTrailStyle"
+            >
 
-            <div class="outer-track bg-white border rounded">
-                <div
-                    class="active-trail background-primary"
-                    v-show="trail"
-                    :style="activeTrailStyle"
-                >
-
-                </div>
-                <div
-                    class="inner-track"
-                    ref="innerTrackRef"
-                >
-                    <div
-                        class="origin border-bottom-1"
-                        :style="originStyle"
-                    >
-                    </div>
-
-                    <div
-                        v-show="thumb"
-                        class="thumb bg-light border rounded"
-                        :style="thumbStyle"
-                    >
-                        <div class="style-line"></div>
-                        <div class="style-line"></div>
-
-                    </div>
-                </div>
-
-                <input
-                    type='range'
-                    style="display: none;"
-                    :min="min"
-                    :max="max"
-                    :value="modelValue"
-                />
             </div>
 
+            <div
+                class="origin border-bottom-1"
+                :style="originStyle"
+                style="background-color: red; width: 10px;"
+                v-if="useOrigin"
+            >
+            </div>
+
+            <div
+                class="inner-track position-absolute"
+                :style="innerTrackStyle"
+                ref="innerTrackRef"
+            >
+
+                <div
+                    v-show="thumb"
+                    class="thumb bg-light border rounded"
+                    :style="thumbStyle"
+                >
+                </div>
+            </div>
+
+            <input
+                type='range'
+                style="display: none;"
+                :min="min"
+                :max="max"
+                :value="modelValue"
+            />
         </div>
+
     </div>
 
 </template>
@@ -230,10 +347,6 @@
     lang='scss'
     scoped
 >
-    $border-width: 1px;
-    $thumb-size: 18px;
-    $width: 20px;
-    $length: 100px;
 
     .debug {
         .slider {
@@ -254,15 +367,10 @@
     }
 
     .slider {
-        display: inline-block;
-        padding: 10px;
-
         &:hover {
-
             .active-trail {
                 filter: brightness(1.1);
             }
-
         }
 
         &:active {
@@ -276,108 +384,4 @@
         }
     }
 
-    .outer-track {
-        position: relative;
-        width: $length;
-        height: $width;
-        box-shadow: inset 1px 2px 3px rgba($color: #000000, $alpha: .1);
-        overflow: hidden;
-    }
-
-    .inner-track {
-        position: absolute;
-        left: calc($thumb-size / 2);
-        width: calc($length - $thumb-size);
-        height: $width;
-    }
-
-    .thumb {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: space-evenly;
-
-        position: absolute;
-        top: -$border-width;
-        left: 0;
-        width: calc($thumb-size);
-        height: 100%;
-        transform: translateX(-50%);
-        box-sizing: border-box;
-        box-shadow: 0 2px 2px rgba($color: #000000, $alpha: .2);
-        filter: brightness(0.90);
-
-        &:hover {
-            filter: brightness(0.85);
-        }
-    }
-
-    .active-trail {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        height: 100%;
-        background-color: #007bff;
-    }
-
-    .style-line {
-        pointer-events: none;
-        height: 60%;
-        border-left: 1px solid #dee2e6;
-    }
-
-    .origin {
-        position: absolute;
-        height: 100%;
-        width: 2px;
-        transform: translateX(50%);
-        background-color: #007bff;
-    }
-
-    .vertical {
-
-        .origin {
-            transform: translateY(-50%);
-            width: 100%;
-            height: 2px;
-        }
-
-        .outer-track {
-            width: $width;
-            height: $length;
-        }
-
-        .inner-track {
-            width: $width;
-            left: 0;
-            top: calc($thumb-size / 2);
-            height: calc($length - $thumb-size - 2 * $border-width);
-            width: calc($width - $border-width);
-        }
-
-        .thumb {
-            left: 0;
-            top: auto;
-            height: $thumb-size;
-            width: calc(100% - $border-width);
-            transform: translateY(50%);
-
-            flex-direction: column;
-            align-items: center;
-            justify-content: space-evenly;
-        }
-
-        .style-line {
-            border-left: 0;
-            border-bottom: 1px solid #dee2e6;
-            width: 60%;
-            height: 0;
-        }
-
-        .active-trail {
-            width: 100%;
-            height: 0px;
-            bottom: 0;
-        }
-    }
 </style>
