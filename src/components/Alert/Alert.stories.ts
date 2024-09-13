@@ -14,7 +14,7 @@ const types = ['success', 'note', 'info', 'warning', 'error', 'mono'] as const;
 
 type AlertProps = {
   type: (typeof types)[number];
-  message: string;
+  message: string | null;
   showIcon: boolean;
 };
 
