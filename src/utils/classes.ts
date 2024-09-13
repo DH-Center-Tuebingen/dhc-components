@@ -1,2 +1,1 @@
-
-
+export const multiselectResetClasslist = {clear: 'multiselect-clear multiselect-clear-reset'};
