@@ -2537,6 +2537,12 @@ destroy@1.2.0:
 detect-indent@^6.1.0:
   version "6.1.0"
 
+"dhc-utils@file:D:/Projekte/dhc-utils":
+  version "0.1.0"
+  resolved "file:D:/Projekte/dhc-utils"
+  dependencies:
+    dayjs "^1.11.13"
+
 diff-sequences@^29.6.3:
   version "29.6.3"
 
