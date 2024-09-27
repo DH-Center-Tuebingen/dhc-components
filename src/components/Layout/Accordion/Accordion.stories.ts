@@ -40,6 +40,10 @@ const meta: Meta<typeof Accordion> = {
 export default meta;
 type Story = StoryObj<typeof Accordion>;
 
+
+/**
+ * Provides a easy component to implement an accordion.
+ */
 export const Dynamic: Story = {
   args: {
     name: 'dynamic-accordion',

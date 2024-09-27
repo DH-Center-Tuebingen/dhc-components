@@ -1,6 +1,5 @@
 import { expect } from '@storybook/test';
 import type { Meta, StoryObj } from '@storybook/vue3';
-
 import Tabs from './Tabs.vue';
 
 const tabContent = {
