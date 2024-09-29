@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/vue3';
 
-import UserAvatar from './UserAvatar.vue';
+import UsernameInfo from './UsernameInfo.vue';
 import { Jane, UserList } from '@/mock/user';
 
-const meta: Meta<typeof UserAvatar> = {
-  component: UserAvatar,
+const meta: Meta<typeof UsernameInfo> = {
+  component: UsernameInfo,
   argTypes: {
     user: {
       options: UserList.map((user) => user.name),
@@ -19,20 +19,19 @@ const meta: Meta<typeof UserAvatar> = {
 
 export default meta;
 
-type Story = StoryObj<typeof UserAvatar>;
+type Story = StoryObj<typeof UsernameInfo>;
 
 export const Default: Story = {
   args: {
     // Add props here
     user: Jane,
-    size: 30,
   },
   render: (args: any) => ({
-    components: { UserAvatar },
+    components: { UsernameInfo },
     setup() {
       return { args }
     },
-    template: '<UserAvatar v-bind="args" />',
+    template: '<UsernameInfo v-bind="args" />',
   }),
 };
 
@@ -40,13 +39,12 @@ export const WithImage: Story = {
   args: {
     // Add props here
     user: Jane,
-    size: 30,
   },
   render: (args: any) => ({
-    components: { UserAvatar },
+    components: { UsernameInfo },
     setup() {
       return { args }
     },
-    template: '<UserAvatar v-bind="args" />',
+    template: '<UsernameInfo v-bind="args" />',
   }),
 };

@@ -5,3 +5,9 @@
 export type Draft<T> = Omit<T, 'id'>;
 
 export type WithId<T> = T & { id: number };
+
+export type Timestamps = {
+    created_at?: string;
+    updated_at?: string;
+    deleted_at?: string;
+};

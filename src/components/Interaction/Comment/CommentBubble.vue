@@ -3,7 +3,7 @@
         :class="commentBubbleClasses"
         class="comment-bubble d-flex"
     >
-        <!-- <slot
+        <slot
             v-if="showAvatar"
             name="avatar"
             :user="author"
@@ -65,7 +65,7 @@
                                 :aria-labelledby="`edit-comment-dropdown-${comment.id}`"
                             >
                                 <a
-                                    v-if="showEditButton(comment)"
+                                    v-if="showEditButton()"
                                     class="dropdown-item"
                                     href="#"
                                     @click.prevent="enableEditing(comment)"
@@ -73,7 +73,7 @@
                                     <i class="fas fa-fw fa-edit text-info" /> {{ t('global.edit') }}
                                 </a>
                                 <a
-                                    v-if="showReplyTo(comment)"
+                                    v-if="showReplyTo()"
                                     class="dropdown-item"
                                     href="#"
                                     @click.prevent="replyTo(comment)"
@@ -81,7 +81,7 @@
                                     <i class="fas fa-fw fa-reply text-primary" /> {{ t('global.reply_to') }}
                                 </a>
                                 <a
-                                    v-if="showDeleteButton(comment)"
+                                    v-if="showDeleteButton()"
                                     class="dropdown-item"
                                     href="#"
                                     @click.prevent="handleDelete(comment)"
@@ -109,7 +109,7 @@
                                     type="button"
                                     class="btn btn-success btn-sm me-2"
                                     :disabled="state.editContent == comment.content"
-                                    @click="handleEdit(comment, state.editContent)"
+                                    @click="handleEdit( state.editContent)"
                                 >
                                     <i class="fas fa-fw fa-save" /> {{ t('global.save') }}
                                 </button>
@@ -132,82 +132,85 @@
                             v-if="comment.content"
                             class="card-body px-3 py-2"
                         >-->
-        <!-- TODO; Here we insert user input into the comment. This is bad!-->
-        <!-- eslint-disable vue/no-v-html -->
-        <p
-            class="card-text"
-            v-html="mentionify(comment.content)"
-        />
-        <!-- eslint-enable vue/no-v-html -->
-        <!-- </div>
-    </slot>
-    <slot
-        v-else
-        name="body-deleted"
-        :comment="comment"
-    >
-        <div
-            class="card-body px-3 py-2"
-            style="opacity: 0.75;"
-        >
-            <p class="card-text fst-italic">
-                {{ t('global.comments.deleted_info') }}
-            </p>
-        </div>
-    </slot>
-    </div>
-    <footer>
-        <slot
-            name="footer"
-            :comment="comment"
-        />
-    </footer>
-    </div>
-    <div
-        v-if="repliesCount > 0"
-        class="d-flex flex-row justify-content-end"
-    >
-        <a
-            href="#"
-            class="small text-body"
-            @click.prevent="toggleReplies()"
-        >
-            <div v-show="state.repliesOpen">
-                <span>
-                    {{
-                        t('global.comments.hide_reply', repliesCount, {
-                            cnt:
-                                repliesCount
-                        })
-                    }}
-                </span>
-                <i class="fas fa-fw fa-caret-up" />
+                            <!-- TODO; Here we insert user input into the comment. This is bad!-->
+                            <!-- eslint-disable vue/no-v-html -->
+                            <p
+                                class="card-text"
+                                v-html="mentionify(comment.content)"
+                            />
+                            <!-- eslint-enable vue/no-v-html -->
+                        </div>
+                    </slot>
+                    <slot
+                        v-else
+                        name="body-deleted"
+                        :comment="comment"
+                    >
+                        <div
+                            class="card-body px-3 py-2"
+                            style="opacity: 0.75;"
+                        >
+                            <p class="card-text fst-italic">
+                                {{ t('global.comments.deleted_info') }}
+                            </p>
+                        </div>
+                    </slot>
+                </div>
+                <footer>
+                    <slot
+                        name="footer"
+                        :comment="comment"
+                    />
+                </footer>
             </div>
-            <div v-show="!state.repliesOpen">
-                <span>
-                    {{
-                        t('global.comments.show_reply', repliesCount, {
-                            cnt:
-                                repliesCount
-                        })
-                    }}
-                </span>
-                <i class="fas fa-fw fa-caret-down" />
+            <div
+                v-if="repliesCount > 0"
+                class="d-flex flex-row justify-content-end"
+            >
+                <a
+                    href="#"
+                    class="small text-body"
+                    @click.prevent="toggleReplies()"
+                >
+                    <div v-show="state.repliesOpen">
+                        <span>
+                            {{
+                                t('global.comments.hide_reply', repliesCount, {
+                                    cnt:
+                                        repliesCount
+                                })
+                            }}
+                        </span>
+                        <i class="fas fa-fw fa-caret-up" />
+                    </div>
+                    <div v-show="!state.repliesOpen">
+                        <span>
+                            {{
+                                t('global.comments.show_reply', repliesCount, {
+                                    cnt:
+                                        repliesCount
+                                })
+                            }}
+                        </span>
+                        <i class="fas fa-fw fa-caret-down" />
+                    </div>
+                </a>
             </div>
-        </a>
-    </div>
 
-    <div v-if="state.repliesOpen">
-        <slot
-            name="replies"
-            :comment="comment"
-        />
-    </div>
-    </div> -->
+            <div v-if="state.repliesOpen">
+                <slot
+                    name="replies"
+                    :comment="comment"
+                />
+            </div>
+        </div>
     </div>
 </template>
 
-<script lang="ts">
+<script
+    lang="ts"
+    setup
+>
 
     import {
         computed,
@@ -224,6 +227,8 @@
     import {
         Time,
     } from 'dhc-utils'
+    const datestring = Time.datestring;
+    const ago = Time.ago;
 
     import { useI18n } from 'vue-i18n';
 
@@ -231,157 +236,114 @@
     // import UsernameInfo from '../../user/UsernameInfo.vue';
     // import { can } from '../../../helpers/helpers';
     // import { emit } from 'process';
-    
+
     import UserAvatar from '@/components/User/UserAvatar.vue';
     import UsernameInfo from '@/components/User/UsernameInfo.vue';
-    
+    import type { User as UserType } from 'src/types/User';
+    import { Comment } from 'src/types/Interaction';
+    import { User } from 'dhc-utils';
 
-    export default defineComponent({
-        components: { 
-            UserAvatar,
-            UsernameInfo,
-        },
-        props: {
-            activeUser: {
-                required: false,
-                type: Object,
-                default: () => {
-                    return {
-                        id: 0,
-                        nickname: 'Unknown',
-                    }
-                },
-            },
-            readOnly: {
-                required: false,
-                type: Boolean,
-                default: false,
-            },
-            showAvatar: {
-                required: false,
-                type: Boolean,
-                default: true,
-            },
-            showHeader: {
-                required: false,
-                type: Boolean,
-                default: true,
-            },
-            avatar: {
-                required: false,
-                type: Number,
-                default: 42
-            },
-            comment: {
-                type: Object,
-                required: true,
-            },
-        },
-        emits: ['reply', 'toggle-replies'],
-        setup(props, context) {
 
-            const state = reactive({
-                editing: false,
-                editContent: '',
-                repliesOpen: false,
-            });
-
-            const isDeleted = _ => {
-                return !!props.comment.deleted_at;
-            };
-
-            const isOwn = _ => {
-                return props.activeUser.id === props.comment.author.id;
-            };
-
-            const emptyMetadata = _ => {
-                return props.comment.metadata && props.comment.metadata.is_empty;
-            };
-
-            const toggleReplies = _ => {
-                state.repliesOpen = !state.repliesOpen;
-                context.emit('toggle-replies', state.repliesOpen);
-            };
-
-            const repliesCount = computed(() => {
-                return props.comment?.replies_count ?? 0;
-            });
-
-            const handleDelete = comment => {
-                const cid = comment.id;
-                context.emit('delete', cid);
-            };
-
-            const showEditButton = _ => {
-                return isOwn() && !state.editing && can('comments_edit');
-            };
-
-            const showDeleteButton = _ => {
-                return isOwn() && can('comments_delete');
-            };
-
-            const disableEditing = () => {
-                state.editing = false;
-            };
-
-            const enableEditing = comment => {
-                state.editing = true;
-                state.editContent = comment.content;
-            };
-
-            const handleEdit = async (comment, composedMessage) => {
-                disableEditing();
-                context.emit('edit', comment, composedMessage);
-            };
-
-            const showReplyTo = () => {
-                return can('comments_create');
-            };
-
-            const replyTo = (comment) => {
-                context.emit('reply', comment);
-            };
-
-            const author = computed(() => {
-                return props.comment?.author ?? {
-                    id: 0,
-                    nickname: 'Unknown',
-                };
-            });
-
-            const hasActiveCommands = computed(() => {
-                return showEditButton() || showDeleteButton() || showReplyTo();
-            });
-
-            const commentBubbleClasses = computed(() => {
-                return {
-                    'opacity-50': isDeleted(),
-                };
-            });
-
-            return {
-                ago: Time.ago,
-                author,
-                commentBubbleClasses,
-                datestring: Time.datestring,
-                disableEditing,
-                emptyMetadata,
-                enableEditing,
-                handleDelete,
-                handleEdit,
-                hasActiveCommands,
-                isDeleted,
-                isOwn,
-                mentionify: (a:string) => a,
-                repliesCount,
-                replyTo,
-                showEditButton,
-                showDeleteButton,
-                showReplyTo,
-                state,
-                t: useI18n().t,
-                toggleReplies,
-            };
-        }
+    const props = withDefaults(defineProps<{
+        activeUser: UserType;
+        avatar: number;
+        comment: Comment;
+        readOnly: boolean;
+        showAvatar: boolean;
+        showHeader: boolean;
+    }>(), {
+        readOnly: false,
+        showAvatar: true,
+        showHeader: true,
+        default: 42,
     });
+
+    const emit = defineEmits<{
+        edit: [Comment, string];
+        delete: [id: number];
+        reply: [Comment];
+        'toggle-replies': [boolean];
+    }>()
+
+
+    const state = reactive({
+        editing: false,
+        editContent: '',
+        repliesOpen: false,
+    });
+
+    const isDeleted = () => {
+        return !!props.comment.deleted_at;
+    };
+
+    const isOwn = () => {
+        return props.activeUser.id === props.comment.author.id;
+    };
+
+    const emptyMetadata = () => {
+        return props.comment.metadata && props.comment.metadata.is_empty;
+    };
+
+    const toggleReplies = () => {
+        state.repliesOpen = !state.repliesOpen;
+        emit('toggle-replies', state.repliesOpen);
+    };
+
+    const repliesCount = computed(() => {
+        return props.comment?.replies_count ?? 0;
+    });
+
+    const handleDelete = () => {
+        emit('delete', props.comment.id);
+    };
+
+    const showEditButton = () => {
+        return isOwn() && !state.editing && User.can('comments_edit');
+    };
+
+    const showDeleteButton = () => {
+        return isOwn() && User.can('comments_delete');
+    };
+
+    const disableEditing = () => {
+        state.editing = false;
+    };
+
+    const enableEditing = () => {
+        state.editing = true;
+        state.editContent = props.comment.content;
+    };
+
+    const handleEdit = async (composedMessage:string) => {
+        disableEditing();
+        emit('edit', props.comment, composedMessage);
+    };
+
+    const showReplyTo = () => {
+        return User.can('comments_create');
+    };
+
+    const replyTo = () => {
+        emit('reply', props.comment);
+    };
+
+    const author = computed(() => {
+        return props.comment?.author ?? {
+            id: 0,
+            nickname: 'Unknown',
+        };
+    });
+
+    const hasActiveCommands = computed(() => {
+        return showEditButton() || showDeleteButton() || showReplyTo();
+    });
+
+    const commentBubbleClasses = computed(() => {
+        return {
+            'opacity-50': isDeleted(),
+        };
+    });
+
+    const t = useI18n().t;
+
 </script>

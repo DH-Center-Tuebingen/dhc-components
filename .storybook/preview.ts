@@ -4,8 +4,12 @@ import i18n from "./i18n";
 
 import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import 'vue-final-modal/style.css'
+
+import { ModalsContainer, createVfm } from "vue-final-modal";
 
 setup((app) => {
+  app.use(createVfm())
   app.use(i18n)
 })
 
@@ -28,6 +32,12 @@ const preview: Preview = {
       },
     },
   },
+  decorators:[
+    (story) => ({
+      components: { story, ModalsContainer },
+      template: '<ModalsContainer /><story />',
+    }),
+  ]
 };
 
 export default preview;
