@@ -16,6 +16,15 @@ export default defineConfig({
       '$': path.resolve(__dirname, 'src/components'),
     },
   },
+  css: {
+    preprocessorOptions: {
+      scss: {
+        api: 'modern-compiler',
+        /**Bootstrap uses legacy sass code. This silences the warnings. */
+        quietDeps: true,
+      }
+    },
+  },
   build: {
     target: 'esnext',
     cssCodeSplit: true,
@@ -32,7 +41,7 @@ export default defineConfig({
           vue: 'Vue',
           t: 't'
         }
-      }
+      },
     }
   }
 });

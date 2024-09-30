@@ -16,31 +16,21 @@
     </a>
 </template>
 
-<script
-    lang="ts"
-    setup
->
+<script lang="ts" setup>
 
-    import { User } from 'src/types/User';
     import { computed } from 'vue';
+
+    import { User } from '@/types/User';
     import UserInfo from './UserInfo.vue';
-    import { useModal, useModalSlot, VueFinalModal } from 'vue-final-modal';
+    import { useModal } from '@/composables/modal';
 
     const props = defineProps<{
         user: User;
     }>();
 
 
-    const { open } = useModal({
-        component: VueFinalModal,
-        slots: {
-            default: useModalSlot({
-                component: UserInfo,
-                attrs: {
-                    user: props.user,
-                },
-            })
-        },
+    const { open } = useModal(UserInfo, {
+        user: props.user,
     });
 
     const displayName = computed(() => {

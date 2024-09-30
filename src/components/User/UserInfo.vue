@@ -1,5 +1,4 @@
 <template>
-
     <div class="user-info">
         <div class="text-center">
             <UserAvatar

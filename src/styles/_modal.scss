@@ -1,0 +1,57 @@
+.vfm.vfm--inset.vfm--fixed {
+    z-index: $zindex-modal + 1 !important;
+}
+
+.modal-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(50, 50, 50, 0.5);
+}
+
+.modal-body {
+    overflow-y: auto;
+}
+
+.modal-body.nonscrollable {
+    overflow-y: initial !important;
+}
+
+.sp-modal-content {
+    @extend .modal-content;
+    max-height: 80vh;
+    width: 960px;
+    max-width: 95%;
+}
+
+.sp-modal-content-xl {
+    max-width: 80vw;
+}
+
+.sp-modal-content-lg {
+    max-width: 70vw;
+}
+
+.sp-modal-content-sm {
+    width: 600px;
+    max-width: 95%;
+}
+
+.sp-modal-content-xs {
+    width: 420px;
+    max-width: 95%;
+}
+
+.modal-image {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.atom-label {
+    text-shadow: -1px 1px 1px rgb(0, 0, 0);
+    margin-left: 25px;
+}
+
+.v--modal-overlay {
+    z-index: $zindex-sticky + 1 !important;
+}

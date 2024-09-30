@@ -4,12 +4,14 @@ import i18n from "./i18n";
 
 import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import 'vue-final-modal/style.css'
+import 'vue-final-modal/style.css';
+import '@/styles/main.scss';
 
 import { ModalsContainer, createVfm } from "vue-final-modal";
 
 setup((app) => {
-  app.use(createVfm())
+  const vfm = createVfm()
+  app.use(vfm)
   app.use(i18n)
 })
 

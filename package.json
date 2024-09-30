@@ -28,7 +28,7 @@
   "dependencies": {
     "vee-validate": "^4.13.2",
     "vue": "^3.3.4",
-    "vue-final-modal": "^4.5.5",
+    "vue-final-modal": "v4.5.3",
     "vue-i18n": "^9.13.1"
   },
   "devDependencies": {
@@ -62,7 +62,7 @@
     "npm-run-all2": "^6.1.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "sass": "^1.69.5",
+    "sass": "^1.62.0",
     "start-server-and-test": "^2.0.1",
     "storybook": "^8.2.6",
     "storybook-addon-vue-slots": "^0.9.30-next.2",
