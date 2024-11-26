@@ -8,6 +8,7 @@ export type User = {
     name: string;
     email: string;
     metadata?: UserMetadata | null;
+    permissions?: string[];
 } & Timestamps;
 
 export type UserMetadata = {
@@ -17,5 +18,4 @@ export type UserMetadata = {
     institution: string;
     field: string;
     role: string;
-    
 }

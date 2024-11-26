@@ -1,14 +1,14 @@
 <template>
     <a
         href="#"
-        class="text-body text-decoration-none"
+        class="text-body text-decoration-none d-flex align-items-center gap-2"
+        :class="{ 'flex-row-reverse': reversed }"
         @click.stop.prevent="open()"
     >
         <span class="fw-medium">
             {{ displayName }}
         </span>
         <template v-if="showNickName">
-            &bull;
             <span class="text-muted fw-light">
                 {{ user.nickname }}
             </span>
@@ -24,9 +24,12 @@
     import UserInfo from './UserInfo.vue';
     import { useModal } from '@/composables/modal';
 
-    const props = defineProps<{
+    const props = withDefaults(defineProps<{
         user: User;
-    }>();
+        reversed?: boolean;
+    }>(),{
+        reversed: false,
+    });
 
 
     const { open } = useModal(UserInfo, {

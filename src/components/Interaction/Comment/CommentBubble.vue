@@ -1,7 +1,7 @@
 <template>
     <div
         :class="commentBubbleClasses"
-        class="comment-bubble d-flex"
+        class="comment-bubble d-flex gap-2"
     >
         <slot
             v-if="showAvatar"
@@ -11,148 +11,64 @@
             <UserAvatar
                 :user="author"
                 :size="avatar"
-                class="me-2"
             />
         </slot>
         <div class="flex-grow-1">
             <div class="card">
-                <header
+                <CommentHeader
                     v-if="showHeader"
-                    class="card-header d-flex flex-row justify-content-between align-items-center py-1 px-3"
-                    :class="{ 'border-0': !comment.content }"
-                >
-                    <div>
-                        <slot
-                            name="author"
-                            :comment="author"
-                        >
-                            <UsernameInfo :user="author" />
-                        </slot>
-                    </div>
-                    <div class="small">
-                        <slot
-                            name="metadata"
-                            class="me-2"
-                            :comment="comment"
-                        />
-                        <template v-if="comment.updated_at != comment.created_at">
-                            <span class="badge bg-light text-dark border">
-                                {{ t('global.edited') }}
-                            </span>
-                            &bull;
-                        </template>
-                        <span
-                            class="text-muted fw-light"
-                            :title="datestring(comment.updated_at)"
-                        >
-                            {{ ago(comment.updated_at) }}
-                        </span>
-                        <span
-                            v-if="!readOnly && !isDeleted() && hasActiveCommands"
-                            class="dropdown ms-1"
-                        >
-                            <span
-                                :id="`edit-comment-dropdown-${comment.id}`"
-                                class="clickable ms-2 user-select-none"
-                                data-bs-toggle="dropdown"
-                                aria-haspopup="true"
-                                aria-expanded="false"
-                            >
-                                <i class="fas fa-lg fa-fw fa-ellipsis-h" />
-                            </span>
-                            <div
-                                class="dropdown-menu dropdown-menu-end"
-                                :aria-labelledby="`edit-comment-dropdown-${comment.id}`"
-                            >
-                                <a
-                                    v-if="showEditButton()"
-                                    class="dropdown-item"
-                                    href="#"
-                                    @click.prevent="enableEditing(comment)"
-                                >
-                                    <i class="fas fa-fw fa-edit text-info" /> {{ t('global.edit') }}
-                                </a>
-                                <a
-                                    v-if="showReplyTo()"
-                                    class="dropdown-item"
-                                    href="#"
-                                    @click.prevent="replyTo(comment)"
-                                >
-                                    <i class="fas fa-fw fa-reply text-primary" /> {{ t('global.reply_to') }}
-                                </a>
-                                <a
-                                    v-if="showDeleteButton()"
-                                    class="dropdown-item"
-                                    href="#"
-                                    @click.prevent="handleDelete(comment)"
-                                >
-                                    <i class="fas fa-fw fa-trash text-danger" /> {{ t('global.delete') }}
-                                </a>
-                            </div>
-                        </span>
-                    </div>
-                </header>
-                <div v-if="!emptyMetadata()">
+                    :activeUser="activeUser"
+                    :comment="comment"
+                    :edit="state.editing"
+                    :showHeader="showHeader"
+                    v-model:showContent="showContent"
+                    @reply="() => emit('reply', comment)"
+                    @edit="() => edit()"
+                    @delete="() => emit('delete', comment.id)"
+                    @restore="() => emit('restore', comment.id)"
+                />
+                <div v-if="!isMetadataEmpty">
                     <slot
-                        v-if="!isDeleted() && state.editing"
+                        v-if="!isDeleted && state.editing"
                         name="body-editing"
                         :comment="comment"
                         :content="state.editContent"
                     >
                         <div class="card-body px-3 py-2">
-                            <textarea
-                                v-model="state.editContent"
-                                class="form-control"
-                            />
-                            <div class="mt-1 d-flex flex-row justify-content-end">
+                            <AutoResizeTextArea v-model="state.editContent" />
+                            <div class="d-flex flex-row justify-content-end gap-2 mt-2">
+
                                 <button
                                     type="button"
-                                    class="btn btn-success btn-sm me-2"
-                                    :disabled="state.editContent == comment.content"
-                                    @click="handleEdit( state.editContent)"
-                                >
-                                    <i class="fas fa-fw fa-save" /> {{ t('global.save') }}
-                                </button>
-                                <button
-                                    type="button"
-                                    class="btn btn-danger btn-sm"
+                                    class="btn btn-outline-secondary btn-sm"
                                     @click="disableEditing()"
                                 >
-                                    <i class="fas fa-fw fa-times" /> {{ t('global.cancel') }}
+                                    {{ t('global.cancel') }}
                                 </button>
+                                <LoadingButton
+                                    :loading="state.saveEdit"
+                                    :disabled="state.editContent == comment.content"
+                                    :small="true"
+                                    class="px-5"
+                                    @click="saveEdit(state.editContent)"
+                                    color="primary"
+                                >
+                                    {{ t('global.save') }}
+                                </LoadingButton>
                             </div>
                         </div>
                     </slot>
                     <slot
-                        v-else-if="!isDeleted()"
                         name="body"
                         :comment="comment"
                     >
+                        <!-- eslint-disable vue/no-v-html -->
                         <div
-                            v-if="comment.content"
+                            v-if="comment.content && showContent && !state.editing"
                             class="card-body px-3 py-2"
-                        >-->
-                            <!-- TODO; Here we insert user input into the comment. This is bad!-->
-                            <!-- eslint-disable vue/no-v-html -->
-                            <p
-                                class="card-text"
-                                v-html="mentionify(comment.content)"
-                            />
-                            <!-- eslint-enable vue/no-v-html -->
-                        </div>
-                    </slot>
-                    <slot
-                        v-else
-                        name="body-deleted"
-                        :comment="comment"
-                    >
-                        <div
-                            class="card-body px-3 py-2"
-                            style="opacity: 0.75;"
+                            style="white-space: pre-line;"
+                            v-html="formattedComment"
                         >
-                            <p class="card-text fst-italic">
-                                {{ t('global.comments.deleted_info') }}
-                            </p>
                         </div>
                     </slot>
                 </div>
@@ -175,7 +91,7 @@
                     <div v-show="state.repliesOpen">
                         <span>
                             {{
-                                t('global.comments.hide_reply', repliesCount, {
+                                t('global.comments.hide_reply', {
                                     cnt:
                                         repliesCount
                                 })
@@ -186,7 +102,7 @@
                     <div v-show="!state.repliesOpen">
                         <span>
                             {{
-                                t('global.comments.show_reply', repliesCount, {
+                                t('global.comments.show_reply', {
                                     cnt:
                                         repliesCount
                                 })
@@ -207,82 +123,60 @@
     </div>
 </template>
 
-<script
-    lang="ts"
-    setup
->
+<script lang="ts" setup>
+    // Types
+    import type { User as UserType } from '§/User';
+    import { Comment } from '§/Interaction';
 
+    // Vendor
     import {
         computed,
-        defineComponent,
         reactive,
+        ref,
     } from 'vue';
-
-    // import {
-    //     ago,
-    //     datestring,
-    //     mentionify,
-    // } from '@/helpers/filters.js';
-
-    import {
-        Time,
-    } from 'dhc-utils'
-    const datestring = Time.datestring;
-    const ago = Time.ago;
-
     import { useI18n } from 'vue-i18n';
 
-    // import UserAvatar from '../../user/UserAvatar.vue';
-    // import UsernameInfo from '../../user/UsernameInfo.vue';
-    // import { can } from '../../../helpers/helpers';
-    // import { emit } from 'process';
+    // Composables
+    import useComment from '@/composables/comment';
 
+    // Components
+    import CommentHeader from './CommentHeader.vue';
     import UserAvatar from '@/components/User/UserAvatar.vue';
-    import UsernameInfo from '@/components/User/UsernameInfo.vue';
-    import type { User as UserType } from 'src/types/User';
-    import { Comment } from 'src/types/Interaction';
-    import { User } from 'dhc-utils';
-
+    import AutoResizeTextArea from '@/components/Form/TextArea/AutoResizeTextArea.vue';
+    import LoadingButton from '@/components/Button/LoadingButton/LoadingButton.vue';
 
     const props = withDefaults(defineProps<{
         activeUser: UserType;
-        avatar: number;
         comment: Comment;
-        readOnly: boolean;
-        showAvatar: boolean;
-        showHeader: boolean;
+        avatar?: number;
+        readOnly?: boolean;
+        showAvatar?: boolean;
+        showHeader?: boolean;
     }>(), {
         readOnly: false,
         showAvatar: true,
         showHeader: true,
-        default: 42,
+        avatar: 42,
     });
 
     const emit = defineEmits<{
-        edit: [Comment, string];
-        delete: [id: number];
-        reply: [Comment];
-        'toggle-replies': [boolean];
-    }>()
-
+        (e: 'save', content: string, saved: Function): void,
+        (e: 'reply', comment: Comment): void,
+        (e: 'delete', id: number): void,
+        (e: 'restore', id: number): void,
+        (e: 'toggle-replies', open: boolean): void,
+    }>();
 
     const state = reactive({
         editing: false,
         editContent: '',
         repliesOpen: false,
+        saveEdit: false,
     });
 
-    const isDeleted = () => {
-        return !!props.comment.deleted_at;
-    };
-
-    const isOwn = () => {
-        return props.activeUser.id === props.comment.author.id;
-    };
-
-    const emptyMetadata = () => {
+    const isMetadataEmpty = computed(() => {
         return props.comment.metadata && props.comment.metadata.is_empty;
-    };
+    });
 
     const toggleReplies = () => {
         state.repliesOpen = !state.repliesOpen;
@@ -293,57 +187,39 @@
         return props.comment?.replies_count ?? 0;
     });
 
-    const handleDelete = () => {
-        emit('delete', props.comment.id);
-    };
-
-    const showEditButton = () => {
-        return isOwn() && !state.editing && User.can('comments_edit');
-    };
-
-    const showDeleteButton = () => {
-        return isOwn() && User.can('comments_delete');
-    };
-
-    const disableEditing = () => {
-        state.editing = false;
-    };
-
-    const enableEditing = () => {
-        state.editing = true;
-        state.editContent = props.comment.content;
-    };
-
-    const handleEdit = async (composedMessage:string) => {
-        disableEditing();
-        emit('edit', props.comment, composedMessage);
-    };
-
-    const showReplyTo = () => {
-        return User.can('comments_create');
-    };
-
-    const replyTo = () => {
-        emit('reply', props.comment);
-    };
-
-    const author = computed(() => {
-        return props.comment?.author ?? {
-            id: 0,
-            nickname: 'Unknown',
-        };
-    });
-
-    const hasActiveCommands = computed(() => {
-        return showEditButton() || showDeleteButton() || showReplyTo();
-    });
+    const {
+        author,
+        isDeleted,
+        isOwn,
+        formattedComment,
+    } = useComment(props.comment, props.activeUser);
 
     const commentBubbleClasses = computed(() => {
         return {
-            'opacity-50': isDeleted(),
+            'opacity-50': isDeleted.value,
+            'flex-row-reverse': isOwn.value,
         };
     });
 
     const t = useI18n().t;
 
+    const showContent = ref(!isDeleted.value);
+
+    const edit = () => {
+        state.editContent = props.comment.content;
+        state.editing = true
+    };
+    const disableEditing = () => state.editing = false;
+    const savedCallback = () => {
+        disableEditing();
+        state.saveEdit = false;
+    };
+    const saveEdit = async (composedMessage: string) => {
+        state.saveEdit = true;
+        emit('save', composedMessage, savedCallback);
+    };
+
+    defineExpose({
+        edit,
+    });
 </script>

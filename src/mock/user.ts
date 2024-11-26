@@ -1,6 +1,7 @@
 import { User } from 'src/types/User';
 
 export const Jane: User = {
+    id: 1,
     name: 'Jane Doe',
     nickname: 'jeannette',
     avatar: true,
@@ -8,7 +9,7 @@ export const Jane: User = {
     email: 'jane.doe@mail.com',
     created_at: '2021-01-01',
     updated_at: '2021-01-02',
-    deleted_at: null,
+    deleted_at: undefined,
     metadata: {
         phonenumber: '123-456-7890',
         orcid: '0000-0000-0000-0000',
@@ -16,10 +17,12 @@ export const Jane: User = {
         institution: 'University of California, Berkeley',
         field: 'Artificial Intelligence',
         role: 'Professor'
-    }
+    },
+    permissions: []
 };
 
 export const Ludwig: User = {
+    id: 2,
     name: 'Ludwig Zimmermann',
     nickname: 'ludwigZett',
     avatar: true,

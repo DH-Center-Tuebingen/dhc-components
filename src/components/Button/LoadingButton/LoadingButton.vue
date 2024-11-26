@@ -2,7 +2,6 @@
     <button
         class="position-relative d-flex align-items-center justify-content-center"
         :class="buttonClass"
-        style="width: 120px;"
         role="button"
         :disabled="loading"
     >
@@ -31,6 +30,7 @@
         outlined?: boolean
         color?: ColorName
         loading: boolean
+        small?: boolean
     }>();
 
     const contentClass = computed(_ => {
@@ -42,7 +42,8 @@
     const buttonClass = computed(_ => {
         const color = props.color ?? 'dark';
         const baseName = props.outlined ? 'btn-outline' : 'btn';
-        return `btn ${baseName}-${color}`;
+        const small = props.small ? 'btn-sm' : '';
+        return `btn ${baseName}-${color} ${small}`;
     })
 
 </script>

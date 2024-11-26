@@ -3,9 +3,9 @@ import { User } from './User';
 
 export type Comment = WithId<{
     content: string;
-    updated_at: string | null;
+    updated_at?: string;
     created_at: string;
-    deleted_at: string | null;
+    deleted_at?: string;
     author: User;
     replies_count: number;
     metadata?: CommentMetadata
