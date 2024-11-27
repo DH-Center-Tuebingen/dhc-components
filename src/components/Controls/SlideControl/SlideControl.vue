@@ -240,7 +240,6 @@
         let value = ratio * (props.max - props.min) + props.min;
         value = Math.round(value / props.step) * props.step;
         value = Math.min(Math.max(value, props.min), props.max);
-        console.log('value', value);
         emit('update:modelValue', value);
     }
 

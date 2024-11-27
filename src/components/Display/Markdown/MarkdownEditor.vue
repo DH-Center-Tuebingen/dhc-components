@@ -1,18 +1,18 @@
 <template>
     <div class="bg-white rounded overflow-auto">
         <MarkdownToolbar
-            v-if="!readonly"
+            v-show="!readonly"
             class="rounded pb-0 m-2 mb-0"
             :editor="editor"
             @toggle="setEditorType"
         />
         <Milkdown
-            v-if="state.type == 'md'"
+            v-show="state.type == 'md'"
             :class="state.editModeClasses"
             :editor="editor"
         />
         <textarea
-            v-else
+            v-show="state.type !== 'md'"
             v-model="state.markdownString"
             class="font-monospace border-0 px-5 p-4 flex-grow-1 w-100 rounded-3 bg-transparent"
             style="resize: none; outline: none;"
@@ -86,6 +86,7 @@
                 readonly,
             } = toRefs(props);
 
+            const editor = ref({});
 
             const state = reactive({
                 dirty: false,
@@ -104,11 +105,12 @@
             });
 
             // FUNCTIONS
-            const getMarkdown = _ => {
+            const getMarkdown = () => {
                 return state.markdownString;
             };
-            const setMarkdown = markdown => {
+            const setMarkdown = (markdown: string) => {
                 if (editor.value) {
+                    const markdown = getMarkdown();
                     editor.value.action(replaceAll(markdown));
                 }
             };
@@ -116,7 +118,8 @@
                 if (state.type == 'md') {
                     state.type = 'raw';
                 } else {
-                    setMarkdown(getMarkdown());
+                    const markdown = getMarkdown();
+                    setMarkdown(markdown);
                     state.type = 'md';
                 }
             };
@@ -127,8 +130,6 @@
                 remarkEmojiPlugin,
                 emojiSchema,
             ].flat();
-
-            const editor = ref({});
 
             useEditor((root) =>
                 editor.value = Editor.make()
@@ -165,7 +166,7 @@
             // in preview mode.
             if (!readonly.value) { usePreventNavigation(_ => state.dirty); }
 
-            watch(_ => state.markdownString, markdownString => {
+            watch(() => state.markdownString, (markdownString: string) => {
                 state.dirty = markdownString != data.value;
                 context.emit('update', markdownString);
             }

@@ -67,6 +67,7 @@
 
     import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
     import { fa1, fa2, fa3, fa4, faBold, faH, faIndent, faItalic, faListOl, faListUl, faOutdent, faParagraph, faRedo, faStrikethrough, faUndo } from '@fortawesome/free-solid-svg-icons'
+    import { faMarkdown } from '@fortawesome/free-brands-svg-icons'
 
     import Separator from '@/components/Visuals/Separator.vue';
 
@@ -93,7 +94,7 @@
     });
 
     // FUNCTIONS
-    const command = (action, data) => {
+    const command = (action :string, data = {}) => {
         state.mde.action(callCommand(action, data));
     };
 
@@ -101,9 +102,9 @@
         command(wrapInHeadingCommand.key, i);
     };
 
-    const toggleEditmode = _ => {
+    const toggleEditmode = () => {
         state.editMode = !state.editMode;
-        context.emit('toggle', state.editMode);
+        emit('toggle', state.editMode);
     };
 
     // As we need to dynamically change classes
@@ -223,7 +224,7 @@
         {
             name: 'editmode',
             command: _ => toggleEditmode(),
-            icon: 'fab fa-fw fa-markdown',
+            icon:  faMarkdown,
             class: markdownClass
         },
     ];

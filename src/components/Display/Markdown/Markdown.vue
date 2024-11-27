@@ -9,14 +9,14 @@
         />
     </MilkdownProvider>
 </template>
-  
+
 <script lang="ts">
     import {
         ref,
         watch,
     } from 'vue';
     import MilkdownEditor from './MarkdownEditor.vue';
-    import { MilkdownProvider } from '@milkdown/vue'; 
+    import { MilkdownProvider } from '@milkdown/vue';
 
     export default {
         components: {
@@ -41,17 +41,18 @@
         },
         emits: ['update'],
         setup(props, context) {
-            const getEditorMarkdown = _ => {
-                return editorRef.value.getMarkdown();
+            const getEditorMarkdown = () => {
+                if (editorRef.value) {return editorRef.value.getMarkdown();}
+                return '';
             };
 
-            const emitUpdate = data => {
+            const emitUpdate = (data: string) => {
                 context.emit('update', data);
             };
 
-            const editorRef = ref({});
-            watch(_ => props.data, (newData, oldData) => {
-                if(editorRef.value && editorRef.value.setMarkdown) {
+            const editorRef = ref<InstanceType<typeof MilkdownEditor>>();
+            watch(() => props.data, (newData, oldData) => {
+                if (editorRef.value && editorRef.value.setMarkdown) {
                     editorRef.value.setMarkdown(newData);
                 }
             });

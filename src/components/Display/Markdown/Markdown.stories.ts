@@ -11,9 +11,7 @@ export default meta;
 
 type Story = StoryObj<typeof Markdown>;
 
-export const Default: Story = {
-    args: {
-        data: `
+const content = `
 ## Header
 
 ---
@@ -50,7 +48,26 @@ A final paragraph.
 
 [1]: http://www.google.com
 [2]: http://www.google.com/intl/en_ALL/images/logo.gif
-    `,
+`;
+
+export const Default: Story = {
+    args: {
+        data: content,
+        // Add props here
+    },
+    render: (args) => ({
+        components: { Markdown },
+        setup() {
+            return { args };
+        },
+        template: '<Markdown v-bind="args" />',
+    }),
+};
+
+export const ReadOnly: Story = {
+    args: {
+        data: content,
+        readonly: true,
         // Add props here
     },
     render: (args) => ({

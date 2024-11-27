@@ -231,7 +231,7 @@
   dependencies:
     "@types/mdx" "^2.0.0"
 
-"@milkdown/core@^7.2.0", "@milkdown/core@^7.3.0":
+"@milkdown/core@^7.2.0", "@milkdown/core@^7.5.0":
   version "7.5.0"
   resolved "https://registry.npmjs.org/@milkdown/core/-/core-7.5.0.tgz"
   integrity sha512-s2kjp6QkCKON6xWHJEZXPhgQd2ZxQjXf2/qmTQXXSsiEkdviflnXfP7SuH+ivsBnxlxvkQn2b5RLo7sa30fhYw==
@@ -257,7 +257,7 @@
   dependencies:
     tslib "^2.5.0"
 
-"@milkdown/plugin-clipboard@^7.3.0":
+"@milkdown/plugin-clipboard@^7.5.0":
   version "7.5.0"
   resolved "https://registry.npmjs.org/@milkdown/plugin-clipboard/-/plugin-clipboard-7.5.0.tgz"
   integrity sha512-8AISCDWyLYHEPIpckO3P5+mpxCAAP8S7IF4+1J0xcjVzFx6RTDQiIEgutqjqq4hl3edhaXBK7oNhNNrmWw3j6g==
@@ -265,7 +265,7 @@
     "@milkdown/utils" "7.5.0"
     tslib "^2.5.0"
 
-"@milkdown/plugin-diagram@^7.3.0":
+"@milkdown/plugin-diagram@^7.5.0":
   version "7.5.0"
   resolved "https://registry.npmjs.org/@milkdown/plugin-diagram/-/plugin-diagram-7.5.0.tgz"
   integrity sha512-3SXKTNSLtKUKbxwO75ZcAT6/quAnMgrXMZRGFtsiZeE1wrKbkgj6FKEJjsM4ElQ/F3cxnJkgh6EiIOl33xngCQ==
@@ -278,7 +278,7 @@
     tslib "^2.5.0"
     unist-util-visit "^5.0.0"
 
-"@milkdown/plugin-emoji@^7.3.0":
+"@milkdown/plugin-emoji@^7.5.0":
   version "7.5.0"
   resolved "https://registry.npmjs.org/@milkdown/plugin-emoji/-/plugin-emoji-7.5.0.tgz"
   integrity sha512-qcbZ8+pDHZjQfqJeA6nWL5CGxsH5I5CrxDTtjOJAZc4QRhprzNEw8YlTGl3O6Oc5MLGCFyw2MHGvda0OVMCUEA==
@@ -292,7 +292,7 @@
     twemoji "^14.0.2"
     unist-util-visit "^5.0.0"
 
-"@milkdown/plugin-history@^7.3.0":
+"@milkdown/plugin-history@^7.5.0":
   version "7.5.0"
   resolved "https://registry.npmjs.org/@milkdown/plugin-history/-/plugin-history-7.5.0.tgz"
   integrity sha512-Y0d5nBFsp3sInWQ8DKdL9vCaYiQxh4/UaXpP6McMNc8STEohbld3y/SzsGfIKAUEJl5LATyj3hrhksIqdc5YOA==
@@ -300,7 +300,7 @@
     "@milkdown/utils" "7.5.0"
     tslib "^2.5.0"
 
-"@milkdown/plugin-indent@^7.3.0":
+"@milkdown/plugin-indent@^7.5.0":
   version "7.5.0"
   resolved "https://registry.npmjs.org/@milkdown/plugin-indent/-/plugin-indent-7.5.0.tgz"
   integrity sha512-RYJsj+co5jcTzIs0mzmb2qhbf72sv2oNL8cWMW0pFF9RVbCNJW24SUAaJBbIKvRsXAeMXaQT/aN2krCkQ0Z29g==
@@ -308,7 +308,7 @@
     "@milkdown/utils" "7.5.0"
     tslib "^2.5.0"
 
-"@milkdown/plugin-listener@^7.3.0":
+"@milkdown/plugin-listener@^7.5.0":
   version "7.5.0"
   resolved "https://registry.npmjs.org/@milkdown/plugin-listener/-/plugin-listener-7.5.0.tgz"
   integrity sha512-Dz6BPKYgJ5iNbyoC7D+gXDf14U+71w39VqxKDyZKMRN5RC8QTjaVVolduVLaiXxgN6jm6DKQq46nQxVxMxMf4Q==
@@ -318,7 +318,7 @@
     lodash.debounce "^4.0.8"
     tslib "^2.5.0"
 
-"@milkdown/plugin-math@^7.3.0":
+"@milkdown/plugin-math@^7.5.0":
   version "7.5.0"
   resolved "https://registry.npmjs.org/@milkdown/plugin-math/-/plugin-math-7.5.0.tgz"
   integrity sha512-EQ6P2Q6NNelzMKOdqASrNy2boEMwN6bH+lSxioup/J2Q6HhGVyoPNC2f4aCTgNSJ3mWmS0RQmWkqyA50YJtu6A==
@@ -330,7 +330,7 @@
     remark-math "^6.0.0"
     tslib "^2.5.0"
 
-"@milkdown/plugin-prism@^7.3.0":
+"@milkdown/plugin-prism@^7.5.0":
   version "7.5.0"
   resolved "https://registry.npmjs.org/@milkdown/plugin-prism/-/plugin-prism-7.5.0.tgz"
   integrity sha512-e/FsB6iaZGlmyCPtZ7bHPZ9e6nctheqKYbkEMRX6VZtS3x39LpeZPL84AJJyqwprp05A5XurHL/QE9+N1Wmilg==
@@ -339,7 +339,7 @@
     refractor "^4.0.0"
     tslib "^2.5.0"
 
-"@milkdown/plugin-tooltip@^7.3.0":
+"@milkdown/plugin-tooltip@^7.5.0":
   version "7.5.3"
   resolved "https://registry.npmjs.org/@milkdown/plugin-tooltip/-/plugin-tooltip-7.5.3.tgz"
   integrity sha512-n8woJCNqyPSZVmaiHTLUOJ4ixsmPIspUuDFgq4a9Mu5VUtWIdxtaRNNIO1exuXEMZKfA1d2EgagJbIDMDl5sRQ==
@@ -352,7 +352,7 @@
     tippy.js "^6.3.7"
     tslib "^2.5.0"
 
-"@milkdown/plugin-upload@^7.3.0":
+"@milkdown/plugin-upload@^7.5.0":
   version "7.5.0"
   resolved "https://registry.npmjs.org/@milkdown/plugin-upload/-/plugin-upload-7.5.0.tgz"
   integrity sha512-B3vqrXMpeH8fVLugtuZ1ElHpYVY2KSmT+JWstq/4dUEfHI0awUEyz8aErBMmuq/YXmqQDPdrvPz/5y25Q98mtQ==
@@ -361,7 +361,7 @@
     "@milkdown/utils" "7.5.0"
     tslib "^2.5.0"
 
-"@milkdown/preset-commonmark@^7.2.0", "@milkdown/preset-commonmark@^7.3.0":
+"@milkdown/preset-commonmark@^7.2.0", "@milkdown/preset-commonmark@^7.5.0":
   version "7.5.0"
   resolved "https://registry.npmjs.org/@milkdown/preset-commonmark/-/preset-commonmark-7.5.0.tgz"
   integrity sha512-tBQlBuCfoJgKsHH5Xf6pBCMrsOhxrYNxfOUqH3Lwybrw05SV0vqIrBnjTQvhMKnWCKaomYkE3G0NnoSbCgrEuQ==
@@ -373,7 +373,7 @@
     tslib "^2.5.0"
     unist-util-visit "^5.0.0"
 
-"@milkdown/preset-gfm@^7.3.0":
+"@milkdown/preset-gfm@^7.5.0":
   version "7.5.0"
   resolved "https://registry.npmjs.org/@milkdown/preset-gfm/-/preset-gfm-7.5.0.tgz"
   integrity sha512-pqw0ZEhuIV6DSfWa6Pwo/iMDQkPmaMx6fP6mWtMkDAViDVV09zj0WkGi73kU+KzBOAHewpJXrpl1ipOkp4aaVQ==
@@ -384,7 +384,7 @@
     remark-gfm "^4.0.0"
     tslib "^2.5.0"
 
-"@milkdown/prose@^7.2.0", "@milkdown/prose@^7.3.0":
+"@milkdown/prose@^7.2.0", "@milkdown/prose@^7.5.0":
   version "7.5.0"
   resolved "https://registry.npmjs.org/@milkdown/prose/-/prose-7.5.0.tgz"
   integrity sha512-zufSFhQJ24SI/gsRXRuOoB5buSYIl5455fdknOBHjmK98qnLWZcUs/RZcBQezZXmNc+5gINkoDmAnQPiB18H7A==
@@ -405,7 +405,7 @@
     prosemirror-view "^1.31.7"
     tslib "^2.5.0"
 
-"@milkdown/theme-nord@^7.3.0":
+"@milkdown/theme-nord@^7.5.0":
   version "7.5.0"
   resolved "https://registry.npmjs.org/@milkdown/theme-nord/-/theme-nord-7.5.0.tgz"
   integrity sha512-pLvmcg8YgPx9kuTtQxpUNf52laFe8s9DQ0v5QuGX7J+1jJ45C+gRSi5QbqrCBJfwEW+X/hvXyB+CpwH3ztjjUg==
@@ -434,7 +434,7 @@
     nanoid "^5.0.0"
     tslib "^2.5.0"
 
-"@milkdown/vue@^7.3.0":
+"@milkdown/vue@^7.5.0":
   version "7.5.0"
   resolved "https://registry.npmjs.org/@milkdown/vue/-/vue-7.5.0.tgz"
   integrity sha512-qmAQ94T/nQASWSS2htHp7Aw9i0ne937oRs1SNjTYNgJN+JyOBjhC7pLr+Gwzdwcq1jZmPCMVlTw9zYHdpqyHGA==

@@ -144,7 +144,6 @@
     }
 
     const login = () => {
-        console.log('login')
         emit('login', {
             username: username.value,
             password: password.value,
