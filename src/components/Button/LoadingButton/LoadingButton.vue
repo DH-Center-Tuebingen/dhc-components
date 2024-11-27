@@ -2,7 +2,6 @@
     <button
         class="position-relative d-flex align-items-center justify-content-center"
         :class="buttonClass"
-        style="width: 120px;"
         role="button"
         :disabled="loading"
     >

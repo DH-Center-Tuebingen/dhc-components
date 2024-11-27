@@ -4,6 +4,7 @@ import i18n from "./i18n";
 
 import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import '@/assets/main.css';
 
 setup((app) => {
   app.use(i18n)
@@ -28,6 +29,8 @@ const preview: Preview = {
       },
     },
   },
+
+  tags: ["autodocs"]
 };
 
 export default preview;

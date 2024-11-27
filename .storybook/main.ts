@@ -1,10 +1,7 @@
 import type { StorybookConfig } from "@storybook/vue3-vite";
 
 const config: StorybookConfig = {
-  stories: [
-    "../src/**/*.stories.mdx",
-    "../src/**/*.stories.@(js|jsx|ts|tsx|vue)",
-  ],
+  stories: ["../src/**/*.mdx", "../src/**/*.stories.@(js|jsx|ts|tsx|vue)"],
   addons: [
     "storybook-addon-vue-slots",
     "@storybook/addon-links",
@@ -17,8 +14,7 @@ const config: StorybookConfig = {
     options: {},
   },
   core: {
-    builder: "@storybook/builder-vite",
-    disableTelemetry: true,
+    disableTelemetry: true
   },
   docs: {},
 };
