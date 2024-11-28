@@ -60,7 +60,7 @@
     import { upload } from '@milkdown/plugin-upload';
     import { replaceAll } from '@milkdown/utils';
 
-    import { usePreventNavigation } from '@/composables/prevent-navigation.ts';
+    import { usePreventNavigation } from '@/composables/prevent-navigation';
 
     export default {
         components: {
@@ -86,7 +86,40 @@
                 readonly,
             } = toRefs(props);
 
-            const editor = ref({});
+            const editor = ref<Editor>();
+
+            useEditor((root: HTMLDivElement) => {
+                editor.value = Editor.make()
+                    .config((ctx) => {
+                        ctx.set(rootCtx, root);
+                        ctx.set(defaultValueCtx, data.value);
+                        ctx.update(rootAttrsCtx, (prev) => ({
+                            ...prev,
+                            class: `milkdown h-100`,
+                        }));
+                        ctx.update(editorViewOptionsCtx, (prev) => ({
+                            ...prev,
+                            editable: _ => !readonly.value,
+                        }));
+                        ctx.get(listenerCtx).markdownUpdated((ctx, markdown) => {
+                            state.markdownString = markdown;
+                        });
+                    })
+                .use(commonmark)
+                .use(gfm)
+                .use(listener)
+                .use(history)
+                .use(clipboard)
+                .use(prism)
+                .use(math)
+                .use(emojiPlugin)
+                .use(diagram)
+                .use(indent)
+                .use(upload)
+
+                console.log(editor.value, root);
+                return editor.value;
+            });
 
             const state = reactive({
                 dirty: false,
@@ -110,11 +143,10 @@
             };
             const setMarkdown = (markdown: string) => {
                 if (editor.value) {
-                    const markdown = getMarkdown();
                     editor.value.action(replaceAll(markdown));
                 }
             };
-            const setEditorType = _ => {
+            const setEditorType = () => {
                 if (state.type == 'md') {
                     state.type = 'raw';
                 } else {
@@ -131,40 +163,12 @@
                 emojiSchema,
             ].flat();
 
-            useEditor((root) =>
-                editor.value = Editor.make()
-                    .config((ctx) => {
-                        ctx.set(rootCtx, root);
-                        ctx.set(defaultValueCtx, data.value);
-                        ctx.update(rootAttrsCtx, (prev) => ({
-                            ...prev,
-                            class: `milkdown h-100`,
-                        }));
-                        ctx.update(editorViewOptionsCtx, (prev) => ({
-                            ...prev,
-                            editable: _ => !readonly.value,
-                        }));
-                        ctx.get(listenerCtx).markdownUpdated((ctx, markdown, prevMarkdown) => {
-                            state.markdownString = markdown;
-                        });
-                    })
-                    .use(commonmark)
-                    .use(gfm)
-                    .use(listener)
-                    .use(history)
-                    .use(clipboard)
-                    .use(prism)
-                    .use(math)
-                    .use(emojiPlugin)
-                    .use(diagram)
-                    .use(indent)
-                    .use(upload)
-            );
+
 
             // Only add the prevent navigation hook if the editor is not readonly
             // otherwise the hook will be added concurrently and unecessary when the editor is used
             // in preview mode.
-            if (!readonly.value) { usePreventNavigation(_ => state.dirty); }
+            if (!readonly.value) { usePreventNavigation(() => state.dirty); }
 
             watch(() => state.markdownString, (markdownString: string) => {
                 state.dirty = markdownString != data.value;
