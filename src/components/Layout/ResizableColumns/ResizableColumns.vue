@@ -4,30 +4,27 @@
         ref="container"
         @mouseleave="e => endMoveColumn(e)"
         @mouseup="e => endMoveColumn(e)"
-        style="height: 100px;"
+        style="height: 100vh;"
     >
         <template
             v-for="(column, columnIndex) of columns"
             :key="column.name"
         >
             <div
-                class="column overflow-x-hidden"
-                :style="columnStyle(column)"
+                class="column-wrapper"
+                :style="columnWrapperStyle(column)"
             >
-                {{ column.width }}
                 <div
+                    class="column"
+                >
+                    <slot :name="column.name" />
+                </div>
+                <ColumnSeparator
                     v-if="columnIndex !== columns.length - 1"
-                    class="position-absolute h-100 top-0 end-0 d-flex justify-content-center"
                     @mousedown.stop.prevent="e => startMoveColumn(e, columnIndex)"
                     @mouseup="e => endMoveColumn(e)"
                     @click.stop.prevent
-                    style="width: 10px; cursor: col-resize; overflow: hidden; background-color: red; transform: translateX(50%);"
-                >
-                    <div
-                        class="border-start border-primary border-3 h-100"
-                        style="width: 0;"
-                    ></div>
-                </div>
+                />
             </div>
 
         </template>
@@ -38,6 +35,7 @@
     import { CSS } from 'src/types/Common';
     import { ColumnDefinition } from 'src/types/Layout';
     import { computed, onUnmounted, ref } from 'vue';
+    import ColumnSeparator from './ColumnSeparator.vue';
 
     const columns = defineModel<ColumnDefinition[]>({
         required: true,
@@ -47,7 +45,7 @@
     const startPosition = ref(0);
     const leftColumnIndex = ref<number | null>(null);
     const rightColumnIndex = ref<number | null>(null);
-    
+
     const leftStartWidth = ref(0);
     const rightStartWidth = ref(0);
 
@@ -66,7 +64,7 @@
         return calculateWidth(column) + '%'
     }
 
-    const columnStyle = (column: ColumnDefinition): CSS => {
+    const columnWrapperStyle = (column: ColumnDefinition): CSS => {
         return {
             width: calculateWidthCss(column),
             position: 'relative'
@@ -76,37 +74,51 @@
     const moveListener = (e: MouseEvent) => {
         let diff = e.clientX - startPosition.value;
 
+        // Prevent resizing if the columns are not set
         if (leftColumnIndex.value == null ||
             rightColumnIndex.value == null ||
             leftColumn.value == null ||
             rightColumn.value == null ||
             container.value == null) { return; }
 
-        const widthPerPoint = container.value.clientWidth/ totalWidth.value;
-        // let newLeftWidth = leftColumn.value.width + diff * widthPerPoint;
-        // newLeftWidth = Math.max(0,Math.min(newLeftWidth, totalWidth.value));
-        // const newRightWidth = totalWidth.value - newLeftWidth;
-        
+        // Transform the values from pixels to column width
+        const localTotalWidth = totalWidth.value;
         const percent = diff / container.value.clientWidth;
-        const columnWidthDiff = totalWidth.value * percent;
-        console.log(diff, columnWidthDiff)
-        
-        const newLeftWidth = leftStartWidth.value + columnWidthDiff;
-        const newRightWidth = rightStartWidth.value - columnWidthDiff;
-        
-        // console.log(totalWidth.value, newLeftWidth, newRightWidth)
-        
-        
+        const columnWidthDiff = localTotalWidth * percent;
+
+        // Apply the new width to the left column
+        let newLeftWidth = leftStartWidth.value + columnWidthDiff;
+        if (leftColumn.value.minWidth && newLeftWidth < leftColumn.value.minWidth) {
+            newLeftWidth = leftColumn.value.minWidth;
+        }
+        if (leftColumn.value.maxWidth && newLeftWidth > leftColumn.value.maxWidth) {
+            newLeftWidth = leftColumn.value.maxWidth;
+        }
+
+        // Apply the new width to the right column 
+        // & adjust the left column width if the right column has a min/max width
+        const combinedWidth = leftColumn.value.width + rightColumn.value.width;
+        let newRightWidth = combinedWidth - newLeftWidth;
+        if (rightColumn.value.minWidth && newRightWidth < rightColumn.value.minWidth) {
+            newRightWidth = rightColumn.value.minWidth;
+            newLeftWidth = combinedWidth - newRightWidth;
+        }
+
+        if (rightColumn.value.maxWidth && newRightWidth > rightColumn.value.maxWidth) {
+            newRightWidth = rightColumn.value.maxWidth;
+            newLeftWidth = combinedWidth - newRightWidth;
+        }
+
+        // Update the column widths
         columns.value[leftColumnIndex.value].width = newLeftWidth;
         columns.value[rightColumnIndex.value].width = newRightWidth;
     }
 
     const startMoveColumn = (e: MouseEvent, columnIndex: number) => {
-        console.log('START MOVE')
         startPosition.value = e.clientX;
         leftColumnIndex.value = columnIndex;
         rightColumnIndex.value = columnIndex + 1;
-        
+
         leftStartWidth.value = columns.value[columnIndex].width;
         rightStartWidth.value = columns.value[columnIndex + 1].width;
 
@@ -124,3 +136,26 @@
     });
 
 </script>
+
+<style scoped>
+
+    .column-separator {
+        position: absolute;
+        right: 0;
+        transform: translateX(50%);
+    }
+
+    .column-wrapper {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        position: relative;
+    }
+
+    .column {
+        height: 100%;
+        max-height: 100%;
+        overflow-y: auto;
+        padding: 1rem;
+    }
+</style>
