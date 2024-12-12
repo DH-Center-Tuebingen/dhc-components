@@ -4,7 +4,10 @@ import ResizableColumns from './ResizableColumns.vue';
 import { reactive } from 'vue';
 
 const meta: Meta<typeof ResizableColumns> = {
-  component: ResizableColumns,
+    component: ResizableColumns,
+    parameters: {
+        layout: 'fullscreen',
+    }
 };
 
 export default meta;
@@ -12,19 +15,48 @@ export default meta;
 type Story = StoryObj<typeof ResizableColumns>;
 
 export const Default: Story = {
-  args: {
-    // Add additional args
-  },
-  render: (args: any) => ({
-    components: { ResizableColumns },
-    setup() {
-      const vModel = reactive([
-        { name: 'Column 1', width: 100, style: 'background-color: #f00' },
-        { name: 'Column 2', width: 200 },
-        { name: 'Column 3', width: 300, style: 'background-color: #00f' },
-      ]);
-      return { args, vModel };
+    args: {
+        // Add additional args
     },
-    template: '<ResizableColumns v-bind="args" v-model="vModel" />',
-  }),
+    render: (args: any) => ({
+        components: { ResizableColumns },
+        setup() {
+            const vModel = reactive([
+                { name: 'column-1', width: 100, style: 'background-color: #f00', minWidth: 70 },
+                { name: 'column-2', width: 200, minWidth: 70 },
+                { name: 'column-3', width: 300, style: 'background-color: #00f', minWidth: 70, maxWidth: 300 },
+            ]);
+            return { args, vModel };
+        },
+        template: `<ResizableColumns v-bind="args" v-model="vModel" style="height: 100vh">
+        <template #column-1>
+            <h2>Die Verwandlung</h2>
+        
+            <p>Als Gregor Samsa eines Morgens aus unruhigen Träumen erwachte, fand er sich in seinem Bett zu einem ungeheueren Ungeziefer verwandelt. Er lag auf seinem panzerartig harten Rücken und sah, wenn er den Kopf ein wenig hob, seinen gewölbten, braunen, von bogenförmigen Versteifungen geteilten Bauch, auf dessen Höhe sich die Bettdecke, zum gänzlichen Niedergleiten bereit, kaum noch erhalten konnte. Seine vielen, im Vergleich zu seinem sonstigen Umfang kläglich dünnen Beine flimmerten ihm hilflos vor den Augen.</p>
+            <p>»Was ist mit mir geschehen?«, dachte er. Es war kein Traum. Sein Zimmer, ein richtiges, nur etwas zu kleines Menschenzimmer, lag ruhig zwischen den vier wohlbekannten Wänden. Über dem Tisch, auf dem eine auseinandergepackte Musterkollektion von Tuchwaren ausgebreitet war – Samsa war Reisender – hing das Bild, das er vor kurzem aus einer illustrierten Zeitschrift ausgeschnitten und in einem hübschen, vergoldeten Rahmen untergebracht hatte. Es stellte eine Dame dar, die mit einem Pelzhut und einer Pelzboa versehen, aufrecht dasaß und einen schweren Pelzmuff, in dem ihr ganzer Unterarm verschwunden war, dem Beschauer entgegenhob.</p>
+        </template>
+        
+        <template #column-2>
+            <h2>Der Prozeß</h2>
+            <p>Jemand mußte Josef K. verleumdet haben, denn ohne daß er etwas Böses getan hätte, wurde er eines Morgens verhaftet. Die Köchin der Frau Grubach, seiner Zimmervermieterin, die ihm jeden Tag gegen acht Uhr früh das Frühstück brachte, kam diesmal nicht. Das war noch niemals geschehen. K. wartete noch ein Weilchen, sah von seinem Kopfkissen aus die alte Frau, die ihm gegenüber wohnte und die ihn mit einer an ihr ganz ungewöhnlichen Neugierde beobachtete, dann aber, gleichzeitig befremdet und hungrig, läutete er. Sofort klopfte es und ein Mann, den er in dieser Wohnung noch niemals gesehen hatte, trat ein. Er war schlank und doch fest gebaut, er trug ein anliegendes schwarzes Kleid, das, ähnlich den Reiseanzügen, mit verschiedenen Falten, Taschen, Schnallen, Knöpfen und einem Gürtel versehen war und infolgedessen, ohne daß man sich darüber klar wurde, wozu es dienen sollte, besonders praktisch erschien. »Wer sind Sie?« fragte K. und saß gleich halb aufrecht im Bett. Der Mann aber ging über die Frage hinweg, als müsse man seine Erscheinung hinnehmen, und sagte bloß seinerseits: »Sie haben geläutet?« »Anna soll mir das Frühstück bringen«, sagte K. und versuchte, zunächst stillschweigend, durch Aufmerksamkeit und Überlegung festzustellen, wer der Mann eigentlich war. Aber dieser setzte sich nicht allzulange seinen Blicken aus, sondern wandte sich zur Tür, die er ein wenig öffnete, um jemandem, der offenbar knapp hinter der Tür stand, zu sagen: »Er will, daß Anna ihm das Frühstück bringt.« Ein kleines Gelächter im Nebenzimmer folgte, es war nach dem Klang nicht sicher, ob nicht mehrere Personen daran beteiligt waren. Obwohl der fremde Mann dadurch nichts erfahren haben konnte, was er nicht schon früher gewußt hätte, sagte er nun doch zu K. im Tone einer Meldung: »Es ist unmöglich.« »Das wäre neu«, sagte K., sprang aus dem Bett und zog rasch seine Hosen an. »Ich will doch sehen, was für Leute im Nebenzimmer sind und wie Frau Grubach diese Störung mir gegenüber verantworten wird.« Es fiel ihm zwar gleich ein, daß er das nicht hätte laut sagen müssen und daß er dadurch gewissermaßen ein Beaufsichtigungsrecht des Fremden anerkannte, aber es schien ihm jetzt nicht wichtig. Immerhin faßte es der Fremde so auf, denn er sagte: »Wollen Sie nicht lieber hierbleiben?« »Ich will weder hierbleiben, noch von Ihnen angesprochen werden, solange Sie sich mir nicht vorstellen.« »Es war gut gemeint«, sagte der Fremde und öffnete nun freiwillig die Tür. Im Nebenzimmer, in das K. langsamer eintrat, als er wollte, sah es auf den ersten Blick fast genau so aus wie am Abend vorher. Es war das Wohnzimmer der Frau Grubach, vielleicht war in diesem mit Möbeln, Decken, Porzellan und Photographien überfüllten Zimmer heute ein wenig mehr Raum als sonst, man erkannte das nicht gleich, um so weniger, als die Hauptveränderung in der Anwesenheit eines Mannes bestand, der beim offenen Fenster mit einem Buch saß, von dem er jetzt aufblickte. »Sie hätten in Ihrem Zimmer bleiben sollen! Hat es Ihnen denn Franz nicht gesagt?« »Ja, was wollen Sie denn?« sagte K. und sah von der neuen Bekanntschaft zu dem mit Franz Benannten, der in der Tür stehengeblieben war, und dann wieder zurück. Durch das offene Fenster erblickte man wieder die alte Frau, die mit wahrhaft greisenhafter Neugierde zu dem jetzt gegenüberliegenden Fenster getreten war, um auch weiterhin alles zu sehen. »Ich will doch Frau Grubach –«, sagte K., machte eine Bewegung, als reiße er sich von den zwei Männern los, die aber weit von ihm entfernt standen, und wollte weitergehen. »Nein«, sagte der Mann beim Fenster, warf das Buch auf ein Tischchen und stand auf. »Sie dürfen nicht weggehen, Sie sind ja verhaftet.« »Es sieht so aus«, sagte K. »Und warum denn?« fragte er dann. »Wir sind nicht dazu bestellt, Ihnen das zu sagen. Gehen Sie in Ihr Zimmer und warten Sie. Das Verfahren ist nun einmal eingeleitet, und Sie werden alles zur richtigen Zeit erfahren. Ich gehe über meinen Auftrag hinaus, wenn ich Ihnen so freundschaftlich zurede. Aber ich hoffe, es hört es niemand sonst als Franz, und der ist selbst gegen alle Vorschrift freundlich zu Ihnen. Wenn Sie auch weiterhin so viel Glück haben wie bei der Bestimmung Ihrer Wächter, dann können Sie zuversichtlich sein.« K. wollte sich setzen, aber nun sah er, daß im ganzen Zimmer keine Sitzgelegenheit war, außer dem Sessel beim Fenster. »Sie werden noch einsehen, wie wahr das alles ist«, sagte Franz und ging gleichzeitig mit dem andern Mann auf ihn zu. Besonders der letztere überragte K. bedeutend und klopfte ihm öfters auf die Schulter. Beide prüften K.s Nachthemd und sagten, daß er jetzt ein viel schlechteres Hemd werde anziehen müssen, daß sie aber dieses Hemd wie auch seine übrige Wäsche aufbewahren und, wenn seine Sache günstig ausfallen sollte, ihm wieder zurückgeben würden. »Es ist besser, Sie geben die Sachen uns als ins Depot«, sagten sie, »denn im Depot kommen öfters Unterschleife vor und außerdem verkauft man dort alle Sachen nach einer gewissen Zeit, ohne Rücksicht, ob das betreffende Verfahren zu Ende ist oder nicht. Und wie lange dauern doch derartige Prozesse, besonders in letzter Zeit! Sie bekämen dann schließlich allerdings vom Depot den Erlös, aber dieser Erlös ist erstens an sich schon gering, denn beim Verkauf entscheidet nicht die Höhe des Angebotes, sondern die Höhe der Bestechung, und weiter verringern sich solche Erlöse erfahrungsgemäß, wenn sie von Hand zu Hand und von Jahr zu Jahr weitergegeben werden.« K. achtete auf diese Reden kaum, das Verfügungsrecht über seine Sachen, das er vielleicht noch besaß, schätzte er nicht hoch ein, viel wichtiger war es ihm, Klarheit über seine Lage zu bekommen; in Gegenwart dieser Leute konnte er aber nicht einmal nachdenken, immer wieder stieß der Bauch des zweiten Wächters – es konnten ja nur Wächter sein – förmlich freundschaftlich an ihn, sah er aber auf, dann erblickte er ein zu diesem dicken Körper gar nicht passendes trockenes, knochiges Gesicht mit starker, seitlich gedrehter Nase, das sich über ihn hinweg mit dem anderen Wächter verständigte. Was waren denn das für Menschen? Wovon sprachen sie? Welcher Behörde gehörten sie an? K. lebte doch in einem Rechtsstaat, überall herrschte Friede, alle Gesetze bestanden aufrecht, wer wagte, ihn in seiner Wohnung zu überfallen? Er neigte stets dazu, alles möglichst leicht zu nehmen, das Schlimmste erst beim Eintritt des Schlimmsten zu glauben, keine Vorsorge für die Zukunft zu treffen, selbst wenn alles drohte. Hier schien ihm das aber nicht richtig, man konnte zwar das Ganze als Spaß ansehen, als einen groben Spaß, den ihm aus unbekannten Gründen, vielleicht weil heute sein dreißigster Geburtstag war, die Kollegen in der Bank veranstaltet hatten, es war natürlich möglich, vielleicht brauchte er nur auf irgendeine Weise den Wächtern ins Gesicht zu lachen, und sie würden mitlachen, vielleicht waren es Dienstmänner von der Straßenecke, sie sahen ihnen nicht unähnlich – trotzdem war er diesmal, förmlich schon seit dem ersten Anblick des Wächters Franz, entschlossen, nicht den geringsten Vorteil, den er vielleicht gegenüber diesen Leuten besaß, aus der Hand zu geben. Darin, daß man später sagen würde, er habe keinen Spaß verstanden, sah K. eine ganz geringe Gefahr, wohl aber erinnerte er sich – ohne daß es sonst seine Gewohnheit gewesen wäre, aus Erfahrungen zu lernen – an einige, an sich unbedeutende Fälle, in denen er zum Unterschied von seinen Freunden mit Bewußtsein, ohne das geringste Gefühl für die möglichen Folgen, sich unvorsichtig benommen hatte und dafür durch das Ergebnis gestraft worden war. Es sollte nicht wieder geschehen, zumindest nicht diesmal; war es eine Komödie, so wollte er mitspielen.</p>
+        </template>
+
+        <template #column-3>
+            <h2>Das Schloß</h2>
+            <p>Es war spät abends, als K. ankam. Das Dorf lag in tiefem Schnee. Vom Schloßberg war nichts zu sehen, Nebel und Finsternis umgaben ihn, auch nicht der schwächste Lichtschein deutete das große Schloß an. Lange stand K. auf der Holzbrücke, die von der Landstraße zum Dorf führte, und blickte in die scheinbare Leere empor.</p>
+<p>Dann ging er, ein Nachtlager suchen; im Wirtshaus war man noch wach, der Wirt hatte zwar kein Zimmer zu vermieten, aber er wollte, von dem späten Gast äußerst überrascht und verwirrt, K. in der Wirtsstube auf einem Strohsack schlafen lassen. K. war damit einverstanden. Einige Bauern waren noch beim Bier, aber er wollte sich mit niemandem unterhalten, holte selbst den Strohsack vom Dachboden und legte sich in der Nähe des Ofens hin. Warm war es, die Bauern waren still, ein wenig prüfte er sie noch mit den müden Augen, dann schlief er ein.</p>
+<p>Aber kurze Zeit darauf wurde er schon geweckt. Ein junger Mann, städtisch angezogen, mit schauspielerhaftem Gesicht, die Augen schmal, die Augenbrauen stark, stand mit dem Wirt neben ihm. Die Bauern waren auch noch da, einige hatten ihre Sessel herumgedreht, um besser zu sehen und zu hören. Der junge Mensch entschuldigte sich sehr höflich, K. geweckt zu haben, stellte sich als Sohn des Schloßkastellans vor und sagte dann: »Dieses Dorf ist Besitz des Schlosses, wer hier wohnt oder übernachtet, wohnt oder übernachtet gewissermaßen im Schloß. Niemand darf das ohne gräfliche Erlaubnis. Sie aber haben eine solche Erlaubnis nicht oder haben sie wenigstens nicht vorgezeigt.«</p>
+<p>K. hatte sich halb aufgerichtet, hatte die Haare zurechtgestrichen, blickte die Leute von unten her an und sagte: »In welches Dorf habe ich mich verirrt? Ist denn hier ein Schloß?«</p>
+<p>»Allerdings«, sagte der junge Mann langsam, während hier und dort einer den Kopf über K. schüttelte, »das Schloß des Herrn Grafen Westwest.«</p>
+<p>»Und man muß die Erlaubnis zum Übernachten haben?« fragte K., als wolle er sich davon überzeugen, ob er die früheren Mitteilungen nicht vielleicht geträumt hätte.</p>
+<p>»Die Erlaubnis muß man haben«, war die Antwort, und es lag darin ein großer Spott für K., als der junge Mann mit ausgestrecktem Arm den Wirt und die Gäste fragte: »Oder muß man etwa die Erlaubnis nicht haben?«</p>
+<p>»Dann werde ich mir also die Erlaubnis holen müssen«, sagte K. gähnend und schob die Decke von sich, als wolle er aufstehen.</p>
+<p>»Ja von wem denn?« fragte der junge Mann.</p>
+<p>»Vom Herrn Grafen«, sagte K., »es wird nichts anderes übrigbleiben.«</p>
+<p>»Jetzt um Mitternacht die Erlaubnis vom Herrn Grafen holen?« rief der junge Mann und trat einen Schritt zurück.</p>
+<p>»Ist das nicht möglich?« fragte K. gleichmütig. »Warum haben Sie mich also geweckt?«</p>
+<p>Nun geriet aber der junge Mann außer sich. »Landstreichermanieren!« rief er. »Ich verlange Respekt vor der gräflichen Behörde! Ich habe Sie deshalb geweckt, um Ihnen mitzuteilen, daß Sie sofort das gräfliche Gebiet verlassen müssen.«</p>
+        </template>
+    </ResizableColumns>`,
+    }),
 };
