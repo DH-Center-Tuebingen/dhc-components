@@ -12,5 +12,8 @@ export { default as Markdown } from './components/Display/Markdown/Markdown.vue'
 export { default as MarkdownEditor } from './components/Display/Markdown/MarkdownEditor.vue';
 export { default as MarkdownToolbar } from './components/Display/Markdown/MarkdownToolbar.vue';
 
+// Layout
+export { default as ResizableColumns } from './components/Layout/ResizableColumns/ResizableColumns.vue';
+
 // Composables
 export { default as useResizeObserver } from './composables/resize-observer';

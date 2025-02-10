@@ -20,7 +20,7 @@ export default defineConfig({
     target: 'esnext',
     minify: false,
     cssCodeSplit: true,
-    sourcemap: true,
+    // sourcemap: true,
     lib: {
       entry: path.resolve(__dirname, 'src/index.ts'),
       name,

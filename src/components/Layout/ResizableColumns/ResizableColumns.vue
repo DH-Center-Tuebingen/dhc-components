@@ -4,7 +4,7 @@
         ref="container"
         @mouseleave="e => endMoveColumn(e)"
         @mouseup="e => endMoveColumn(e)"
-        style="height: 100vh;"
+        style="height: 100%;"
     >
         <template
             v-for="(column, columnIndex) of columns"
@@ -126,8 +126,8 @@
     }
 
     const endMoveColumn = (e: MouseEvent) => {
-        leftColumn.value = null;
-        rightColumn.value = null;
+        leftColumnIndex.value = null;
+        rightColumnIndex.value = null;
         window.removeEventListener('mousemove', moveListener);
     }
 
