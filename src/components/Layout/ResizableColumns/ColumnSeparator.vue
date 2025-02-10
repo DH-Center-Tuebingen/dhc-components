@@ -32,9 +32,9 @@
 
     .column-separator-line {
         height: 100%;
-        background-color: rgb(88, 88, 88);
+        background-color: #e6e6e6;
         box-sizing: border-box;
-        width: 2px;
+        width: 1px;
         
         transition: background-color .5s;
     }
