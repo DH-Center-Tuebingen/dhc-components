@@ -48,7 +48,7 @@
     "@milkdown/transformer": "^7.5.0",
     "@milkdown/vue": "^7.5.0",
     "@vueform/multiselect": "^2.6.11",
-    "vee-validate": "^4.13.2",
+    "vee-validate": "^4.15.0",
     "vue": "^3.3.4",
     "vue-i18n": "^9.13.1"
   },
