@@ -48,8 +48,7 @@
             </div>
         </div>
         <div
-            class="line line-bottom d-flex flex-grow-1 justify-content-start align-items-center gap-2 flex-wrap basis-fit-content order-2"
-        >
+            class="line line-bottom d-flex flex-grow-1 justify-content-start align-items-center gap-2 flex-wrap basis-fit-content order-2">
             <div
                 class="delimiter-group input-group flex-grow-1 flex-nowrap basis-fit-content"
                 style="max-width: 250px;"
@@ -141,69 +140,69 @@
     </form>
 </template>
 <script setup lang="ts">
-import { computed, ModelRef, ref } from 'vue';
-import { useI18n } from 'vue-i18n';
-import IconButton from '@/components/Button/IconButton/IconButton.vue';
+    import { computed, ModelRef, ref } from 'vue';
+    import { useI18n } from 'vue-i18n';
+    import IconButton from '@/components/Button/IconButton/IconButton.vue';
 
-const props = withDefaults(defineProps<{
-    total: number,
-    removable: boolean
-    showPreviewButton: boolean,
-}>(), {
-    showPreviewButton: false,
-});
+    const props = withDefaults(defineProps<{
+        total: number,
+        removable: boolean
+        showPreviewButton: boolean,
+    }>(), {
+        showPreviewButton: false,
+    });
 
-const delimiter: ModelRef<string, string> = defineModel('delimiter', {default: ','});
-const hasHeaderRow: ModelRef<boolean, PropertyKey> = defineModel('hasHeaderRow', {default: true});
-const showLineNumbers: ModelRef<boolean, PropertyKey> = defineModel('showLineNumbers', {default: true});
-const showPreview: ModelRef<boolean, PropertyKey> = defineModel('showPreview', {default: true});
-const useCustomDelimiter: ModelRef<boolean, PropertyKey> = defineModel('useCustomDelimiter', { default: false});
-const showCount: ModelRef<number, PropertyKey> = defineModel('showCount', { default: 20 });
-const skippedCount: ModelRef<number, PropertyKey> = defineModel('skippedCount', { default: 0 });
-// const maxRows: ModelRef<number, PropertyKey> = defineModel('maxRows', { default: 100 });
+    const delimiter: ModelRef<string, string> = defineModel('delimiter', { default: ',' });
+    const hasHeaderRow: ModelRef<boolean, PropertyKey> = defineModel('hasHeaderRow', { default: true });
+    const showLineNumbers: ModelRef<boolean, PropertyKey> = defineModel('showLineNumbers', { default: true });
+    const showPreview: ModelRef<boolean, PropertyKey> = defineModel('showPreview', { default: true });
+    const useCustomDelimiter: ModelRef<boolean, PropertyKey> = defineModel('useCustomDelimiter', { default: false });
+    const showCount: ModelRef<number, PropertyKey> = defineModel('showCount', { default: 20 });
+    const skippedCount: ModelRef<number, PropertyKey> = defineModel('skippedCount', { default: 0 });
+    // const maxRows: ModelRef<number, PropertyKey> = defineModel('maxRows', { default: 100 });
 
-const emit = defineEmits([
-    'remove',
-]);
+    const emit = defineEmits([
+        'remove',
+    ]);
 
-const { t } = useI18n();
+    const { t } = useI18n();
 
-const delimiterOptions = ref([
-    { value: ',', label: ',' },
-    { value: ';', label: ';' },
-    { value: '\t', label: t('keyboard.tab') },
-    { value: ' ', label: t('keyboard.space') },
-]);
+    const delimiterOptions = ref([
+        { value: ',', label: ',' },
+        { value: ';', label: ';' },
+        { value: '\t', label: t('keyboard.tab') },
+        { value: ' ', label: t('keyboard.space') },
+    ]);
 
-const delimiterInputStyle = ref({
-    width: '5em',
-    minWidth: '5em',
-    flex: '1 1 min-content',
-    zIndex: 500,
-});
+    const delimiterInputStyle = ref({
+        width: '5em',
+        minWidth: '5em',
+        flex: '1 1 min-content',
+        zIndex: 500,
+    });
 
-const rangeInformationText = computed(() => {
-    const start = skippedCount.value + 1;
-    let end = skippedCount.value + showCount.value;
-    if (end > props.total) {
-        end = props.total;
-    }
-
-    return `${start}-${end} ${t('global.paginator.of')} ${props.total}`;
-});
-
-const paginatorInputStyle = ref({
-    minWidth: '5em',
-});
-
-const changeCustomDelimiter = () => {
-    if (useCustomDelimiter.value) {
-        const delimiterExists = delimiterOptions.value.find(option => option.value === delimiter.value);
-        if (!delimiterExists) {
-            delimiter.value = delimiterOptions.value[0].value;
+    const rangeInformationText = computed(() => {
+        const start = skippedCount.value + 1;
+        let end = skippedCount.value + showCount.value;
+        if (end > props.total) {
+            end = props.total;
         }
-    }
 
-    useCustomDelimiter.value = !useCustomDelimiter.value;
-};
+        return `${start}-${end} ${t('global.paginator.of')} ${props.total}`;
+    });
+
+    const paginatorInputStyle = ref({
+        minWidth: '5em',
+    });
+
+    const changeCustomDelimiter = () => {
+        if (useCustomDelimiter.value) {
+            const delimiterExists = delimiterOptions.value.find(option => option.value === delimiter.value);
+            if (!delimiterExists) {
+                delimiter.value = delimiterOptions.value[0].value;
+            }
+        }
+
+        useCustomDelimiter.value = !useCustomDelimiter.value;
+    };
 </script>

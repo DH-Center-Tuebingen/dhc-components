@@ -12,7 +12,7 @@ type Story = StoryObj<typeof Csv>;
 
 export const Default: Story = {
   args: {
-    // Add props here
+    content: 'a,b,c\n1,2,3\n4,5,6',
   },
   render: (args : any) => ({
     components: { Csv },
