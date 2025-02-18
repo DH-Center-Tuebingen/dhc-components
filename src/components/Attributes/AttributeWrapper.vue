@@ -14,10 +14,18 @@
 <script setup lang="ts">
     import { computed } from 'vue';
     import AttributeError from './AttributeError.vue';
+    
+    interface Field {
+        meta: {
+            dirty: boolean
+        }
+    }
 
     const props = defineProps<{
         name: string,
-        field: object
+        field: Field
+        value: any,
+        errorMessage: string
     }>();
 
 

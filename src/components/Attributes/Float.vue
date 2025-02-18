@@ -1,5 +1,5 @@
 <template>
-    <AttributeWrapper :name="name" :field="field">
+    <AttributeWrapper :name="name" :field="field" :value="value" :errorMessage="''">
         <input
             v-model="value"
             type="number"
@@ -9,7 +9,7 @@
 
 <script lang="ts" setup>
     import AttributeWrapper from './AttributeWrapper.vue';
-    import { useAttribute } from '@/composables/attribute.ts';
+    import { useAttribute } from '@/composables/attribute';
 
     const activeValue = defineModel<number>();
 

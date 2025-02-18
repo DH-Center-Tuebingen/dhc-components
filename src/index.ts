@@ -17,3 +17,5 @@ export { default as ResizableColumns } from './components/Layout/ResizableColumn
 
 // Composables
 export { default as useResizeObserver } from './composables/resize-observer';
+
+export { default as Csv } from './components/Display/Csv/Csv.vue';
