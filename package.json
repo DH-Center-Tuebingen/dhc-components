@@ -9,7 +9,8 @@
     ".": {
       "import": "./dist/dhc-components.es.js",
       "require": "./dist/dhc-components.umd.js"
-    }
+    },
+    "./css": "./dist/index.css"
   },
   "scripts": {
     "dev": "vite",
