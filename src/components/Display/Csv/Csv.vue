@@ -103,7 +103,7 @@
 
     import CsvSettings from './CsvSettings.vue';
     import { useLocalStorage } from '@/composables/local-storage';
-    import { String } from 'vue-utils'
+    import { capitalize } from 'dhc-utils/string';
 
     const { t } = useI18n();
 

@@ -14,7 +14,7 @@ type Story = StoryObj<typeof Multiselect>;
 export const Default: Story = {
   args: {
     options: ['Apfel', 'Birne', 'Banane', 'Kiwi'],
-    value: ['Apfel'],
+    modelValue: ['Apfel'],
   },
   render: (args : any) => ({
     components: { Multiselect },
@@ -30,7 +30,7 @@ export const Default: Story = {
 export const Multiple: Story = {
     args: {
       options: ['Apfel', 'Birne', 'Banane', 'Kiwi'],
-      value: ['Birne', 'Kiwi'],
+      modelValue: ['Birne', 'Kiwi'],
       multiple: true,
     },
     render: (args : any) => ({
