@@ -19,8 +19,7 @@ export const Default: Story = {
   render: (args : any) => ({
     components: { Multiselect },
     setup() {
-        
-        const model = ref(args.value);
+        const model = ref(['Apfel']);
         return { args, model };
     },
     template: '<Multiselect v-bind="args" v-model="model" />',
@@ -37,7 +36,7 @@ export const Multiple: Story = {
       components: { Multiselect },
       setup() {
           
-          const model = ref(args.value);
+          const model = ref(['Birne', 'Kiwi']);
           return { args, model };
       },
       template: '<Multiselect v-bind="args" v-model="model" />',

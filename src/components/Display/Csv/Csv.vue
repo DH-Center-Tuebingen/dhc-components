@@ -7,7 +7,7 @@
             <CsvSettings
                 v-model:delimiter="csvSettings.delimiter"
                 v-model:has-header-row="csvSettings.hasHeaderRow"
-                v-model:show-linenumbers="csvSettings.showLinenumbers"
+                v-model:show-line-numbers="csvSettings.showLinenumbers"
                 v-model:show-count="csvSettings.showCount"
                 v-model:skipped-count="csvSettings.skippedCount"
                 v-model:useCustomDelimiter="csvSettings.useCustomDelimiter"
@@ -45,7 +45,7 @@
                             :key="i"
                             :class="cellClass"
                         >
-                            {{ String.capitalize(header) }}
+                            {{ capitalize(header) }}
                         </th>
                     </tr>
                 </thead>
@@ -132,7 +132,7 @@
         }
     };
     const toggleShowPreview = () => {
-        csvSettings.value.showPreview = !csvSettings.value.showPreview;
+        csvSettings.showPreview = !csvSettings.showPreview;
     };
     const recomputeRows = (internal = false) => {
         if (!props.content || !state.dsv) {
@@ -143,11 +143,11 @@
             header: null,
             data: null,
             striped_data: null,
-            ...csvSettings.value,
+            ...csvSettings,
         };
         const headerRow = props.content.split('\n')[0];
         const header = state.dsv.parseRows(headerRow)[0];
-        if (csvSettings.value.hasHeaderRow) {
+        if (csvSettings.hasHeaderRow) {
             res.header = header;
             res.data = state.dsv.parse(props.content);
         }
@@ -175,18 +175,22 @@
         showPreview: true,
         useCustomDelimiter: false,
     });
+    
+    watch(()=> csvSettings, (newVal, oldVal) => {
+        console.log('csvSettings changed', newVal, oldVal);
+    }, {deep: true});
 
     // DATA
-    const state = reactive({
+    const state:any = reactive({
         computedRows: {},
         wrapClass: {},
-        dsv: computed(() => d3.dsvFormat(csvSettings.value.delimiter || ',')),
-        endVisible: computed(() => state.stripedStart + csvSettings.value.showCount > state.rows),
+        dsv: computed(() => d3.dsvFormat(csvSettings.delimiter || ',')),
+        endVisible: computed(() => state.stripedStart + csvSettings.showCount > state.rows),
         rows: computed(() => state.computedRows.data ? state.computedRows.data.length : 0),
-        maxRows: computed(() => state.rows - csvSettings.value.skippedCount),
+        maxRows: computed(() => state.rows - csvSettings.skippedCount),
         maxSkippedRows: computed(() => state.rows > 0 ? state.rows - 1 : 0),
-        stripedStart: computed(() => csvSettings.value.skippedCount || 0),
-        stripedEnd: computed(() => Math.min((csvSettings.value.skippedCount || 0) + (csvSettings.value.showCount || 10), state.rows)),
+        stripedStart: computed(() => csvSettings.skippedCount || 0),
+        stripedEnd: computed(() => Math.min((csvSettings.skippedCount || 0) + (csvSettings.showCount || 10), state.rows)),
     });
 
     onMounted(() => {
@@ -197,23 +201,23 @@
         recomputeRows();
     });
 
-    watch(() => csvSettings.value.hasHeaderRow, (newVal, oldVal) => {
+    watch(() => csvSettings.hasHeaderRow, (newVal, oldVal) => {
         if (oldVal !== newVal) {
             recomputeRows();
         }
     });
-    watch(() => csvSettings.value.showCount, (newVal, oldVal) => {
+    watch(() => csvSettings.showCount, (newVal, oldVal) => {
         if (oldVal !== newVal) {
             recomputeRows(true);
         }
     });
-    watch(() => csvSettings.value.skippedCount, (newVal, oldVal) => {
+    watch(() => csvSettings.skippedCount, (newVal, oldVal) => {
         if (oldVal !== newVal) {
             recomputeRows(true);
         }
     });
 
-    watch(() => csvSettings.value.delimiter, (newVal, oldVal) => {
+    watch(() => csvSettings.delimiter, (newVal, oldVal) => {
         if (oldVal !== newVal) {
             recomputeRows();
         }
