@@ -3,12 +3,12 @@
         <input
             :key="`tfa-input-${digit}`"
             v-for="(digit, index) in digits"
-            :ref="ref => inputRefs[index] = ref"
+            :ref="ref => inputRefs[index] = (ref as HTMLInputElement)"
             type="text"
             maxlength="1"
             :value="digit"
             @keydown="(event) => keydown(event, index)"
-            @input="(event) => input(event, index)"
+            @input="(event) => input(event as InputEvent, index)"
         >
     </div>
 </template>

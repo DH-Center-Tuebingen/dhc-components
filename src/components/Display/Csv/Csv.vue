@@ -45,7 +45,7 @@
                             :key="i"
                             :class="cellClass"
                         >
-                            {{ capitalize(header) }}
+                            {{ StringUtils.capitalize(header) }}
                         </th>
                     </tr>
                 </thead>
@@ -103,7 +103,7 @@
 
     import CsvSettings from './CsvSettings.vue';
     import { useLocalStorage } from '@/composables/local-storage';
-    import { capitalize } from 'dhc-utils/string';
+    import { StringUtils } from 'dhc-utils';
 
     const { t } = useI18n();
 
