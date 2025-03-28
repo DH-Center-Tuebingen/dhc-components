@@ -1,5 +1,5 @@
 <template>
-    <div class="column-separator">
+    <div class="column-separator z-1">
         <div class="column-separator-line"></div>
     </div>
 </template>
@@ -17,25 +17,25 @@
         width: 10px;
         cursor: col-resize;
         overflow: hidden;
-        background-color: rgba(0, 0, 255, 0);
+        background-color: rgba(var(--bs-primary-rgb), 0);
         transform: translateX(50%);
         transition: background-color .5s;
     }
 
     .column-separator:hover {
-        background-color: rgba(0, 0, 255, 0.1);
+        background-color: rgba(var(--bs-primary-rgb), 0.3);
     }
 
     .column-separator:hover .column-separator-line {
-        background-color: rgba(0, 0, 255, 1);
+        background-color: var(--bs-primary);
     }
 
     .column-separator-line {
         height: 100%;
-        background-color: #e6e6e6;
+        background-color: var(--bs-border-color);
         box-sizing: border-box;
         width: 1px;
-        
         transition: background-color .5s;
+        transform: translateX(-50%);
     }
 </style>
