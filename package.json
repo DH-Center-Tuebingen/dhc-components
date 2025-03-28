@@ -26,8 +26,7 @@
     "type-check": "vue-tsc --noEmit -p tsconfig.cypress-ct.json --composite false",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build",
-    "postinstall": "node scripts/link-modules.js"
+    "build-storybook": "storybook build"
   },
   "dependencies": {
     "@milkdown/core": "^7.5.0",
