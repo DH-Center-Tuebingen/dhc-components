@@ -27,4 +27,4 @@ export { default as ResizableColumns } from './components/Layout/ResizableColumn
 // Composables
 export { default as useResizeObserver } from './composables/resize-observer';
 
-import './css/dhc-components.css';
+import './assets/main.css';
