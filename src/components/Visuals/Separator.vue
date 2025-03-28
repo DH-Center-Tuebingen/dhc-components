@@ -16,16 +16,3 @@ defineProps({
 });
 
 </script>
-
-<!-- <style>
-.separator {
-    border-left: 1px solid currentColor;
-    height: 100%;
-    margin: 0 0.5rem;
-    opacity: 0.3;
-}
-
-.text-separator {
-    height: 1em;
-}
-</style> -->
