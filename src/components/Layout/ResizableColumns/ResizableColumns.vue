@@ -16,6 +16,7 @@
             >
                 <div
                     class="column"
+                    :class="columnsClassesArray"
                 >
                     <slot :name="column.name" />
                 </div>
@@ -34,8 +35,23 @@
 <script setup lang="ts">
     import { CSS } from 'src/types/Common';
     import { ColumnDefinition } from 'src/types/Layout';
-    import { computed, onUnmounted, ref } from 'vue';
+    import { computed, onUnmounted, PropType, ref } from 'vue';
     import ColumnSeparator from './ColumnSeparator.vue';
+
+    const props = defineProps({
+        columnsClasses: {
+            type: [String, Array] as PropType<string | string[]>,
+            default: ''
+        },
+    })
+
+    const columnsClassesArray = computed(() => {
+        if (typeof props.columnsClasses === 'string') {
+            return props.columnsClasses.split(/\s+/);
+        } else {
+            return props.columnsClasses;
+        }
+    })
 
     const columns = defineModel<ColumnDefinition[]>({
         required: true,
