@@ -156,6 +156,5 @@
         height: 100%;
         max-height: 100%;
         overflow-y: auto;
-        padding: 1rem;
     }
 </style>
