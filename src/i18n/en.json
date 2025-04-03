@@ -1,0 +1,20 @@
+{
+    "global": {
+        "save": "save",
+        "cancel": "cancel"
+    },
+    "login": {
+        "title": "Login",
+        "email_or_nick": "Email or Nickname",
+        "password": "Password",
+        "remember_me":"Remember me"
+    },
+    "attribute":{
+        "wkt": {
+            "add": "Add WKT"
+        }
+    },
+    "validation": {
+        "field_is_required": "Field is required"
+    }
+}

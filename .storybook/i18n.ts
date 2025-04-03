@@ -1,18 +1,12 @@
 import { createI18n } from "vue-i18n";
 
+import * as en from "@/i18n/en.json";
+import * as de from "@/i18n/de.json";
+
+
 const messages = {
-    en: {
-        global: {
-            login_title: "Login",
-            email_or_nick: "Email or Nickname",
-            password: "Password",
-            login: "Login",
-            remember_me: "Remember me",
-        },
-        validation: {
-            field_is_required: "Field is required",
-        }
-    },
+    en,
+    de,
 };
 
 const i18n = createI18n({

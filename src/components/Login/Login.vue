@@ -2,7 +2,7 @@
     <div class="card p-3">
         <div class="card-body">
             <h2 class="fw-bold card-title mb-4">
-                {{ t('global.login_title') }}
+                {{ t('login.title') }}
             </h2>
             <form
                 @submit.stop.prevent="submit"
@@ -16,7 +16,7 @@
                         class="mb-2"
                     >
                         <i class="text-muted fas fa-fw fa-user me-2"></i>
-                        {{ t('global.email_or_nick') }}
+                        {{ t('login.email_or_nick') }}
                     </label>
 
                     <input
@@ -41,7 +41,7 @@
                         class="mb-2"
                     >
                         <i class="text-muted fas fa-fw fa-unlock-alt me-2"></i>
-                        {{ t('global.password') }}
+                        {{ t('login.password') }}
                     </label>
 
                     <input
@@ -82,10 +82,10 @@
                                     v-model="stayLoggedIn"
                                 >
                                 <label
-                                    class="form-check-label"
+                                    class="form-check-label user-select-none clickable cursor-pointer"
                                     for="remember-me"
                                 >
-                                    {{ t('global.remember_me') }}
+                                    {{ t('login.remember_me') }}
                                 </label>
                             </label>
                         </div>
@@ -94,7 +94,7 @@
                         :loading="loading"
                         :color="'primary'"
                     >
-                        {{ t('global.login') }}
+                        {{ t('login.title') }}
                     </LoadingButton>
                 </div>
             </form>

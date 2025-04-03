@@ -28,7 +28,6 @@
         toRefs,
         watch,
     } from 'vue';
-    import { useI18n } from 'vue-i18n';
 
     import MarkdownToolbar from './MarkdownToolbar.vue';
 
@@ -80,7 +79,6 @@
         },
         emits: ['closing', 'update'],
         setup(props, context) {
-            const { t } = useI18n();
             const {
                 data,
                 readonly,
@@ -178,7 +176,6 @@
 
             // RETURN
             return {
-                t,
                 // HELPERS
                 // PROPS
                 // LOCAL
