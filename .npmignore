@@ -1,0 +1,28 @@
+# Excludes files from being included in the npm package.
+
+# Exclude everything by default
+/*
+
+# But include the dist folder
+!dist/
+!dist/**/*
+
+# Optionally include the README and package.json
+!README.md
+!package.json
+
+# Always exclude node_modules just in case
+node_modules/
+
+# Exclude Storybook, Cypress, and config files
+.storybook/
+cypress/
+*.stories.*
+*.config.*
+*.tsconfig*
+*.md
+!README.md
+
+# Exclude other dev files
+*.log
+*.test.*

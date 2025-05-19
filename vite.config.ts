@@ -18,7 +18,7 @@ export default defineConfig({
     },
     build: {
         target: 'esnext',
-        minify: false,
+        minify: true,
         cssCodeSplit: true,
         sourcemap: true,
         lib: {
@@ -27,11 +27,19 @@ export default defineConfig({
             fileName: (format) => `${name}.${format}.js`
         },
         rollupOptions: {
-            external: ['vue'],
+            external: [
+                'vue',
+                't',
+                ///^@milkdown(\/.*)?$/  // Would be good to exclude milkdown as it takes up a lot of space:
+                                        // With Milkdown: 1MB
+                                        // Without Milkdown: 0.3MB        
+            ],
             output: {
                 globals: {
                     vue: 'Vue',
-                    t: 't'
+                    t: 't',
+                    'vue-i18n': 'VueI18n',
+
                 }
             }
         }

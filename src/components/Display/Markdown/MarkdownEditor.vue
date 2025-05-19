@@ -42,21 +42,21 @@
         Milkdown,
         useEditor
     } from '@milkdown/vue';
+
     import { commonmark } from '@milkdown/preset-commonmark';
     import { gfm } from '@milkdown/preset-gfm';
     import { listener, listenerCtx } from '@milkdown/plugin-listener';
     import { history } from '@milkdown/plugin-history';
     import { clipboard } from '@milkdown/plugin-clipboard';
     import { prism } from '@milkdown/plugin-prism';
-    import { math } from '@milkdown/plugin-math';
+    import { indent } from '@milkdown/plugin-indent';
+    import { upload } from '@milkdown/plugin-upload';
+
     import {
         emojiAttr,
         remarkEmojiPlugin,
         emojiSchema,
     } from '@milkdown/plugin-emoji';
-    import { diagram } from '@milkdown/plugin-diagram';
-    import { indent } from '@milkdown/plugin-indent';
-    import { upload } from '@milkdown/plugin-upload';
     import { replaceAll } from '@milkdown/utils';
 
     import { usePreventNavigation } from '@/composables/prevent-navigation';
@@ -109,9 +109,7 @@
                 .use(history)
                 .use(clipboard)
                 .use(prism)
-                .use(math)
                 .use(emojiPlugin)
-                .use(diagram)
                 .use(indent)
                 .use(upload)
 
