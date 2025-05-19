@@ -16,6 +16,10 @@ export { default as Menu } from './components/Layout/Menu/Menu.vue';
 export { default as Sidebar } from './components/Layout/Sidebar/Sidebar.vue';
 
 // Display
+//// CSV
+export {default as Csv} from './components/Display/Csv/Csv.vue';
+export {default as CsvSettings} from './components/Display/Csv/CsvSettings.vue';
+
 //// Markdown
 export { default as Markdown } from './components/Display/Markdown/Markdown.vue';
 export { default as MarkdownEditor } from './components/Display/Markdown/MarkdownEditor.vue';
