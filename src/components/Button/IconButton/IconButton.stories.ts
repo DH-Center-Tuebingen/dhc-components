@@ -3,7 +3,7 @@
 import type { Meta, StoryObj } from '@storybook/vue3';
 
 import IconButton from './IconButton.vue';
-import { faEnvelope, faEnvelopeOpen, faFaceSmileWink } from '@fortawesome/free-solid-svg-icons';
+import { faEnvelope, faEnvelopeOpen, faFaceMehBlank, faFaceSadCry, faFaceSmile, faFaceSmileWink } from '@fortawesome/free-solid-svg-icons';
 import { onMounted, ref, watch } from 'vue';
 import { FontAwesomeIcon, FontAwesomeLayers, FontAwesomeLayersText } from '@fortawesome/vue-fontawesome';
 import { findIconDefinition } from 'node_modules/@fortawesome/fontawesome-svg-core';
@@ -22,24 +22,14 @@ export default meta;
 
 type Story = StoryObj<typeof IconButton>;
 
-interface Args {
-    [key: string]: any
-}
-
-function iconLookup(args: Args, name: string): Args {
-    if (!args[name]) { throw new Error(`IconButton: ${name} prop is required`); }
-    args[name] = findIconDefinition(args[name]);
-    return args;
-}
-
 export const Default: Story = {
     args: {
         // Add props here
-        icon: 'faFaceSmile',
     },
     render: (args: any) => ({
         components: { IconButton },
         setup() {
+            args.icon = faFaceSmile;
             return { args };
         },
         template: '<IconButton v-bind="args" />',
@@ -49,14 +39,13 @@ export const Default: Story = {
 export const Disabled: Story = {
     args: {
         // Add props here
-        icon: 'faFaceSadCry',
         disabled: true,
     },
     render: (args: any) => ({
         components: { IconButton },
         setup() {
-            iconLookup(args, 'icon');
-            return { args };
+            args.icon = faFaceSadCry;
+            return { args };    
         },
         template: '<IconButton v-bind="args" />',
     }),
@@ -64,15 +53,14 @@ export const Disabled: Story = {
 
 export const Toggle: Story = {
     args: {
-        // Add props here
-        icon: 'faFaceMehBlank',
-        activeIcon: faFaceSmileWink,
     },
     render: (args: any) => ({
         components: { IconButton },
         setup() {
+            args.icon = faFaceMehBlank;
+            args.activeIcon = faFaceSmileWink;
+            
             const modelValue = ref(false);
-            iconLookup(args, 'icon');
             return { args, modelValue };
         },
         template: '<IconButton v-bind="args" v-model="modelValue" />',
@@ -82,15 +70,13 @@ export const Toggle: Story = {
 export const IconSlot: Story = {
     args: {
         // Add props here
-        icon: 'faFaceMehBlank',
-        activeIcon: 'faFaceSmileWink',
+        icon: faFaceMehBlank,
+        activeIcon: faFaceSmileWink,
     },
     render: (args: any) => ({
         components: { IconButton, FontAwesomeIcon, FontAwesomeLayers, FontAwesomeLayersText },
         setup() {
             const modelValue = ref(false);
-            iconLookup(args, 'icon');
-            iconLookup(args, 'activeIcon');
             const icons = {
                 faEnvelope: faEnvelope,
                 faEnvelopeOpen: faEnvelopeOpen,
@@ -120,14 +106,13 @@ export const IconSlot: Story = {
 export const Loading: Story = {
     args: {
         // Add props here
-        icon: 'faFaceSmile',
+        icon: faFaceSmile,
         loading: true,
     },
     render: (args: any) => ({
         components: { IconButton },
         setup() {
-            iconLookup(args, 'icon');
-
+            console.log('args', args);
             const loading = ref(args.loading.value);
             const loadingTimeout = ref<NodeJS.Timeout | null>(null);
             const clicked = () => setLoadingTimeout()
