@@ -2,7 +2,10 @@ export { default as Alert } from './components/Alert/Alert.vue';
 export { default as LoadingSpinner } from './components/LoadingSpinner/LoadingSpinner.vue';
 export { default as Login } from './components/Login/Login.vue';
 export { default as SlideControl } from './components/Form/SlideControl/SlideControl.vue';
+
+//Buttons}
 export { default as Toggle } from './components/Button/Toggle/Toggle.vue';
+export { default as IconButton } from './components/Button/IconButton/IconButton.vue';
 
 // Form
 export { default as Multiselect } from './components/Form/Multiselect/Multiselect.vue';
