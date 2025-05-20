@@ -76,8 +76,6 @@ export const Toggle: Story = {
 export const IconSlot: Story = {
     args: {
         // Add props here
-        icon: faFaceMehBlank,
-        activeIcon: faFaceSmileWink,
     },
     render: (args: any) => ({
         components: { IconButton, FontAwesomeIcon, FontAwesomeLayers, FontAwesomeLayersText },
@@ -112,13 +110,13 @@ export const IconSlot: Story = {
 export const Loading: Story = {
     args: {
         // Add props here
-        icon: faFaceSmile,
         loading: true,
     },
     render: (args: any) => ({
         components: { IconButton },
         setup() {
-            console.log('args', args);
+            args.icon = faFaceSmile;
+
             const loading = ref(args.loading.value);
             const loadingTimeout = ref<NodeJS.Timeout | null>(null);
             const clicked = () => setLoadingTimeout()
@@ -148,5 +146,37 @@ export const Loading: Story = {
             return { args, clicked, loading };
         },
         template: '<IconButton v-bind="args" :loading="loading" v-model="modelValue" @click="clicked" />',
+    }),
+};
+
+/**
+ * 
+ */
+export const Active: Story = {
+    args: {
+        // Add props here
+        loading: true,
+    },
+    render: (args: any) => ({
+        components: { IconButton },
+        setup() {
+            
+            const icons = [
+                faFaceSmile,
+                faFaceSmileWink,
+                faFaceSadCry,
+                faFaceMehBlank,
+            ]
+            const mappedIcons = icons.map((icon, id) => ({id, icon})); 
+            
+            const selectedIcon = ref(0);
+           
+            return { args, mappedIcons, selectedIcon};
+        },
+        template: `
+        <div class="d-flex gap-2 align-items-center">
+            <div class="d-flex align-items-center text-center fw-bold">{{selectedIcon}}</div>
+            <IconButton v-for="icon in mappedIcons" :key="icon.id" :icon="icon.icon" :key="icon.id" @click="()=>selectedIcon=icon.id" :active="selectedIcon === icon.id"/>
+        </div>`,
     }),
 };

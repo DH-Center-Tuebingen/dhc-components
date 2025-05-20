@@ -20,7 +20,7 @@
             </slot>
             <template v-if="!slots.icon">
                 <div
-                    v-if="!modelValue"
+                    v-if="!isActive"
                     class="icon"
                 >
                     <FontAwesomeIcon
@@ -50,7 +50,7 @@
 >
     import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
     import type { IconDefinition, SizeProp } from '@fortawesome/fontawesome-svg-core';
-    import { computed, defineProps, ModelRef, useSlots } from 'vue';
+    import { computed, ModelRef, useSlots } from 'vue';
     import LoadingSpinner from '@/components/LoadingSpinner/LoadingSpinner.vue';
 
 
@@ -77,6 +77,7 @@
         fixedWidth: true,
         iconCategory: 'fas',
         loading: false,
+        active: undefined,
     });
     function resolveIconProp(prop: string | IconDefinition, category: string) {
         if(typeof prop === 'string') {
@@ -103,17 +104,17 @@
     const buttonClass = computed(() => {
         const classes = [
             'btn',
-            `btn-${value.value ? props.activeButtonClass : props.buttonClass}`,
+            `btn-${isActive.value ? props.activeButtonClass : props.buttonClass}`,
         ]
 
-        if(value.value) {
+        if(isActive.value) {
             classes.push('active');
         }
 
         return classes;
     });
 
-    const active = computed(() => {
+    const isActive = computed(() => {
         return props.active != null ? props.active : value.value;
     });
 </script>
