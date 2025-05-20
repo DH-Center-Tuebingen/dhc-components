@@ -35,6 +35,21 @@ export const Default: Story = {
     }),
 };
 
+export const Small: Story = {
+    args: {
+        // Add props here
+        small: true,
+    },
+    render: (args: any) => ({
+        components: { IconButton },
+        setup() {
+            args.icon = faFaceSmile;
+            return { args };
+        },
+        template: '<IconButton v-bind="args" />',
+    }),
+};
+
 export const Disabled: Story = {
     args: {
         // Add props here
