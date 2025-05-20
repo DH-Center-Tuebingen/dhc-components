@@ -1,57 +1,117 @@
 <template>
-    <div
+    <button
         class="icon-button"
+        :class="buttonClass"
         style="user-select: none; cursor: pointer;"
         :aria-pressed="active"
-        @click="_ => value = !value"
+        :disabled="disabled"
+        @click="clicked()"
     >
-        <div
-            v-if="!altIcon || modelValue"
-            class="icon"
-            :class="activeClass"
-        >
-            <i :class="iconClass" />
-        </div>
-        <div
-            v-else
-            class="icon"
-            :class="activeClass"
-        >
-            <i :class="altIconClass" />
-        </div>
-    </div>
+        <LoadingSpinner v-if="loading"
+                        :size="size"
+        />
+        <template v-else>
+            <!-- Can be used to render your own custom icon, e.g. if you need to create an icon composition.  -->
+            <slot
+                name="icon"
+                :active="active"
+            >
+            </slot>
+            <template v-if="!slots.icon">
+                <div
+                    v-if="!modelValue"
+                    class="icon"
+                >
+                    <FontAwesomeIcon
+                        :icon="icon"
+                        :size="size"
+                        :fixed-width="fixedWidth"
+                    />
+                </div>
+                <div
+                    v-else
+                    class="icon"
+                >
+                    <FontAwesomeIcon
+                        :icon="activeIcon"
+                        :size="size"
+                        :fixed-width="fixedWidth"
+                    />
+                </div>
+            </template>
+        </template>
+    </button>
 </template>
 
-<script setup lang="ts">
-import { computed, defineProps, ModelRef } from 'vue';
+<script
+    setup
+    lang="ts"
+>
+    import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+    import type { IconDefinition, SizeProp } from '@fortawesome/fontawesome-svg-core';
+    import { computed, defineProps, ModelRef, useSlots } from 'vue';
+    import LoadingSpinner from '@/components/LoadingSpinner/LoadingSpinner.vue';
 
-const props = withDefaults(defineProps<{
-    iconCategory?: string;
-    icon: string;
-    altIcon?: string;
-    altIconCategory?: string;
-}>(), {
-    iconCategory: 'fas',
-    altIconCategory: 'fas',
-});
 
-const value: ModelRef<boolean, string> = defineModel({ required: true });
-const iconClass = computed(() => {
-    return `${props.iconCategory} fa-fw fa-${props.icon}`;
-});
+    const slots = useSlots();
 
-const altIconClass = computed(() => {
-    return `${props.altIconCategory} fa-fw fa-${props.altIcon}`;
-});
+    const value: ModelRef<boolean | undefined, string> = defineModel();
+    const props = withDefaults(defineProps<{
+        activeButtonClass?: string;
+        activeIcon?: string | IconDefinition;
+        activeIconCategory?: string;
+        buttonClass?: string;
+        disabled?: boolean;
+        fixedWidth?: boolean;
+        icon: string | IconDefinition;
+        iconCategory?: string;
+        loading?: boolean;
+        size?: SizeProp;
+    }>(), {
+        activeButtonClass: 'primary',
+        activeIconCategory: 'fas',
+        buttonClass: 'secondary',
+        disabled: false,
+        fixedWidth: true,
+        iconCategory: 'fas',
+        loading: false,
+    });
+    function resolveIconProp(prop: string | IconDefinition, category: string) {
+        if (typeof prop === 'string') {
+            return `${category} fa-fw fa-${prop}`;
+        } else {
+            return prop;
+        }
+    }
 
-const activeClass = computed(() => {
-    return {
-        'active': value.value,
-        'text-primary': value.value,
-    };
-});
+    function clicked() {
+        if (value.value !== undefined) {
+            value.value = !value.value;
+        }
+    }
 
-const active = computed(() => {
-    return Boolean(value.value);
-});
+    const icon = computed(() => {
+        return resolveIconProp(props.icon, props.iconCategory);
+    });
+
+    const activeIcon = computed(() => {
+        return resolveIconProp(props.activeIcon ?? props.icon, props.activeIconCategory);
+    });
+
+    const buttonClass = computed(() => {
+        const classes = [
+            'btn',
+            `btn-${value.value ? props.activeButtonClass : props.buttonClass}`,
+        ]
+
+        if (value.value) {
+            classes.push('active');
+        }
+
+        return classes;
+    });
+
+    const active = computed(() => {
+        return Boolean(value.value);
+    });
 </script>

@@ -12,11 +12,9 @@
     import { SizeProp } from '@fortawesome/fontawesome-svg-core';
     import { useDhcClasses } from '../../composables/dhc';
 
-    const props = withDefaults(defineProps<{
-        size: SizeProp;
-    }>(), {
-        size: 'sm'
-    });
+    const props = defineProps<{
+        size?: SizeProp;
+    }>();
 
     const dhcClasses = useDhcClasses();
 

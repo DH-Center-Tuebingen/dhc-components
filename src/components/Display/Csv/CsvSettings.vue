@@ -69,7 +69,7 @@
                     :placeholder="t('main.csv.uploader.delimiter_with_info')"
                     :style="delimiterInputStyle"
                 >
-                <Multiselect
+                <Dropdown
                     v-else
                     v-model:delimiter="delimiter"
                     :options="delimiterOptions"
@@ -142,6 +142,7 @@
 <script setup lang="ts">
     import { computed, ModelRef, ref } from 'vue';
     import { useI18n } from 'vue-i18n';
+    import Dropdown from '@/components/Dropdown/Dropdown.vue';
     import IconButton from '@/components/Button/IconButton/IconButton.vue';
 
     const props = withDefaults(defineProps<{
