@@ -7,8 +7,9 @@
         :disabled="disabled"
         @click="clicked()"
     >
-        <LoadingSpinner v-if="loading"
-                        :size="size"
+        <LoadingSpinner
+            v-if="loading"
+            :size="size"
         />
         <template v-else>
             <!-- Can be used to render your own custom icon, e.g. if you need to create an icon composition.  -->
