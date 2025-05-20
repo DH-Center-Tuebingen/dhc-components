@@ -6,7 +6,6 @@ import IconButton from './IconButton.vue';
 import { faEnvelope, faEnvelopeOpen, faFaceMehBlank, faFaceSadCry, faFaceSmile, faFaceSmileWink } from '@fortawesome/free-solid-svg-icons';
 import { onMounted, ref, watch } from 'vue';
 import { FontAwesomeIcon, FontAwesomeLayers, FontAwesomeLayersText } from '@fortawesome/vue-fontawesome';
-import { findIconDefinition } from 'node_modules/@fortawesome/fontawesome-svg-core';
 
 /**
  * Use the IconButton component if you need a button only with a single icon.
@@ -45,7 +44,7 @@ export const Disabled: Story = {
         components: { IconButton },
         setup() {
             args.icon = faFaceSadCry;
-            return { args };    
+            return { args };
         },
         template: '<IconButton v-bind="args" />',
     }),
@@ -59,8 +58,15 @@ export const Toggle: Story = {
         setup() {
             args.icon = faFaceMehBlank;
             args.activeIcon = faFaceSmileWink;
-            
-            const modelValue = ref(false);
+
+            const modelValue = ref(true);
+
+            watch(() => args.modelValue, (newValue) => {
+                if(modelValue.value !== newValue) {
+                    modelValue.value = newValue;
+                }
+            })
+
             return { args, modelValue };
         },
         template: '<IconButton v-bind="args" v-model="modelValue" />',
@@ -118,13 +124,13 @@ export const Loading: Story = {
             const clicked = () => setLoadingTimeout()
 
             onMounted(() => {
-                if (args.loading) {
+                if(args.loading) {
                     setLoadingTimeout();
                 }
             });
 
             const setLoadingTimeout = () => {
-                if (loading.value) { return; }
+                if(loading.value) { return; }
                 loading.value = true;
                 loadingTimeout.value = setTimeout(() => {
                     loading.value = false;
@@ -134,7 +140,7 @@ export const Loading: Story = {
             }
 
             watch(() => args.loading, (newValue) => {
-                if (loading.value !== newValue && newValue === true) {
+                if(loading.value !== newValue && newValue === true) {
                     setLoadingTimeout();
                 }
             });

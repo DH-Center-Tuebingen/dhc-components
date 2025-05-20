@@ -58,6 +58,7 @@
 
     const value: ModelRef<boolean | undefined, string> = defineModel();
     const props = withDefaults(defineProps<{
+        active?: boolean;
         activeButtonClass?: string;
         activeIcon?: string | IconDefinition;
         activeIconCategory?: string;
@@ -78,7 +79,7 @@
         loading: false,
     });
     function resolveIconProp(prop: string | IconDefinition, category: string) {
-        if (typeof prop === 'string') {
+        if(typeof prop === 'string') {
             return `${category} fa-fw fa-${prop}`;
         } else {
             return prop;
@@ -86,7 +87,7 @@
     }
 
     function clicked() {
-        if (value.value !== undefined) {
+        if(value.value !== undefined) {
             value.value = !value.value;
         }
     }
@@ -105,7 +106,7 @@
             `btn-${value.value ? props.activeButtonClass : props.buttonClass}`,
         ]
 
-        if (value.value) {
+        if(value.value) {
             classes.push('active');
         }
 
@@ -113,6 +114,6 @@
     });
 
     const active = computed(() => {
-        return Boolean(value.value);
+        return props.active != null ? props.active : value.value;
     });
 </script>
