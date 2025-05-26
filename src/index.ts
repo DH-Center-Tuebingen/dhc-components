@@ -17,6 +17,8 @@ export { default as Container } from './components/Layout/Container/Container.vu
 export { default as List } from './components/Layout/List/List.vue';
 export { default as Menu } from './components/Layout/Menu/Menu.vue';
 export { default as Sidebar } from './components/Layout/Sidebar/Sidebar.vue';
+export { default as Tabs } from './components/Layout/Tabs/Tabs.vue';
+export { default as Tree } from './components/Layout/Tree/Tree.vue';
 
 // Display
 //// CSV
