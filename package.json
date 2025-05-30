@@ -48,6 +48,7 @@
     "@milkdown/transformer": "^7.5.0",
     "@milkdown/vue": "^7.5.0",
     "@vueform/multiselect": "^2.6.11",
+    "@vuepic/vue-datepicker": "^11.0.2",
     "dhc-utils": "github:Dh-Center-Tuebingen/dhc-utils",
     "vee-validate": "^4.13.2",
     "vue": "^3.3.4",
