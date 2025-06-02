@@ -1,10 +1,10 @@
 <template>
     <div class="datepicker">
         <DatePicker
-            v-if="isDate"
             :id="name"
             :uid="name"
             v-model="modelValue"
+            v-bind="modeProperties"
             class="w-100"
             input-class="form-control"
             value-type="date"
@@ -18,44 +18,17 @@
             :utc="'preserve'"
             :week-numbers="{'type': 'iso'}"
             :week-num-name="'&nbsp;'"
-            @update:model-value="handleInput"
-        />
-        <DatePicker
-            v-if="isRange"
-            :id="name"
-            :uid="name"
-            v-model="modelValue"
-            class="w-100"
-            input-class="form-control"
-            value-type="date"
-            :name="name"
-            :auto-apply="true"
-            :clearable="true"
-            :disabled="disabled"
-            :enable-time-picker="false"
-            :format="'dd.MM.yyyy'"
-            :text-input="true"
-            :utc="'preserve'"
-            :week-numbers="{'type': 'iso'}"
-            :week-num-name="'&nbsp;'"
-            :range="true"
-            :multi-calendars="true"
             @update:model-value="handleInput"
         />
     </div>
 </template>
 
 <script setup lang="ts">
-    import { computed, defineProps, ModelRef, onMounted } from 'vue';
+    import { computed, defineProps, ModelRef, onMounted, watch } from 'vue';
 
     import DatePicker from '@vuepic/vue-datepicker';
 
-    export interface DatepickerProps {
-        name?: string,
-        mode?: string,
-        disabled?: boolean,
-        value?: string | Array<string>,
-    }
+    import { DatepickerProps, DatepickerOptions } from './definitions';
 
     const modelValue: ModelRef<string | Array<string> | undefined> = defineModel();
 
@@ -68,20 +41,41 @@
     const isRange = computed(() => props.mode == 'range');
     const isDate = computed(() => props.mode == 'date' || !props.mode || !isRange.value);
 
-    const setInitialValue = () => {
-        let modeDefault: string | Array<string> = '';
-        if(isDate.value) {
-            modeDefault = '';
-        } else if(isRange.value) {
-            modeDefault = [];
+    const modeProperties = computed(() => {
+        const defaultProps:DatepickerOptions = {
+            range: false,
+        };
+        const modeProps:DatepickerOptions = {};
+
+        if(isRange.value) {
+            modeProps.range = true;
+            modeProps.multiCalendars = true;
         }
 
-        modelValue.value = props.value || modeDefault;
-    }
+        return {
+            ...defaultProps,
+            ...modeProps,
+        };
+    });
+
+    const setInitialValue = () => {
+        let modeValue: string | Array<string> = '';
+        if(isDate.value) {
+            modeValue = typeof props.value == 'string' ? props.value : '';
+        } else if(isRange.value) {
+            modeValue = props.value && Array.isArray(props.value) ? props.value : [];
+        }
+
+        modelValue.value = modeValue;
+    };
 
     const handleInput = (date: string | Array<string>) => {
         modelValue.value = date;
     }
+
+    watch(() => props.mode, () => {
+        setInitialValue();
+    });
 </script>
 
 <style src="@vuepic/vue-datepicker/dist/main.css"></style>

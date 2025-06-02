@@ -15,6 +15,6 @@ export const Default: Story = {
         name: 'datepicker',
         mode: '',
         disabled: false,
-        value: '01.05.2025',
+        value: '2025-01-05',
     },
 };
