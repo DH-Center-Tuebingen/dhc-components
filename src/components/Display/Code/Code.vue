@@ -4,7 +4,7 @@
         :data-theme="dark ? 'dark' : 'light'"
     >
         <pre
-            class="hljs form-control h-100 py-4 px-4"
+            class="hljs form-control h-100 py-4 px-4 m-0"
             v-if="highlightedValue"
         ><code v-html="highlightedValue" /></pre>
     </div>
