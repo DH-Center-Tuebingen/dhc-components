@@ -30,6 +30,9 @@ export { default as Markdown } from './components/Display/Markdown/Markdown.vue'
 export { default as MarkdownEditor } from './components/Display/Markdown/MarkdownEditor.vue';
 export { default as MarkdownToolbar } from './components/Display/Markdown/MarkdownToolbar.vue';
 
+//// Text
+export { default as TextFile } from './components/Display/TextFile/TextFile.vue';
+
 // Layout
 export { default as ResizableColumns } from './components/Layout/ResizableColumns/ResizableColumns.vue';
 
