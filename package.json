@@ -4,7 +4,9 @@
   "private": true,
   "type": "module",
   "files": [
-    "dist/**/*"
+    "dist/**/*",
+    "node_modules/highlight.js/styles/github-dark.css",
+    "node_modules/highlight.js/styles/github.css",
   ],
   "exports": {
     ".": {
@@ -50,6 +52,7 @@
     "@vueform/multiselect": "^2.6.11",
     "@vuepic/vue-datepicker": "^11.0.2",
     "dhc-utils": "github:Dh-Center-Tuebingen/dhc-utils",
+    "highlight.js": "^11.11.1",
     "vee-validate": "^4.13.2",
     "vue": "^3.3.4",
     "vue-i18n": "^9.13.1",
