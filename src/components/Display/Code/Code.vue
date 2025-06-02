@@ -1,10 +1,10 @@
 <template>
     <div
-        class="code"
+        class="code position-relative overflow-auto"
         :data-theme="dark ? 'dark' : 'light'"
     >
         <pre
-            class="hljs form-control py-4 px-5"
+            class="hljs form-control h-100 py-4 px-4"
             v-if="highlightedValue"
         ><code v-html="highlightedValue" /></pre>
     </div>
