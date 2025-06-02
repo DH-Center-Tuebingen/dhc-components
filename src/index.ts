@@ -9,7 +9,7 @@ export { default as IconButton } from './components/Button/IconButton/IconButton
 
 // Form
 export { default as Multiselect } from './components/Form/Multiselect/Multiselect.vue';
-export { default as TFA } from './components/Form/TFA/TFA.vue'; 
+export { default as TFA } from './components/Form/TFA/TFA.vue';
 
 // Layout
 export { default as Accordion } from './components/Layout/Accordion/Accordion.vue';
@@ -22,11 +22,11 @@ export { default as Tree } from './components/Layout/Tree/Tree.vue';
 
 // Display
 //// Code
-export { default as Code } from './components/Display/Code/Code.vue';
+export { default as CodeField } from './components/Display/Code/Code.vue';
 
 //// CSV
-export {default as Csv} from './components/Display/Csv/Csv.vue';
-export {default as CsvSettings} from './components/Display/Csv/CsvSettings.vue';
+export { default as Csv } from './components/Display/Csv/Csv.vue';
+export { default as CsvSettings } from './components/Display/Csv/CsvSettings.vue';
 
 //// Markdown
 export { default as Markdown } from './components/Display/Markdown/Markdown.vue';
