@@ -21,6 +21,9 @@ export { default as Tabs } from './components/Layout/Tabs/Tabs.vue';
 export { default as Tree } from './components/Layout/Tree/Tree.vue';
 
 // Display
+//// Code
+export { default as Code } from './components/Display/Code/Code.vue';
+
 //// CSV
 export {default as Csv} from './components/Display/Csv/Csv.vue';
 export {default as CsvSettings} from './components/Display/Csv/CsvSettings.vue';
