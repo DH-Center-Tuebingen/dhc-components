@@ -19,6 +19,7 @@ export { default as Menu } from './components/Layout/Menu/Menu.vue';
 export { default as Sidebar } from './components/Layout/Sidebar/Sidebar.vue';
 export { default as Tabs } from './components/Layout/Tabs/Tabs.vue';
 export { default as Tree } from './components/Layout/Tree/Tree.vue';
+export { default as Toolbar } from './components/Layout/Toolbar/Toolbar.vue';
 
 // Display
 //// Code
