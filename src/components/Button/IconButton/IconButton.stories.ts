@@ -195,3 +195,36 @@ export const Active: Story = {
         </div>`,
     }),
 };
+
+export const Unbutton: Story = {
+    args: {
+        // Add props here
+        small: true,
+        unbutton: true,
+    },
+    render: (args: any) => ({
+        components: { IconButton },
+        setup() {
+            args.icon = faFaceSmile;
+            return { args };
+        },
+        template: '<IconButton v-bind="args" />',
+    }),
+};
+
+export const UnbuttonActive: Story = {
+    args: {
+        // Add props here
+        active: true,
+        small: true,
+        unbutton: true,
+    },
+    render: (args: any) => ({
+        components: { IconButton },
+        setup() {
+            args.icon = faFaceSmile;
+            return { args };
+        },
+        template: '<IconButton v-bind="args" />',
+    }),
+};

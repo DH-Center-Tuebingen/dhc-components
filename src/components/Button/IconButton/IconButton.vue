@@ -121,7 +121,12 @@
 
         if(props.unbutton) {
             classes.push('bg-transparent border-0 p-0');
-            classes.push(`text-${props.buttonClass}`);
+            if(!isActive.value) {
+                classes.push(`text-${props.buttonClass}`);
+            } else {
+                classes.push(`text-${props.activeButtonClass}`);
+            }
+
         }
 
         return classes;
