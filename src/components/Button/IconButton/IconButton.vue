@@ -70,6 +70,7 @@
         loading?: boolean;
         size?: SizeProp;
         small?: boolean;
+        unbutton?: boolean;
     }>(), {
         active: undefined,
         activeButtonClass: 'primary',
@@ -80,6 +81,7 @@
         iconCategory: 'fas',
         loading: false,
         small: false,
+        unbutton: false,
     });
     function resolveIconProp(prop: string | IconDefinition, category: string) {
         if(typeof prop === 'string') {
@@ -108,13 +110,18 @@
             'btn',
             `btn-${isActive.value ? props.activeButtonClass : props.buttonClass}`,
         ]
-        
+
         if(props.small) {
             classes.push('btn-sm');
         }
 
         if(isActive.value) {
             classes.push('active');
+        }
+
+        if(props.unbutton) {
+            classes.push('bg-transparent border-0 p-0');
+            classes.push(`text-${props.buttonClass}`);
         }
 
         return classes;
