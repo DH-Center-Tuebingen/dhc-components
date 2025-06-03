@@ -102,3 +102,17 @@ export const WithLanguage: Story = {
         template: '<Code v-bind="args" />',
     }),
 };
+
+export const Overflow: Story = {
+    args: {
+        value: exampleCode,
+        language: 'typescript',
+    },
+    render: (args: any) => ({
+        components: { Code },
+        setup() {
+            return { args };
+        },
+        template: '<Code v-bind="args" style="height:250px" />',
+    }),
+};

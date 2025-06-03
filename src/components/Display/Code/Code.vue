@@ -1,17 +1,18 @@
 <template>
     <div
-        class="code position-relative overflow-auto"
+        class="code position-relative form-control d-flex flex-column"
         :data-theme="dark ? 'dark' : 'light'"
     >
         <header
-            v-if="highlightedValue?.language"
+            v-if="showName || showLanguage"
             style="font-size: 0.8rem;"
-            class="bg-white text-secondary position-absolute top-0 start-0 w-100 px-4 py-2 border border-bottom-0 rounded-top"
+            class="bg-white pb-2 text-secondary"
         >
-            {{ capitalize(highlightedValue.language) }}
+            <span v-if="showName">{{ name }}</span>
+            <span v-if="showLanguage">{{ capitalize(highlightedValue.language) }}</span>
         </header>
         <pre
-            class="hljs form-control h-100 py-4 px-4 pt-5 m-0"
+            class="hljs overflow-auto flex-fill m-0"
             v-if="highlightedValue"
         ><code v-html="highlightedValue.value" /></pre>
     </div>
@@ -26,12 +27,17 @@
     import { computed } from 'vue';
 
 
-    const props = defineProps<{
+    const props = withDefaults(defineProps<{
+        name?: string;
         value: string;
         language?: string;
         dark?: boolean;
         showLanguage?: boolean;
-    }>();
+    }>(), {
+        name: '',
+        dark: false,
+        showLanguage: true,
+    });
 
     const highlightedValue = computed(() => {
         // Only set languages if a specific language is provided
@@ -40,6 +46,14 @@
             ? [props.language]
             : undefined;
         return hljs.highlightAuto(props.value, languages);
+    });
+
+    const showLanguage = computed(() => {
+        return props.showLanguage && highlightedValue.value?.language != null;
+    });
+
+    const showName = computed(() => {
+        return props.name && props.name.length > 0;
     });
 </script>
 
