@@ -1,7 +1,16 @@
-import type { Meta, StoryObj } from '@storybook/vue3';
+import { setup, type Meta, type StoryObj } from '@storybook/vue3';
+
+import { ref, computed, ComputedRef } from 'vue';
 
 import Toolbar, { Tool } from './Toolbar.vue';
-import { faArrowLeft, faArrowRight, faBan, faMagnifyingGlassMinus, faMagnifyingGlassPlus, faPlus } from '@fortawesome/free-solid-svg-icons';
+import {
+    faArrowLeft,
+    faArrowRight,
+    faBan,
+    faMagnifyingGlassMinus,
+    faMagnifyingGlassPlus,
+    faPlus
+} from '@fortawesome/free-solid-svg-icons';
 
 const meta: Meta<typeof Toolbar> = {
     component: Toolbar,
@@ -68,4 +77,40 @@ export const Default: Story = {
     args: {
         toolGroups: toolGroups,
     },
+};
+
+
+
+export const Interactive: Story = {
+    render: (args: any) => ({
+        components: { Toolbar },
+        setup() {
+
+            const disabled = ref(false);
+
+            const interactiveToolGroups: ComputedRef<Tool[][]> = computed(_ =>[
+                [
+                    {
+                        name: 'Add',
+                        title: 'Add',
+                        icon: !disabled.value ? faPlus : faBan,
+                        disabled: disabled.value,
+                        action: () => {
+                            console.log('Add action triggered');
+                        }
+                    }
+                ],
+            ])
+
+
+            return {
+                toolGroups: interactiveToolGroups,
+                disabled: disabled
+            };
+        },
+        template: `
+        <Toolbar :toolGroups="toolGroups" :disabled="disabled"/> 
+        <button class="btn btn-primary btn-sm mt-2" @click="disabled = !disabled">Toggle Disabled: {{disabled ? 'disabled' : 'enabled'}}</button>
+        `,
+    }),
 };
