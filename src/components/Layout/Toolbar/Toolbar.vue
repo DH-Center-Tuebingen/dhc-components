@@ -6,6 +6,8 @@
                 v-for="tool of toolGroup"
                 :key="tool.name"
                 class="btn border-0 clickable px-1"
+                :disabled="tool.disabled"
+                :title="tool.title"
                 :class="getClassFromTool(tool)"
                 @click="tool.action"
             >
@@ -51,6 +53,8 @@
         icon?: IconDefinition,
         icons?: IconDefinition[],
         class?: Ref<string>,
+        disabled?: boolean
+        title?: string
     };
 
     defineProps<{
