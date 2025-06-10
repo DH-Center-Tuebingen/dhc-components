@@ -4,7 +4,7 @@ import Toolbar, { Tool } from './Toolbar.vue';
 import { faArrowLeft, faArrowRight, faBan, faMagnifyingGlassMinus, faMagnifyingGlassPlus, faPlus } from '@fortawesome/free-solid-svg-icons';
 
 const meta: Meta<typeof Toolbar> = {
-  component: Toolbar,
+    component: Toolbar,
 };
 
 export default meta;
@@ -37,7 +37,7 @@ const toolGroups: Tool[][] = [
                 console.log('Right action triggered');
             }
         }
-    ],[
+    ], [
         {
             name: 'Zoom In',
             title: 'Zoom In',
@@ -52,17 +52,20 @@ const toolGroups: Tool[][] = [
             action: () => {
                 console.log('Zoom Out action triggered');
             }
-        },{
+        }, {
             name: 'Restricted',
             disabled: true,
             icon: faBan,
             title: `This won't show as it is disabled`,
+            action: () => {
+                console.error('This action should not be triggered');
+            }
         }
     ]
 ]
 
 export const Default: Story = {
-  args: {
-    toolGroups: toolGroups,
-  },
+    args: {
+        toolGroups: toolGroups,
+    },
 };
