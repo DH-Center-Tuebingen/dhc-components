@@ -22,3 +22,21 @@ export const Default: Story = {
     template: '<Csv v-bind="args" />',
   }),
 };
+
+
+export const Slots: Story = {
+  args: {
+    content: 'a,b,c\n1,2,3\n4,5,6',
+  },
+  render: (args : any) => ({
+    components: { Csv },
+    setup() {
+        return { args };
+    },
+    template: `<Csv v-bind="args" >
+<template #toolbar-after>
+    <button @click="console.log('Custom button clicked')">Custom Button</button>
+</template>   
+`,
+  }),
+};

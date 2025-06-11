@@ -14,7 +14,11 @@
                 v-model:show-preview="csvSettings.showPreview"
                 class="d-flex"
                 :total="state.rows"
-            />
+            >
+                <template #after v-if="$slots['toolbar-after']">
+                    <slot name="toolbar-after" />
+                </template>
+            </CsvSettings>
         </header>
         <div class="table-responsive position-relative overflow-y-auto overflow-x-auto">
             <table
