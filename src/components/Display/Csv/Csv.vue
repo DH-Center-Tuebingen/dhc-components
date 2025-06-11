@@ -14,8 +14,12 @@
                 v-model:show-preview="csvSettings.showPreview"
                 class="d-flex"
                 :total="state.rows"
+                :show-preview-button="enablePreviewToggle"
             >
-                <template #after v-if="$slots['toolbar-after']">
+                <template
+                    #after
+                    v-if="$slots['toolbar-after']"
+                >
                     <slot name="toolbar-after" />
                 </template>
             </CsvSettings>
@@ -52,6 +56,19 @@
                     </tr>
                 </thead>
                 <tbody>
+                    <tr v-if="csvSettings.skippedCount > 0">
+                        <td
+                            class="text-center border-1 border-primary p-1 text-primary"
+                            colspan="100%"
+                        >
+                            <FontAwesomeIcon
+                                :icon="faCircleUp"
+                                :fixed-width="true"
+                            />
+                            {{ t("main.csv.uploader.skipped_rows", { count: csvSettings.skippedCount }) }}
+                        </td>
+                    </tr>
+
                     <tr
                         v-for="(row, i) in state.computedRows.striped_data"
                         :key="`csv-preview-row-${i}`"
@@ -72,6 +89,20 @@
                             @click="toggleWrapping(i, j)"
                         >
                             {{ column }}
+                        </td>
+                    </tr>
+                    <tr
+                        v-if="!state.endVisible"
+                    >
+                        <td
+                            class="text-center border-1 border-primary p-1 text-primary"
+                            colspan="100%"
+                        >
+                            <FontAwesomeIcon
+                                :icon="faCircleDown"
+                                :fixed-width="true"
+                            />
+                            {{ t("main.csv.uploader.skipped_rows", { count: csvSettings.skippedCount }) }}
                         </td>
                     </tr>
                 </tbody>
@@ -108,23 +139,23 @@
     import { useI18n } from 'vue-i18n';
 
     import CsvSettings from './CsvSettings.vue';
-    import { useLocalStorage } from '@/composables/local-storage';
     import { StringUtils } from 'dhc-utils';
     import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-    import { faTriangleExclamation } from '@fortawesome/free-solid-svg-icons';
+    import { faCircleDown, faCircleUp, faTriangleExclamation } from '@fortawesome/free-solid-svg-icons';
 
     const { t } = useI18n();
 
-    const props = defineProps<{
+    const props = withDefaults(defineProps<{
         content: string;
         small: boolean;
         linenumbers: boolean;
-        removable: boolean;
-    }>();
+        enablePreviewToggle?: boolean;
+    }>(), {
+        enablePreviewToggle: false,
+    });
 
     const emit = defineEmits<{
         (e: 'parse', data: any): void;
-        (e: 'remove'): void;
     }>();
 
     // FUNCTIONS
@@ -171,7 +202,7 @@
         }
     };
 
-    const { value: csvSettings } = useLocalStorage('csv-settings', {
+    const csvSettings = reactive({
         delimiter: ',',
         hasHeaderRow: true,
         showLinenumbers: false,
@@ -179,11 +210,7 @@
         skippedCount: 0,
         showPreview: true,
         useCustomDelimiter: false,
-    });
-
-    watch(() => csvSettings, (newVal, oldVal) => {
-        console.log('csvSettings changed', newVal, oldVal);
-    }, { deep: true });
+    })
 
     // DATA
     const state: any = reactive({
@@ -197,6 +224,8 @@
         stripedStart: computed(() => csvSettings.skippedCount || 0),
         stripedEnd: computed(() => Math.min((csvSettings.skippedCount || 0) + (csvSettings.showCount || 10), state.rows)),
     });
+
+
 
     onMounted(() => {
         recomputeRows();

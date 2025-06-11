@@ -107,6 +107,7 @@
             </div>
 
             <IconButton
+                v-if="showPreviewButton"
                 :small="true"
                 :icon="faEyeSlash"
                 :active-icon="faEye"
@@ -129,9 +130,12 @@
     import { faEye, faEyeSlash, faKeyboard, faRectangleList } from '@fortawesome/free-solid-svg-icons';
     import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
-    const props = defineProps<{
+    const props = withDefaults(defineProps<{
         total: number,
-    }>();
+        showPreviewButton?: boolean,
+    }>(), {
+        showPreviewButton: true,
+    });
 
     const delimiter: ModelRef<string, string> = defineModel('delimiter', { default: ',' });
     const hasHeaderRow: ModelRef<boolean, PropertyKey> = defineModel('hasHeaderRow', { default: true });
