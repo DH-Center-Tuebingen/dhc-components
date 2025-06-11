@@ -14,14 +14,12 @@
                 v-model:show-preview="csvSettings.showPreview"
                 class="d-flex"
                 :total="state.rows"
-                :removable="removable"
-                @remove="$emit('remove')"
             />
         </header>
         <div class="table-responsive position-relative overflow-y-auto overflow-x-auto">
             <table
                 v-show="csvSettings.showPreview"
-                class="table table-bordered table-striped table-hover "
+                class="table table-bordered table-striped table-hover"
                 :class="{ 'table-sm': small }"
             >
                 <!--     
@@ -75,12 +73,13 @@
                 </tbody>
                 <caption
                     v-if="state.endVisible"
-                    class="bg-dark text-light text-center"
+                    class="border border-warning text-warning text-center rounded-bottom"
                 >
                     <div
                         class="end-of-file"
                         style=""
                     >
+                        <FontAwesomeIcon :icon="faTriangleExclamation" />
                         {{ t("main.csv.uploader.eof") }}
                     </div>
                 </caption>
@@ -89,7 +88,10 @@
     </div>
 </template>
 
-<script lang="ts" setup>
+<script
+    lang="ts"
+    setup
+>
     import * as d3 from 'd3-dsv';
 
     import {
@@ -104,6 +106,8 @@
     import CsvSettings from './CsvSettings.vue';
     import { useLocalStorage } from '@/composables/local-storage';
     import { StringUtils } from 'dhc-utils';
+    import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+    import { faTriangleExclamation } from '@fortawesome/free-solid-svg-icons';
 
     const { t } = useI18n();
 
@@ -122,20 +126,17 @@
     // FUNCTIONS
     const toggleWrapping = (row: number, col: number) => {
         // do not toggle if user selects (part of) the content
-        if (window.getSelection()?.toString()) {
+        if(window.getSelection()?.toString()) {
             return;
         }
-        if (!state.wrapClass[`${row}_${col}`]) {
+        if(!state.wrapClass[`${row}_${col}`]) {
             state.wrapClass[`${row}_${col}`] = 'text-wrap';
         } else {
             state.wrapClass[`${row}_${col}`] = '';
         }
     };
-    const toggleShowPreview = () => {
-        csvSettings.showPreview = !csvSettings.showPreview;
-    };
     const recomputeRows = (internal = false) => {
-        if (!props.content || !state.dsv) {
+        if(!props.content || !state.dsv) {
             state.computedRows = {};
             return;
         }
@@ -147,13 +148,13 @@
         };
         const headerRow = props.content.split('\n')[0];
         const header = state.dsv.parseRows(headerRow)[0];
-        if (csvSettings.hasHeaderRow) {
+        if(csvSettings.hasHeaderRow) {
             res.header = header;
             res.data = state.dsv.parse(props.content);
         }
         else {
             const headerPlaceholder = [];
-            for (let i = 0; i < header.length; i++) {
+            for(let i = 0; i < header.length; i++) {
                 headerPlaceholder.push(`#${i + 1}`);
             }
             res.data = state.dsv.parseRows(props.content);
@@ -161,7 +162,7 @@
         }
         state.computedRows = res;
         state.computedRows.striped_data = res.data.slice(state.stripedStart, state.stripedEnd);
-        if (!internal) {
+        if(!internal) {
             emit('parse', state.computedRows);
         }
     };
@@ -175,13 +176,13 @@
         showPreview: true,
         useCustomDelimiter: false,
     });
-    
-    watch(()=> csvSettings, (newVal, oldVal) => {
+
+    watch(() => csvSettings, (newVal, oldVal) => {
         console.log('csvSettings changed', newVal, oldVal);
-    }, {deep: true});
+    }, { deep: true });
 
     // DATA
-    const state:any = reactive({
+    const state: any = reactive({
         computedRows: {},
         wrapClass: {},
         dsv: computed(() => d3.dsvFormat(csvSettings.delimiter || ',')),
@@ -202,23 +203,23 @@
     });
 
     watch(() => csvSettings.hasHeaderRow, (newVal, oldVal) => {
-        if (oldVal !== newVal) {
+        if(oldVal !== newVal) {
             recomputeRows();
         }
     });
     watch(() => csvSettings.showCount, (newVal, oldVal) => {
-        if (oldVal !== newVal) {
+        if(oldVal !== newVal) {
             recomputeRows(true);
         }
     });
     watch(() => csvSettings.skippedCount, (newVal, oldVal) => {
-        if (oldVal !== newVal) {
+        if(oldVal !== newVal) {
             recomputeRows(true);
         }
     });
 
     watch(() => csvSettings.delimiter, (newVal, oldVal) => {
-        if (oldVal !== newVal) {
+        if(oldVal !== newVal) {
             recomputeRows();
         }
     });

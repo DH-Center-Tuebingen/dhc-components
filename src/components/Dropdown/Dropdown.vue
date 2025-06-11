@@ -1,5 +1,5 @@
 <template>
-    <Multiselect v-bind="props" :appendToBody="true" />
+    <Multiselect v-bind="props" :appendToBody="true" class="overflow-hidden text-nowrap " />
 </template>
 
 <script setup lang="ts">

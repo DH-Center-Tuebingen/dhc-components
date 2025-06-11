@@ -5,12 +5,6 @@
                 <span class="input-group-text">
                     {{ t('global.paginator.count') }}
                 </span>
-                <!-- <label
-                for="row-count"
-                class="visually-hidden"
-            >
-                {{ t('main.csv.uploader.nr_of_shown_rows') }}
-            </label> -->
                 <input
                     id="row-count"
                     v-model="showCount"
@@ -21,13 +15,6 @@
                     :style="paginatorInputStyle"
                     :placeholder="t('main.csv.uploader.nr_of_shown_rows')"
                 >
-
-                <!-- <label
-                for="skipped-row-count"
-                class="visually-hidden"
-            >
-                {{ t('main.csv.uploader.nr_of_skipped_rows') }}
-            </label> -->
                 <span class="input-group-text">
                     {{ t('global.paginator.skip') }}
                 </span>
@@ -83,20 +70,18 @@
                     style="border-left-width: 2px;"
                     @click="changeCustomDelimiter"
                 >
-                    <span v-if="useCustomDelimiter">
-                        <i class="far fa-fw fa-rectangle-list" />
-                    </span>
-                    <span v-else>
-                        <i class="far fa-fw fa-keyboard" />
-                    </span>
+                    <FontAwesomeIcon
+                        :icon="useCustomDelimiter ? faRectangleList : faKeyboard"
+                        :fixed-width="true"
+                    />
                 </button>
             </div>
 
-            <div class="form-check form-switch">
+            <div class="form-check form-switch overflow-hidden">
                 <input
                     id="has-header"
                     v-model="hasHeaderRow"
-                    class="form-check-input"
+                    class="form-check-input text-overflow-ellipsis"
                     type="checkbox"
                 >
                 <label
@@ -122,36 +107,31 @@
             </div>
 
             <IconButton
-                icon="eye"
-                alt-icon="eye-slash"
+                :small="true"
+                :icon="faEyeSlash"
+                :active-icon="faEye"
                 v-model="showPreview"
             />
 
-            <button
-                v-if="removable"
-                class="btn btn-outline-danger"
-                type="button"
-                style="border-left-width: 2px;"
-                @click="() => emit('remove')"
-            >
-                {{ t('global.remove_file') }}
-            </button>
+            <slot name="after" />
+
         </div>
     </form>
 </template>
-<script setup lang="ts">
+<script
+    setup
+    lang="ts"
+>
     import { computed, ModelRef, ref } from 'vue';
     import { useI18n } from 'vue-i18n';
     import Dropdown from '@/components/Dropdown/Dropdown.vue';
     import IconButton from '@/components/Button/IconButton/IconButton.vue';
+    import { faEye, faEyeSlash, faKeyboard, faRectangleList } from '@fortawesome/free-solid-svg-icons';
+    import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
-    const props = withDefaults(defineProps<{
+    const props = defineProps<{
         total: number,
-        removable: boolean
-        showPreviewButton: boolean,
-    }>(), {
-        showPreviewButton: false,
-    });
+    }>();
 
     const delimiter: ModelRef<string, string> = defineModel('delimiter', { default: ',' });
     const hasHeaderRow: ModelRef<boolean, PropertyKey> = defineModel('hasHeaderRow', { default: true });
@@ -161,10 +141,6 @@
     const showCount: ModelRef<number, PropertyKey> = defineModel('showCount', { default: 20 });
     const skippedCount: ModelRef<number, PropertyKey> = defineModel('skippedCount', { default: 0 });
     // const maxRows: ModelRef<number, PropertyKey> = defineModel('maxRows', { default: 100 });
-
-    const emit = defineEmits([
-        'remove',
-    ]);
 
     const { t } = useI18n();
 
@@ -185,7 +161,7 @@
     const rangeInformationText = computed(() => {
         const start = skippedCount.value + 1;
         let end = skippedCount.value + showCount.value;
-        if (end > props.total) {
+        if(end > props.total) {
             end = props.total;
         }
 
@@ -194,12 +170,13 @@
 
     const paginatorInputStyle = ref({
         minWidth: '5em',
+        width: '5rem'
     });
 
     const changeCustomDelimiter = () => {
-        if (useCustomDelimiter.value) {
+        if(useCustomDelimiter.value) {
             const delimiterExists = delimiterOptions.value.find(option => option.value === delimiter.value);
-            if (!delimiterExists) {
+            if(!delimiterExists) {
                 delimiter.value = delimiterOptions.value[0].value;
             }
         }
