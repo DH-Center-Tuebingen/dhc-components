@@ -91,9 +91,7 @@
                             {{ column }}
                         </td>
                     </tr>
-                    <tr
-                        v-if="!state.endVisible"
-                    >
+                    <tr v-if="!state.endVisible">
                         <td
                             class="text-center border-1 border-primary p-1 text-primary"
                             colspan="100%"
@@ -175,7 +173,11 @@
             state.computedRows = {};
             return;
         }
-        const res = {
+        const res: {
+            header: string[] | null;
+            data: any[] | null;
+            striped_data: any[] | null;
+        } = {
             header: null,
             data: null,
             striped_data: null,
@@ -196,7 +198,12 @@
             res.header = headerPlaceholder;
         }
         state.computedRows = res;
-        state.computedRows.striped_data = res.data.slice(state.stripedStart, state.stripedEnd);
+        if(res.data === null || res.data.length === 0) {
+            state.computedRows.striped_data = [];
+        } else {
+            state.computedRows.striped_data = res.data.slice(state.stripedStart, state.stripedEnd);
+        }
+        
         if(!internal) {
             emit('parse', state.computedRows);
         }
