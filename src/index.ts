@@ -4,6 +4,7 @@ export { default as Login } from './components/Login/Login.vue';
 export { default as SlideControl } from './components/Form/SlideControl/SlideControl.vue';
 
 //Buttons}
+export { default as LoadingButton } from './components/Button/LoadingButton/LoadingButton.vue';
 export { default as Toggle } from './components/Button/Toggle/Toggle.vue';
 export { default as IconButton } from './components/Button/IconButton/IconButton.vue';
 
