@@ -15,7 +15,7 @@
             v-show="state.type !== 'md'"
             v-model="state.markdownString"
             class="font-monospace border-0 px-5 p-4 flex-grow-1 w-100 rounded-3 bg-transparent"
-            style="resize: none; outline: none;"
+            style="outline: none;"
         />
     </div>
 </template>
