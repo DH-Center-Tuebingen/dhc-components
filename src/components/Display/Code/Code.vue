@@ -13,6 +13,7 @@
         </header>
         <pre
             class="hljs overflow-auto flex-fill m-0"
+            :class="contentClasses"
             v-if="highlightedValue"
         ><code v-html="highlightedValue.value" /></pre>
     </div>
@@ -33,10 +34,20 @@
         language?: string;
         dark?: boolean;
         showLanguage?: boolean;
+        rounded?: boolean;
     }>(), {
         name: '',
         dark: false,
         showLanguage: true,
+        rounded: false,
+    });
+
+    const contentClasses = computed(() => {
+        const classes = ['p-2'];
+        if(props.rounded) {
+            classes.push('rounded');
+        }
+        return classes;
     });
 
     const highlightedValue = computed(() => {
