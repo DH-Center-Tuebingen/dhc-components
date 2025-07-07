@@ -40,7 +40,6 @@
     setup
     lang="ts"
 >
-
     import type { Ref } from 'vue';
     import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
     import { IconDefinition } from '@fortawesome/fontawesome-svg-core';

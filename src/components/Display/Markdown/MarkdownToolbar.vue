@@ -17,7 +17,6 @@
     import { useI18n } from 'vue-i18n';
     const { t } = useI18n();
 
-
     import {
         toggleEmphasisCommand,
         toggleStrongCommand,
@@ -56,8 +55,8 @@
         faRedo,
         faStrikethrough,
         faUndo
-    } from '@fortawesome/free-solid-svg-icons'
-    import { faMarkdown } from '@fortawesome/free-brands-svg-icons'
+    } from '@fortawesome/free-solid-svg-icons';
+    import { faMarkdown } from '@fortawesome/free-brands-svg-icons';
 
     import { CmdKey, Editor } from '@milkdown/core';
     import { default as Toolbar, Tool } from '@/components/Layout/Toolbar/Toolbar.vue';
@@ -88,7 +87,6 @@
         if(state.mde) {
             state.mde.action(callCommand(action, data));
         }
-
     };
 
     const heading = (i: number) => {
@@ -117,31 +115,26 @@
             name: 'heading',
             action: () => heading(1),
             icons: [faH, fa1],
-
         },
         {
             name: 'heading',
             action: () => heading(2),
             icons: [faH, fa2],
-
         },
         {
             name: 'heading',
             action: () => heading(3),
             icons: [faH, fa3],
-
         },
         {
             name: 'heading',
             action: () => heading(4),
             icons: [faH, fa4],
-
         },
         {
             name: 'paragraph',
             action: () => command(turnIntoTextCommand.key),
             icon: faParagraph,
-
         },
     ];
 
@@ -150,19 +143,16 @@
             name: 'bold',
             action: () => command(toggleStrongCommand.key),
             icon: faBold,
-
         },
         {
             name: 'italic',
             action: () => command(toggleEmphasisCommand.key),
             icon: faItalic,
-
         },
         {
             name: 'strikethrough',
             action: () => command(toggleStrikethroughCommand.key),
             icon: faStrikethrough,
-
         },
     ];
 
@@ -171,25 +161,21 @@
             name: 'orderlist',
             action: () => command(wrapInOrderedListCommand.key),
             icon: faListOl,
-
         },
         {
             name: 'bulletlist',
             action: () => command(wrapInBulletListCommand.key),
             icon: faListUl,
-
         },
         {
             name: 'outdent_item',
             action: () => command(liftListItemCommand.key),
             icon: faOutdent,
-
         },
         {
             name: 'indent_item',
             action: () => command(sinkListItemCommand.key),
             icon: faIndent,
-
         },
     ];
 
