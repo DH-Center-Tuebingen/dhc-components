@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/vue3';
 
 import Markdown from './Markdown.vue';
-import { readonly } from 'vue';
 
 const meta: Meta<typeof Markdown> = {
     component: Markdown,
@@ -16,7 +15,7 @@ const content = `
 
 ---
 
-Some **bold** Some *italic* and [a link][1] 
+Some **bold** Some *italic* and [a link][1]
 
 A little code sample
 

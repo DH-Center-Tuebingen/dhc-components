@@ -1,7 +1,7 @@
 <template>
     <div class="bg-white rounded overflow-auto d-flex flex-column">
         <MarkdownToolbar
-            v-show="!readonly"
+            v-if="!readonly"
             class="rounded pb-0 m-2 mb-0"
             :editor="editor"
             @toggle="setEditorType"
