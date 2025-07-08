@@ -11,5 +11,21 @@ export default meta;
 type Story = StoryObj<typeof EmojiPicker>;
 
 export const Default: Story = {
-  args: {}
+  args: {
+      position: 'end',
+  }
+};
+
+export const WithLabel: Story = {
+  args: {
+      label: 'Open EmojiPicker',
+      position: 'end',
+  }
+};
+
+export const RenderEnd: Story = {
+    render: () => ({
+        components: { EmojiPicker },
+        template: `<EmojiPicker class="text-end" label=":tada:" position="start" />`,
+    }),
 };
