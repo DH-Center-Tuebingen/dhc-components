@@ -4,6 +4,7 @@
     >
         <button
             class="btn btn-outline-secondary btn-sm position-relative"
+            ref="toggleBtnRef"
             @click="togglePopup"
         >
             {{ translatedLabel }}
@@ -16,6 +17,7 @@
                     :data="emojiIndex"
                     set="twitter"
                     title=""
+                    @click.stop.prevent
                     @select="emojiSelected"
                 />
             </div>
@@ -24,7 +26,7 @@
 </template>
 
 <script setup lang="ts">
-    import { computed, defineProps } from 'vue';
+    import { computed, defineProps, onMounted, onUnmounted, ref } from 'vue';
 
     import data from 'emoji-mart-vue-fast/data/twitter.json';
     import 'emoji-mart-vue-fast/css/emoji-mart.css';
@@ -49,7 +51,11 @@
     });
 
     const emit = defineEmits(['selected'])
+
     const emojiIndex = new EmojiIndex(data);
+
+    const toggleBtnRef = ref({});
+    const showPopup = defineModel<boolean>();
 
     const emojiSelected = (data: EmojiPickEvent) => {
         console.log("selected emoji", data);
@@ -60,6 +66,19 @@
             unicode: data.unified,
             code: data.colons
         });
+    };
+
+    const togglePopup = (event: Event) => {
+        if(event.target != toggleBtnRef.value) {
+            return;
+        }
+        showPopup.value = !showPopup.value;
+    };
+    const handleOutsideClick = (event: Event) => {
+        if(event.target == toggleBtnRef.value) {
+            return;
+        }
+        showPopup.value = false;
     };
 
     const translatedLabel = computed(() => {
@@ -87,9 +106,10 @@
         return classes;
     });
 
-    const showPopup = defineModel<boolean>();
-
-    const togglePopup = () => {
-        showPopup.value = !showPopup.value;
-    };
+    onMounted(() => {
+        window.addEventListener('click', handleOutsideClick);
+    });
+    onUnmounted(() => {
+        window.removeEventListener('click', handleOutsideClick);
+    });
 </script>
