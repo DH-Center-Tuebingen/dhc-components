@@ -2,8 +2,9 @@ export { default as Alert } from './components/Alert/Alert.vue';
 export { default as LoadingSpinner } from './components/LoadingSpinner/LoadingSpinner.vue';
 export { default as Login } from './components/Login/Login.vue';
 export { default as SlideControl } from './components/Form/SlideControl/SlideControl.vue';
+export { default as EmojiPicker } from './components/EmojiPicker/EmojiPicker.vue';
 
-//Buttons}
+// Buttons
 export { default as LoadingButton } from './components/Button/LoadingButton/LoadingButton.vue';
 export { default as Toggle } from './components/Button/Toggle/Toggle.vue';
 export { default as IconButton } from './components/Button/IconButton/IconButton.vue';
@@ -11,6 +12,9 @@ export { default as IconButton } from './components/Button/IconButton/IconButton
 // Form
 export { default as Multiselect } from './components/Form/Multiselect/Multiselect.vue';
 export { default as TFA } from './components/Form/TFA/TFA.vue';
+
+// Indicator
+export { default as DotIndicator } from './components/Indicators/Dot/Dot.vue';
 
 // Layout
 export { default as Accordion } from './components/Layout/Accordion/Accordion.vue';
