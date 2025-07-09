@@ -3,6 +3,7 @@
         class="emoji-picker"
     >
         <button
+            type="button"
             class="btn btn-outline-secondary btn-sm position-relative"
             ref="toggleBtnRef"
             @click="togglePopup"
