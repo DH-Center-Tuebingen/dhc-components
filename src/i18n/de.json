@@ -13,8 +13,5 @@
         "wkt": {
             "add": "WKT hinzufügen"
         }
-    },
-    "validation": {
-        "field_is_required": "Field is required"
     }
 }

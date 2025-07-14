@@ -3,7 +3,7 @@
         <DatePicker
             :id="name"
             :uid="name"
-            v-model="modelValue"
+            v-model="validatedValue"
             v-bind="modeProperties"
             class="w-100"
             input-class="form-control"
@@ -24,13 +24,17 @@
 </template>
 
 <script setup lang="ts">
-    import { computed, defineProps, ModelRef, onMounted, watch } from 'vue';
+    import { computed, defineProps, onMounted, watch } from 'vue';
+
+    import { array, string } from 'yup';
+
+    import { useField } from 'vee-validate';
 
     import DatePicker from '@vuepic/vue-datepicker';
 
     import { DatepickerProps, DatepickerOptions } from './definitions';
 
-    const modelValue: ModelRef<string | Array<string> | undefined> = defineModel();
+    // const modelValue: ModelRef<string | Array<string> | undefined> = defineModel();
 
     const props = withDefaults(defineProps<DatepickerProps>(),{});
 
@@ -40,6 +44,8 @@
 
     const isRange = computed(() => props.mode == 'range');
     const isDate = computed(() => props.mode == 'date' || !props.mode || !isRange.value);
+
+    const emit = defineEmits(['change']);
 
     const modeProperties = computed(() => {
         const defaultProps:DatepickerOptions = {
@@ -61,17 +67,48 @@
     const setInitialValue = () => {
         let modeValue: string | Array<string> = '';
         if(isDate.value) {
-            modeValue = typeof props.value == 'string' ? props.value : '';
+            modeValue = typeof props.defaultValue == 'string' ? props.defaultValue : '';
         } else if(isRange.value) {
-            modeValue = props.value && Array.isArray(props.value) ? props.value : [];
+            modeValue = props.defaultValue && Array.isArray(props.defaultValue) ? props.defaultValue : [];
         }
 
-        modelValue.value = modeValue;
+        return modeValue;
+    };
+
+    const reset = (value: string | Array<string> | undefined) => {
+        value = value || props.defaultValue;
+        resetField({
+            value: value,
+        });
+    };
+
+    const undirty = (value: string | Array<string> | undefined) => {
+        value = value || validatedValue.value;
+        reset(value);
     };
 
     const handleInput = (date: string | Array<string>) => {
-        modelValue.value = date;
+        handleChange(date);
+        console.log("[Date] changed value to", meta.valid, meta.dirty, validatedValue.value);
+        emit('change', {
+            valid: meta.valid,
+            dirty: meta.dirty,
+            value: validatedValue.value,
+        });
+    };
+
+    let rules = props.mode == 'range' ? array() : string();
+    if(props.required) {
+        rules = rules.required();
     }
+    const {
+        value: validatedValue,
+        meta,
+        resetField,
+        handleChange,
+    } = useField(`date_${props.name}`, rules, {
+        initialValue: setInitialValue(),
+    });
 
     watch(() => props.mode, () => {
         setInitialValue();

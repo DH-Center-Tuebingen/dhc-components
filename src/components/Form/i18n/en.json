@@ -1,0 +1,7 @@
+{
+    "validation": {
+        "field_is_required": "Field is required",
+        "field_is_number": "Field must be number",
+        "field_is_integer": "Field must be an integer"
+    }
+}
