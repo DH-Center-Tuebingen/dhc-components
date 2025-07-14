@@ -10,6 +10,9 @@ export { default as Toggle } from './components/Button/Toggle/Toggle.vue';
 export { default as IconButton } from './components/Button/IconButton/IconButton.vue';
 
 // Form
+export { default as Datepicker } from './components/Form/Datepicker/Datepicker.vue';
+export { default as Double } from './components/Form/Double/Double.vue';
+export { default as Integer } from './components/Form/Integer/Integer.vue';
 export { default as Multiselect } from './components/Form/Multiselect/Multiselect.vue';
 export { default as TFA } from './components/Form/TFA/TFA.vue';
 
