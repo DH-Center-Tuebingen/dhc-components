@@ -68,11 +68,13 @@
     };
 
     const handleInput = (event: Event) => {
-        const resetValidation = event.data === null;
-        const inputData = resetValidation ? validatedValue.value : event.data;
-        const isNumberInput = !Number.isNaN(parseFloat(inputData));
+        const inputEvent = event as InputEvent;
+        const resetValidation = inputEvent.data === null;
+        const inputData = resetValidation ? validatedValue.value : parseFloat(inputEvent.data);
+        const isNumberInput = !Number.isNaN(inputData);
         computedValidity = resetValidation ? isNumberInput : computedValidity && isNumberInput;
         // handleChange(event?.target?.value);
+        console.log("[Double] changed value to", computedValidity, meta.dirty, validatedValue.value);
         emit('change', {
             valid: computedValidity,
             dirty: meta.dirty,

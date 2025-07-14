@@ -13,6 +13,6 @@ type Story = StoryObj<typeof Integer>;
 export const Default: Story = {
     args: {
         disabled: false,
-        defaultValue: '42',
+        defaultValue: 42,
     },
 };
