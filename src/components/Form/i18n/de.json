@@ -2,6 +2,8 @@
     "validation": {
         "field_is_required": "Dieses Feld ist erforderlich",
         "field_is_number": "Dieses Feld muss eine Zahl sein",
-        "field_is_integer": "Dieses Feld muss eine Ganzzahl sein"
+        "field_is_integer": "Dieses Feld muss eine Ganzzahl sein",
+        "field_is_not_number": "Der Wert ist keine Zahl",
+        "field_is_not_integer": "Der Wert ist keine Ganzzahl"
     }
 }

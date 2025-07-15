@@ -5,8 +5,8 @@
             v-model="validatedValue"
             class="form-control"
             type="number"
-            step="0.001"
             placeholder="0.0"
+            :step="variableStep"
             :disabled="disabled"
             :name="name"
             @input="handleInput"
@@ -23,13 +23,13 @@
 </template>
 
 <script setup lang="ts">
-    import { defineProps, onMounted } from 'vue';
+    import { computed, defineProps, onMounted } from 'vue';
 
     import { useField } from 'vee-validate';
 
     import { initI18n } from '../../../i18n/i18n';
 
-    import { isNumber } from '../validation/rulesets';
+    import { number } from '../validation/rulesets';
 
     import * as de from './i18n/de.json';
     import * as en from './i18n/en.json';
@@ -38,6 +38,7 @@
 
     onMounted(() => {
         setInitialValue();
+        lastStep = computeStepSize();
     });
 
     const props = withDefaults(defineProps<DoubleProps>(),{});
@@ -67,13 +68,19 @@
         reset(value);
     };
 
+    const computeStepSize = () => {
+        const matches = validatedValue.value.toString().match(/\d+(\.(\d+))/);
+        return matches ? 1 / Math.pow(10, matches[2].length) : 1;
+    };
+
     const handleInput = (event: Event) => {
         const inputEvent = event as InputEvent;
+        // const target = event.currentTarget as HTMLInputElement;
         const resetValidation = inputEvent.data === null;
         const inputData = resetValidation ? validatedValue.value : parseFloat(inputEvent.data);
         const isNumberInput = !Number.isNaN(inputData);
         computedValidity = resetValidation ? isNumberInput : computedValidity && isNumberInput;
-        // handleChange(event?.target?.value);
+        // handleChange(target.value);
         console.log("[Double] changed value to", computedValidity, meta.dirty, validatedValue.value);
         emit('change', {
             valid: computedValidity,
@@ -82,8 +89,21 @@
         });
     };
 
+    let lastStep = 1;
+    const variableStep = computed(() => {
+        const stepSize = computeStepSize()
+        // JS automatically rounds 1.10 to 1.1 (increase step size by factor 10)
+        // In this case we do not want to change step size, but keep
+        // last step size instead
+        if(stepSize == lastStep * 10) {
+            return lastStep;
+        } else {
+            return lastStep = stepSize;
+        }
+    });
+
     let computedValidity = true;
-    let rules = isNumber();
+    let rules = number();
     if(props.required) {
         rules = rules.required();
     }

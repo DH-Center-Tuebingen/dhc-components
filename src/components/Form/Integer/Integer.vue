@@ -29,7 +29,7 @@
 
     import { initI18n } from '../../../i18n/i18n';
 
-    import { isInteger } from '../validation/rulesets';
+    import { integer } from '../validation/rulesets';
 
     import * as de from './i18n/de.json';
     import * as en from './i18n/en.json';
@@ -82,7 +82,7 @@
     };
 
     let computedValidity = true;
-    let rules = isInteger();
+    let rules = integer();
     if(props.required) {
         rules = rules.required();
     }

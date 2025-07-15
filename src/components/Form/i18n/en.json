@@ -2,6 +2,8 @@
     "validation": {
         "field_is_required": "Field is required",
         "field_is_number": "Field must be number",
-        "field_is_integer": "Field must be an integer"
+        "field_is_integer": "Field must be an integer",
+        "field_is_not_number": "Field is not a number",
+        "field_is_not_integer": "Field is not an integer"
     }
 }

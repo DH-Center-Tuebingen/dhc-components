@@ -1,4 +1,7 @@
-import { number } from 'yup';
+import {
+    setLocale,
+    number,
+} from 'yup';
 
 import { initI18n } from '../../../i18n/i18n';
 import * as de from '../i18n/de.json';
@@ -10,6 +13,19 @@ const i18n = initI18n({
 });
 const t = i18n.global.t;
 
-export const isNumber = () => number().typeError(t('validation.field_is_number'));
+setLocale({
+    mixed: {
+        default: '${path} is invalid',
+        required: t('validation.field_is_required'),
+        notType: ({ type }) => {
+            return t(`validation.field_is_not_${type}`);
+        }
+    },
+});
 
-export const isInteger = () => number().integer().typeError(t('validation.field_is_integer'));
+const integer = () => number().integer();
+
+export {
+    number,
+    integer,
+};
