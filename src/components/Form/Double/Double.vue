@@ -69,7 +69,7 @@
     };
 
     const computeStepSize = () => {
-        const matches = validatedValue.value.toString().match(/\d+(\.(\d+))/);
+        const matches = validatedValue.value?.toString().match(/\d+(\.(\d+))/);
         return matches ? 1 / Math.pow(10, matches[2].length) : 1;
     };
 
