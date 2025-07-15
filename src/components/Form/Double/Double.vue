@@ -1,5 +1,5 @@
 <template>
-    <form class="was-validated">
+    <div class="was-validated">
         <input
             :id="name"
             v-model="validatedValue"
@@ -19,7 +19,7 @@
                 {{ msg }}
             </span>
         </div>
-    </form>
+    </div>
 </template>
 
 <script setup lang="ts">

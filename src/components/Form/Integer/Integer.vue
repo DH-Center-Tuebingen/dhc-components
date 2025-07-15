@@ -1,5 +1,5 @@
 <template>
-    <form class="was-validated">
+    <div class="was-validated">
         <input
             :id="name"
             v-model.number="validatedValue"
@@ -19,7 +19,7 @@
                 {{ msg }}
             </span>
         </div>
-    </form>
+    </div>
 </template>
 
 <script setup lang="ts">
@@ -68,20 +68,17 @@
     };
 
     const handleInput = (event: Event) => {
-        const inputEvent = event as InputEvent;
         const target = event.currentTarget as HTMLInputElement;
-        const isIntInput = !Number.isNaN(parseInt(inputEvent.data || ''));
-        computedValidity = computedValidity && isIntInput;
         handleChange(target.value);
-        console.log("[Integer] changed value to", computedValidity, meta.dirty, validatedValue.value);
+        const isValid = target.checkValidity();
+        console.log("[Integer] changed value to", isValid, meta.dirty, validatedValue.value);
         emit('change', {
-            valid: computedValidity,
+            valid: isValid,
             dirty: meta.dirty,
             value: validatedValue.value,
         });
     };
 
-    let computedValidity = true;
     let rules = integer();
     if(props.required) {
         rules = rules.required();
