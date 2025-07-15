@@ -21,6 +21,9 @@ setLocale({
             return t(`validation.field_is_not_${type}`);
         }
     },
+    number: {
+        integer: t('validation.field_is_integer')
+    }
 });
 
 const integer = () => number().integer();
