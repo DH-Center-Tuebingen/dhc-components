@@ -2,7 +2,7 @@
     <div class="was-validated">
         <input
             :id="name"
-            v-model.number="validatedValue"
+            v-model="validatedValue"
             class="form-control"
             type="number"
             step="1"
