@@ -58,6 +58,7 @@
     const t = i18n.global.t;
 
     const setInitialValue = () => {
+        console.log("Double default", props.defaultValue);
         return props.defaultValue || '';
     };
 

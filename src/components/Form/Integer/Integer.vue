@@ -57,6 +57,7 @@
     const t = i18n.global.t;
 
     const setInitialValue = () => {
+        console.log("Integer default", props.defaultValue);
         return props.defaultValue || '';
     };
 
