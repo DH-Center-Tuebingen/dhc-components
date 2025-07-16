@@ -58,13 +58,13 @@
 
     const setInitialValue = () => {
         console.log("Integer default", props.defaultValue);
-        return props.defaultValue || '';
+        return parseInt(props.defaultValue.toString()) || '';
     };
 
     const reset = (value: number | string) => {
         value = value || props.defaultValue;
         resetField({
-            value: value,
+            value: parseInt(value.toString()),
         });
     };
 
@@ -75,7 +75,7 @@
 
     const handleInput = (event: Event) => {
         const target = event.currentTarget as HTMLInputElement;
-        handleChange(target.value);
+        handleChange(parseInt(target.value));
         const isValid = target.checkValidity();
         console.log("[Integer] changed value to", isValid, meta.dirty, validatedValue.value);
         emit('change', {
