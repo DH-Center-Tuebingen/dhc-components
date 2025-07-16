@@ -41,7 +41,12 @@
         lastStep = computeStepSize();
     });
 
-    const props = withDefaults(defineProps<DoubleProps>(),{});
+    const props = withDefaults(defineProps<DoubleProps>(), {
+        name: 'Double',
+        disabled: false,
+        required: false,
+        defaultValue: '',
+    });
 
     const emit = defineEmits(['change']);
 
@@ -53,17 +58,17 @@
     const t = i18n.global.t;
 
     const setInitialValue = () => {
-        return props.defaultValue || undefined;
+        return props.defaultValue || '';
     };
 
-    const reset = (value: number | undefined) => {
+    const reset = (value: number | string) => {
         value = value || props.defaultValue;
         resetField({
             value: value,
         });
     };
 
-    const undirty = (value: number | undefined) => {
+    const undirty = (value: number | string) => {
         value = value || validatedValue.value;
         reset(value);
     };
