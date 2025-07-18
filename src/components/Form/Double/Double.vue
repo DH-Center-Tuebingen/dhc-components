@@ -125,13 +125,4 @@
 </script>
 
 <style scoped>
-    .was-validated .form-control:valid {
-        background-image: none;
-        padding-right: 0.75rem;
-    }
-    .was-validated .form-control:invalid {
-        background-image: none;
-        padding-right: 0.75rem;
-        color: var(--bs-form-invalid-color);
-    }
 </style>

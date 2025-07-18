@@ -1,6 +1,7 @@
 import {
     setLocale,
     number,
+    string,
 } from 'yup';
 
 import { initI18n } from '../../../i18n/i18n';
@@ -31,4 +32,5 @@ const integer = () => number().integer();
 export {
     number,
     integer,
+    string,
 };

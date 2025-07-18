@@ -4,9 +4,8 @@
             :id="name"
             v-model="validatedValue"
             class="form-control"
-            type="number"
-            step="1"
-            placeholder="0"
+            type="text"
+            placeholder="…"
             :disabled="disabled"
             :name="name"
             @input="handleInput"
@@ -23,25 +22,25 @@
 </template>
 
 <script setup lang="ts">
-    import { defineProps, onMounted } from 'vue';
+    import { computed, defineProps, onMounted } from 'vue';
 
     import { useField } from 'vee-validate';
 
     import { initI18n } from '../../../i18n/i18n';
 
-    import { integer } from '../validation/rulesets';
+    import { string } from '../validation/rulesets';
 
     import * as de from './i18n/de.json';
     import * as en from './i18n/en.json';
 
-    import { IntegerProps } from './definitions';
+    import { StringProps } from './definitions';
 
     onMounted(() => {
         setInitialValue();
     });
 
-    const props = withDefaults(defineProps<IntegerProps>(), {
-        name: 'Integer',
+    const props = withDefaults(defineProps<StringProps>(), {
+        name: 'String',
         disabled: false,
         required: false,
         defaultValue: '',
@@ -57,35 +56,33 @@
     const t = i18n.global.t;
 
     const setInitialValue = () => {
-        console.log("Integer default", props.defaultValue);
-        return parseInt(props.defaultValue.toString()) || '';
+        return props.defaultValue || '';
     };
 
-    const reset = (value: number | string) => {
+    const reset = (value: string) => {
         value = value || props.defaultValue;
         resetField({
-            value: parseInt(value.toString()),
+            value: value,
         });
     };
 
-    const undirty = (value: number | string) => {
+    const undirty = (value: string) => {
         value = value || validatedValue.value;
         reset(value);
     };
 
     const handleInput = (event: Event) => {
         const target = event.currentTarget as HTMLInputElement;
-        handleChange(parseInt(target.value));
-        const isValid = target.checkValidity();
-        console.log("[Integer] changed value to", isValid, meta.dirty, validatedValue.value);
+        handleChange(target.value);
+        console.log("[Double] changed value to", meta.valid, meta.dirty, validatedValue.value);
         emit('change', {
-            valid: isValid,
+            valid: meta.valid,
             dirty: meta.dirty,
             value: validatedValue.value,
         });
     };
 
-    let rules = integer();
+    let rules = string();
     if(props.required) {
         rules = rules.required();
     }
@@ -95,7 +92,7 @@
         meta,
         resetField,
         handleChange,
-    } = useField(`integer_${props.name}`, rules, {
+    } = useField(`string_${props.name}`, rules, {
         initialValue: setInitialValue(),
     });
 </script>
