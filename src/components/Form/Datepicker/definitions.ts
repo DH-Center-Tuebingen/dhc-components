@@ -3,7 +3,7 @@ export interface DatepickerProps {
     mode?: string,
     disabled?: boolean,
     required?: boolean,
-    defaultValue?: string | Array<string>,
+    defaultValue: string | Array<string> | null,
 }
 
 export interface DatepickerOptions {

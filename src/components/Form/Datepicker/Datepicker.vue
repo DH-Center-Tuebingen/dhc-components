@@ -32,6 +32,8 @@
 
     import DatePicker from '@vuepic/vue-datepicker';
 
+    import { validate } from '../../../utils/date';
+
     import { DatepickerProps, DatepickerOptions } from './definitions';
 
     // const modelValue: ModelRef<string | Array<string> | undefined> = defineModel();
@@ -65,33 +67,37 @@
     });
 
     const setInitialValue = () => {
-        let modeValue: string | Array<string> = '';
+        let modeValue: string | Array<string> | null = null;
+        if(!props.defaultValue) {
+            return modeValue;
+        }
         if(isDate.value) {
-            modeValue = typeof props.defaultValue == 'string' ? props.defaultValue : '';
+            modeValue = typeof props.defaultValue == 'string' ? props.defaultValue : null;
         } else if(isRange.value) {
-            modeValue = props.defaultValue && Array.isArray(props.defaultValue) ? props.defaultValue : [];
+            modeValue = Array.isArray(props.defaultValue) ? props.defaultValue : null;
         }
 
         return modeValue;
     };
 
-    const reset = (value: string | Array<string> | undefined) => {
+    const reset = (value: string | Array<string> | null) => {
         value = value || props.defaultValue;
         resetField({
             value: value,
         });
     };
 
-    const undirty = (value: string | Array<string> | undefined) => {
+    const undirty = (value: string | Array<string> | null) => {
         value = value || validatedValue.value;
         reset(value);
     };
 
-    const handleInput = (date: string | Array<string>) => {
+    const handleInput = (date: string | Array<string> | null) => {
         handleChange(date);
-        console.log("[Date] changed value to", meta.valid, meta.dirty, validatedValue.value);
+        const isValid = validate(validatedValue.value);
+        console.log("[Date] changed value to", isValid, meta.valid, meta.dirty, validatedValue.value);
         emit('change', {
-            valid: meta.valid,
+            valid: isValid,
             dirty: meta.dirty,
             value: validatedValue.value,
         });

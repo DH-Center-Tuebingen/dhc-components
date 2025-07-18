@@ -51,6 +51,7 @@
     "@milkdown/vue": "^7.5.0",
     "@vueform/multiselect": "^2.6.11",
     "@vuepic/vue-datepicker": "^11.0.2",
+    "dayjs": "^1.11.13",
     "dhc-utils": "github:Dh-Center-Tuebingen/dhc-utils",
     "emoji-mart-vue-fast": "^15.0.4",
     "highlight.js": "^11.11.1",
