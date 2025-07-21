@@ -7,7 +7,7 @@
 </template>
 
 <script setup lang="ts">
-    import { computed, defineProps, ModelRef, onMounted } from 'vue';
+    import { computed, ModelRef, onMounted } from 'vue';
 
     export interface DotIndicatorProps {
         size?: string,

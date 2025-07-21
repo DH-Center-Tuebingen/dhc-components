@@ -13,7 +13,7 @@
 </template>
 
 <script setup lang="ts">
-    import { defineProps, ModelRef, onMounted } from 'vue';
+    import { ModelRef, onMounted } from 'vue';
 
     const value: ModelRef<number | undefined> = defineModel();
 

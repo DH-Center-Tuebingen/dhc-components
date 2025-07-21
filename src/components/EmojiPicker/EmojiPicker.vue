@@ -27,7 +27,7 @@
 </template>
 
 <script setup lang="ts">
-    import { computed, defineProps, onMounted, onUnmounted, ref } from 'vue';
+    import { computed, onMounted, onUnmounted, ref } from 'vue';
 
     import data from 'emoji-mart-vue-fast/data/twitter.json';
     import 'emoji-mart-vue-fast/css/emoji-mart.css';
@@ -51,7 +51,7 @@
         position: 'end',
     });
 
-    const emit = defineEmits(['selected'])
+    const emit = defineEmits(['selected']);
 
     const emojiIndex = new EmojiIndex(data);
 

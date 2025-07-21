@@ -1,7 +1,7 @@
 <template>
-    <Multiselect 
-        v-model="value" 
-        :options="options" 
+    <Multiselect
+        v-model="value"
+        :options="options"
         :mode="mode"
         :searchable="searchable"
         :class="{
@@ -11,7 +11,6 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps } from 'vue';
 import Multiselect from '@vueform/multiselect';
 
 const props = withDefaults(defineProps<{
