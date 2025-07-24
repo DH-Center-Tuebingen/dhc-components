@@ -8,9 +8,47 @@ import Accordion from './Accordion.vue';
 const accordionDelay = 400;
 
 const accordionContent = {
-  ['home-section']: '<h1>Home</h1><p>Home content</p>',
-  ['about-section']: '<h1>About</h1> <ul><li>Storybook</li><li>Component: Accordion</li></ul>',
-  ['contact-section']: '<h1>Contact</h1><p>Contact content</p>',
+    ['home-section']: '<p>Minim exercitation aliqua non et est ipsum occaecat consectetur in do. Incididunt Lorem fugiat magna dolore ullamco. Proident incididunt sit sunt proident nostrud consequat. Incididunt tempor adipisicing deserunt cupidatat sit non do est dolore ea cupidatat culpa minim commodo. Mollit eiusmod irure minim laborum sunt elit consequat dolore sit ex.</p><p>Do et do aute fugiat fugiat qui anim deserunt sit esse irure. Anim aliquip reprehenderit minim adipisicing fugiat reprehenderit nostrud ipsum. Aute officia adipisicing est culpa ullamco irure culpa duis cillum minim duis culpa eiusmod.</p><p>Qui id ex Lorem fugiat. Sunt excepteur eiusmod est ut enim deserunt exercitation labore fugiat veniam. Eu incididunt fugiat amet fugiat mollit adipisicing eiusmod nisi non id anim sit fugiat ad.</p>',
+    ['team-section']: `
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Phone</th>
+                    <th>Email</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Alice Smith</td>
+                    <td>+1 555 123 4567</td>
+                    <td>alice.smith@example.com</td>
+                </tr>
+                <tr>
+                    <td>Bob Johnson</td>
+                    <td>+1 555 987 6543</td>
+                    <td>bob.johnson@example.com</td>
+                </tr>
+                <tr>
+                    <td>Charlie Beige</td>
+                    <td>+1 555 222 3333</td>
+                    <td>charlie.beige@example.com</td>
+                </tr>
+            </tbody>
+        </table>
+    `,
+    ['contact-section']: `
+        <h3>Contact Us</h3>
+        <p>Email: <a href="mailto:info@example.com">info@example.com</a></p>
+        <p>Phone: +1 234 567 890</p>
+        <p>Address: 123 Example Street, 10115 Berlin</p>
+        <form>
+            <input type="text" placeholder="Your Name" /><br/>
+            <input type="email" placeholder="Your Email" /><br/>
+            <textarea placeholder="Your Message"></textarea><br/>
+            <button type="submit">Send</button>
+        </form>
+    `,
 }
 
 function createSlotsFromObject(obj: { [key: string]: string }) {
@@ -30,24 +68,43 @@ const meta: Meta<typeof Accordion> = {
       return { args };
     },
     template: `
-      <Accordion :name="args.name" :items="args.items">
+      <Accordion v-bind="args">
           ${createSlotsFromObject(accordionContent)}
       </Accordion>
     `
   }),
 };
 
+const items = [
+  { name: 'home-section', title: 'Home' },
+  { name: 'team-section', title: 'Team', flush: true },
+  { name: 'contact-section', title: 'Contact' },
+];
+
 export default meta;
 type Story = StoryObj<typeof Accordion>;
+
+export const Default: Story = {
+    args: {
+        name: 'default-accordion',
+        items,
+    }
+}
+
+export const Flush: Story = {
+    args: {
+        name: 'flush-accordion',
+        items,
+        open: true,
+        flush: true,
+        flushBody: true,
+    }
+}
 
 export const Dynamic: Story = {
   args: {
     name: 'dynamic-accordion',
-    items: [
-      { name: 'home-section', title: 'Home' },
-      { name: 'about-section', title: 'About' },
-      { name: 'contact-section', title: 'Contact' },
-    ],
+    items,
   },
   play: async ({ canvas }) => {
     
