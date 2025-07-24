@@ -97,7 +97,6 @@ export const Flush: Story = {
         items,
         open: true,
         flush: true,
-        flushBody: true,
     }
 }
 
