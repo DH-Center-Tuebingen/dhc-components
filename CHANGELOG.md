@@ -2,3 +2,4 @@
 
 ## Added
 + Accordion & AccordionItem
++ Loading Spinner

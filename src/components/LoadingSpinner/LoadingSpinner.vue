@@ -1,11 +1,17 @@
 <template>
-    <FontAwesomeIcon
-        :icon="faCircleNotch"
-        :class="classes"
-    />
+    <!-- The spinner is wrapped in a div so that it can be centered with the css transforms without breaking the spin animation -->
+    <div class="loading-spinner">
+        <FontAwesomeIcon
+            :icon="faCircleNotch"
+            :class="classes"
+        />
+    </div>
 </template>
 
-<script lang="ts" setup>
+<script
+    lang="ts"
+    setup
+>
     import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
     import { faCircleNotch } from '@fortawesome/free-solid-svg-icons'
     import { computed } from 'vue';
