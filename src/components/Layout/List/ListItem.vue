@@ -51,7 +51,7 @@
     }>();
 
     const emit = defineEmits<{
-        (e: 'executed', item: ListItem): void;
+        (e: 'executed', item: ListItem, success: boolean): void;
     }>();
 
     const executing: Ref<boolean> = ref(false);
@@ -75,19 +75,22 @@
         if(item.action) {
             const action = item.action;
             executing.value = true;
+            let successfulExecution = false;
             try {
                 if(listExecutionContext?.wrapExecution) {
                     console.log('Wrapping execution');
                     await listExecutionContext.wrapExecution(async () => {
                         await action();
-                        emit('executed', item);
+                        successfulExecution = true;
                     });
                 } else {
                     await action();
+                    successfulExecution = true;
                 }
             } catch(error) {
                 console.error('Error executing action:', error);
             } finally {
+                emit('executed', item, successfulExecution);
                 executing.value = false;
             }
         }

@@ -13,7 +13,7 @@
             :index="index"
             :with-icons="props.withIcons"
             :disabled="forceDisableAll"
-            @executed="emit('executed', item)"
+            @executed="(item, success) => emit('executed', item, success)"
         />
     </div>
 </template>
@@ -41,7 +41,10 @@
     }>();
     
     const emit = defineEmits<{
-        (e: 'executed', item: ListItemType): void;
+        /**
+         * Executed is called after each action was executed, whether it was successful or not.
+         */
+        (e: 'executed', item: ListItemType, success: boolean): void;
     }>();
 
     const forceDisableAll = computed(() => {
@@ -70,10 +73,13 @@
         wrapExecution: async (action: () => Promise<void>) => {
             executionCount.value++;
             try {
+                console.log('START ACTION');
                 await action();
+                console.log('END ACTION');
             }
             finally {
                 executionCount.value--;
+                console.log('END EXECUTION');
             }
         },
     })

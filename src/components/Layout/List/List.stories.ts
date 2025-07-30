@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/vue3';
 
 import List from './List.vue';
-import { faCircleUser, faSliders } from '@fortawesome/free-solid-svg-icons';
+import { faBomb, faCircleUser, faSliders } from '@fortawesome/free-solid-svg-icons';
 
 const meta: Meta<typeof List> = {
     component: List,
@@ -54,14 +54,7 @@ export const WithIcons: Story = {
                 name: 'Logout',
             }
         ]
-    },
-    render: (args: any) => ({
-        components: { List },
-        setup() {
-            return { args };
-        },
-        template: '<List v-bind="args" />',
-    }),
+    }
 };
 
 export const Loading: Story = {
@@ -90,14 +83,7 @@ export const Loading: Story = {
                 },
             }
         ]
-    },
-    render: (args: any) => ({
-        components: { List },
-        setup() {
-            return { args };
-        },
-        template: '<List v-bind="args" />',
-    }),
+    }
 };
 
 export const LoadingDisableAll: Story = {
@@ -128,12 +114,29 @@ export const LoadingDisableAll: Story = {
             }
         ]
     },
-    render: (args: any) => ({
-        components: { List },
-        setup() {
-            return { args };
-        },
-        template: '<List v-bind="args" />',
-    }),
 };
+
+export const Exception: Story = {
+    args: {
+        disableAll: true, // Set to true to disable the entire list
+        withIcons: true, // Set to true to show icons
+        onExecuted: (item: any) => {
+            console.error('An error occurred while executing:', item);
+        },
+        // Add props here
+        items: [
+            {
+                name: 'Exception',
+                icon: faBomb,
+                action: async () => {
+                    throw new Error('This is an exception');
+                },
+            },
+        ]
+    },
+};
+
+
+
+
 
