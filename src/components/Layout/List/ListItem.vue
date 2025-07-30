@@ -49,6 +49,10 @@
         withIcons?: boolean;
         disabled?: boolean;
     }>();
+    
+    const emit = defineEmits<{
+        (e: 'executed', item: ListItem): void;
+    }>();
 
     const executing = ref(false);
 
@@ -76,6 +80,7 @@
                     console.log('Wrapping execution');
                     await listExecutionContext.wrapExecution(async () => {
                         await action();
+                        emit('executed', item);
                     });
                 } else {
                     await action();

@@ -13,6 +13,7 @@
             :index="index"
             :with-icons="props.withIcons"
             :disabled="forceDisableAll"
+            @executed="emit('executed', item)"
         />
     </div>
 </template>
@@ -30,11 +31,17 @@
     import ListItem from './ListItem.vue';
     import { readonly } from 'vue';
 
-
     const props = defineProps<{
+        /** Specifies if icons should be displayed. Items that do not have an icon will be indented to match the items with icon. */
         withIcons?: boolean;
+        /** List of items to display in the list. */
         items: ListItemType[];
+        /** Disables all items in the list when a single item is executing an action. */
         disableAll?: boolean;
+    }>();
+    
+    const emit = defineEmit<{
+        (e: 'executed', item: ListItemType): void;
     }>();
 
     const forceDisableAll = computed(() => {
