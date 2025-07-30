@@ -40,7 +40,7 @@
         disableAll?: boolean;
     }>();
     
-    const emit = defineEmit<{
+    const emit = defineEmits<{
         (e: 'executed', item: ListItemType): void;
     }>();
 

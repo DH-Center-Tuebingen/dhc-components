@@ -41,7 +41,7 @@
     import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
     import { ListItem, ListExecutionContext } from '@/types/List'
 
-    import { computed, ref, inject, type Ref } from 'vue';
+    import { computed, ref, inject, type ComputedRef, type Ref } from 'vue';
     import LoadingSpinner from '@/components/LoadingSpinner/LoadingSpinner.vue';
 
     const props = defineProps<{
@@ -49,23 +49,23 @@
         withIcons?: boolean;
         disabled?: boolean;
     }>();
-    
+
     const emit = defineEmits<{
         (e: 'executed', item: ListItem): void;
     }>();
 
-    const executing = ref(false);
+    const executing: Ref<boolean> = ref(false);
 
-    const loading = computed(() => {
+    const loading: ComputedRef<boolean> = computed(() => {
         return props.item.loading || executing.value;
     });
 
-    const disabled = computed(() => {
+    const disabled: ComputedRef<boolean> = computed(() => {
         return props.disabled || props.item.disabled || loading.value;
     });
 
-    const listExecutionContext = inject<ListExecutionContext>('list-execution-context');    
-    const exec = async (event: MouseEvent, item: ListItem) => {
+    const listExecutionContext = inject<ListExecutionContext>('list-execution-context');
+    const exec = async (event: MouseEvent, item: ListItem): Promise<void> => {
         if(item.routerLink) {
             return;
         }
