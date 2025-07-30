@@ -13,29 +13,37 @@
             :key="item"
         >
             <component
-                :is="item.routerLink ? 'router-link' : 'a'"
+                :is="item.routerLink ? 'router-link' : 'button'"
                 href="#"
                 class="list-group-item list-group-item-action"
-                @click="item.action"
+                type="button"
+                :to="item.routerLink"
+                @click="(event: MouseEvent) => exec(event, item)"
             >
-                <FontAwesomeIcon
-                    v-if="item.icon"
-                    :icon="item.icon"
-                    class="me-2"
-                />
-                <span v-else
-                      class="d-inline-block me-2"
-                      style="width: 16px;"
-                >
-                &nbsp;
-                </span>
+                <template v-if="props.withIcons">
+                    <FontAwesomeIcon
+                        v-if="item.icon"
+                        :icon="item.icon"
+                        class="me-2"
+                    />
+                    <span
+                        v-else
+                        class="d-inline-block me-2"
+                        style="width: 16px;"
+                    >
+                        &nbsp;
+                    </span>
+                </template>
                 {{ item.name }}
             </component>
         </template>
     </div>
 </template>
 
-<script setup lang="ts">
+<script
+    setup
+    lang="ts"
+>
     import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
     import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
@@ -47,7 +55,17 @@
         action?: Function;
     }
 
-    defineProps<{
+    const props = defineProps<{
+        withIcons?: boolean;
         items: ListItem[];
     }>();
+    
+    const exec = (event: MouseEvent, item: ListItem) => {
+        if(item.routerLink) {return;}
+        event.preventDefault();
+        event.stopPropagation();
+        if (item.action) {
+            item.action();
+        } 
+    }
 </script>

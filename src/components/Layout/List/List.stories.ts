@@ -36,3 +36,31 @@ export const Default: Story = {
         template: '<List v-bind="args" />',
     }),
 };
+
+export const WithIcons: Story = {
+    args: {
+        withIcons: true, // Set to true to show icons
+        // Add props here
+        items: [
+            {
+                name: 'Profile',
+                icon: faCircleUser,
+            },
+            {
+                name: 'Settings',
+                icon: faSliders,
+            },
+            {
+                name: 'Logout',
+            }
+        ]
+    },
+    render: (args: any) => ({
+        components: { List },
+        setup() {
+            return { args };
+        },
+        template: '<List v-bind="args" />',
+    }),
+};
+
