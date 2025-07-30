@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/vue3';
 
 import List from './List.vue';
-import {  faCircleUser, faSliders } from '@fortawesome/free-solid-svg-icons';
+import { faCircleUser, faSliders } from '@fortawesome/free-solid-svg-icons';
 
 const meta: Meta<typeof List> = {
     component: List,
@@ -52,6 +52,79 @@ export const WithIcons: Story = {
             },
             {
                 name: 'Logout',
+            }
+        ]
+    },
+    render: (args: any) => ({
+        components: { List },
+        setup() {
+            return { args };
+        },
+        template: '<List v-bind="args" />',
+    }),
+};
+
+export const Loading: Story = {
+    args: {
+        withIcons: true, // Set to true to show icons
+        // Add props here
+        items: [
+            {
+                name: 'Profile',
+                icon: faCircleUser,
+                action: async () => {
+                    await new Promise(resolve => setTimeout(resolve, 2000));
+                },
+            },
+            {
+                name: 'Settings',
+                icon: faSliders,
+                action: async () => {
+                    await new Promise(resolve => setTimeout(resolve, 2000));
+                },
+            },
+            {
+                name: 'Upload',
+                action: async () => {
+                    await new Promise(resolve => setTimeout(resolve, 2000));
+                },
+            }
+        ]
+    },
+    render: (args: any) => ({
+        components: { List },
+        setup() {
+            return { args };
+        },
+        template: '<List v-bind="args" />',
+    }),
+};
+
+export const LoadingDisableAll: Story = {
+    args: {
+        disableAll: true, // Set to true to disable the entire list
+        withIcons: true, // Set to true to show icons
+        // Add props here
+        items: [
+            {
+                name: 'Profile',
+                icon: faCircleUser,
+                action: async () => {
+                    await new Promise(resolve => setTimeout(resolve, 2000));
+                },
+            },
+            {
+                name: 'Settings',
+                icon: faSliders,
+                action: async () => {
+                    await new Promise(resolve => setTimeout(resolve, 2000));
+                },
+            },
+            {
+                name: 'Upload',
+                action: async () => {
+                    await new Promise(resolve => setTimeout(resolve, 2000));
+                },
             }
         ]
     },
