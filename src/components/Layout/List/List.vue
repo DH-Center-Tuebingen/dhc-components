@@ -21,10 +21,12 @@
     setup
     lang="ts"
 >
-    import type { ListExecutionContext } from '@/types/List';
+    import type { 
+        ListItem as ListItemType, 
+        ListExecutionContext, 
+    } from '@/types/List';
 
     import { computed, provide, ref } from 'vue';
-    import type { ListItem as ListItemType } from './ListItem.vue';
     import ListItem from './ListItem.vue';
     import { readonly } from 'vue';
 
