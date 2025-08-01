@@ -1,0 +1,123 @@
+{
+    "time": {
+        "label": "Time",
+        "units": {
+            "second": "Seconds",
+            "minute": "Minutes",
+            "hour": "Hours",
+            "day": "Days",
+            "year": "Years"
+        }
+    },
+    "length": {
+        "label": "Length",
+        "units": {
+            "nanometre": "Nanometre",
+            "micrometre": "Micrometre",
+            "millimetre": "Millimetre",
+            "centimetre": "Centimetre",
+            "decimetre": "Decimetre",
+            "metre": "Metre",
+            "decametre": "Decametre",
+            "hectometre": "Hectometre",
+            "kilometre": "Kilometre",
+            "inch": "Inch",
+            "feet": "Feet",
+            "yard": "Yards",
+            "mile": "Miles"
+        }
+    },
+    "area": {
+        "label": "Area",
+        "units": {
+            "square_centimetre": "Square centimetre",
+            "square_metre": "Square metre",
+            "square_kilometre": "Square kilometre",
+            "square_inch": "Square inch",
+            "square_feet": "Square feet",
+            "square_yard": "Square yard",
+            "acre": "Acre",
+            "square_mile": "Square mile"
+        }
+    },
+    "volume": {
+        "label": "Volume",
+        "units": {
+            "millilitre": "Millilitre",
+            "litre": "Litre",
+            "cubic_centimetre": "Cubic centimetre",
+            "cubic_decimetre": "Litre | Cubic decimetre",
+            "cubic_metre": "Cubic metre",
+            "cubic_kilometre": "Cubic kilometre",
+            "fluid_ounce_us": "Fluid ounce (US)",
+            "pint_us": "Pint (US)",
+            "cup_us": "Cup (US)",
+            "gallon_us": "Gallon (US)",
+            "cubic_mile": "Cubic mile"
+        }
+    },
+    "mass": {
+        "label": "Mass",
+        "units": {
+            "milligram": "Milligram",
+            "gram": "Gram",
+            "kilogram": "Kilogram",
+            "ton": "Tons",
+            "ounce": "Ounce",
+            "pound": "Pound"
+        }
+    },
+    "force": {
+        "label": "Force",
+        "units": {
+            "newton": "Newton",
+            "kilonewton": "Kilonewton"
+        }
+    },
+    "temperature": {
+        "label": "Temperature",
+        "units": {
+            "celsius": "Celsius",
+            "kelvin": "Kelvin",
+            "fahrenheit": "Fahrenheit",
+            "réaumur": "Réaumur"
+        }
+    },
+    "volumetric_flow": {
+        "label": "Volumetric Flow",
+        "units": {
+            "cubic_metre_per_second": "Cubic metre per second",
+            "litre_per_second": "Litre per second"
+        }
+    },
+    "speed": {
+        "label": "Speed",
+        "units": {
+            "metre_per_second": "Metre per second",
+            "kilometre_per_hour": "Kilometre per hour",
+            "mile_per_hour": "Mile per hour"
+        }
+    },
+    "pressure": {
+        "label": "Pressure",
+        "units": {
+            "pascal": "Pascal",
+            "kilopascal": "Kilopascal",
+            "hectopascal": "Hectopascal",
+            "bar": "Bar",
+            "decibar": "Decibar",
+            "millibar": "Millibar",
+            "torr": "Torr",
+            "technical_atmosphere": "Technical atmosphere",
+            "standard_atmosphere": "Standard atmosphere",
+            "pound_per_square_inch": "Pound per square inch"
+        }
+    },
+    "quotient": {
+        "label": "Quotient",
+        "units": {
+            "percent": "Percent",
+            "parts_per_million": "Parts per million"
+        }
+    }
+}

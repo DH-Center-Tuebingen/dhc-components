@@ -2,6 +2,7 @@ import {
     setLocale,
     number,
     string,
+    object,
 } from 'yup';
 
 import { initI18n } from '../../../i18n/i18n';
@@ -33,4 +34,5 @@ export {
     number,
     integer,
     string,
+    object,
 };

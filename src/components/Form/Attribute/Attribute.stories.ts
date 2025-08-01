@@ -1,6 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/vue3';
 
 import Attribute from './Attribute.vue';
+import { AttributeProps } from './definitions';
+import { SiUnitProps } from '../SiUnit/definitions';
 
 const meta: Meta<typeof Attribute> = {
   component: Attribute,
@@ -55,6 +57,22 @@ export const Date_Range: Story = {
         defaultValue: 13.37,
         type: 'daterange',
         name: 'DateRangeAttribute',
+        debug: true,
+    },
+};
+
+export const Si_Unit: StoryObj<SiUnitProps | AttributeProps> = {
+    args: {
+        disabled: false,
+        defaultValue: {
+            value: 10,
+            unit: 'pascal'
+        },
+        type: 'si-unit',
+        metadata: {
+            si_baseunit: 'pressure',
+        },
+        name: 'SiUnitAttribute',
         debug: true,
     },
 };

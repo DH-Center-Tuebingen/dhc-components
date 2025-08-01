@@ -53,7 +53,6 @@
     import { computed, ModelRef, useSlots } from 'vue';
     import LoadingSpinner from '@/components/LoadingSpinner/LoadingSpinner.vue';
 
-
     const slots = useSlots();
 
     const value: ModelRef<boolean | undefined, string> = defineModel();

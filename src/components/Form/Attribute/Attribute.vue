@@ -4,6 +4,7 @@
             :is="attributeType"
             :mode="attributeSubtype"
             :default-value="defaultValue"
+            :metadata="metadata"
             :name="name"
             :disabled="disabled"
             :required="required"
@@ -29,6 +30,7 @@
     import Date from '../Datepicker/Datepicker.vue';
     import Double from '../Double/Double.vue';
     import Integer from '../Integer/Integer.vue';
+    import SiUnit from '../SiUnit/SiUnit.vue';
     import String from '../String/String.vue';
 
     import { initI18n } from '../../../i18n/i18n';
@@ -46,6 +48,7 @@
         disabled: false,
         required: false,
         defaultValue: '',
+        metadata: {},
         type: 'string',
         debug: false,
     });
@@ -57,6 +60,7 @@
         daterange: Date,
         double: Double,
         integer: Integer,
+        'si-unit': SiUnit,
         string: String,
     };
 

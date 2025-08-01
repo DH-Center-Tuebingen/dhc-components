@@ -1,8 +1,7 @@
-export interface DatepickerProps {
-    name?: string,
+import { baseAttributeProps } from '../Attribute/definitions';
+
+export interface DatepickerProps extends baseAttributeProps {
     mode?: string,
-    disabled?: boolean,
-    required?: boolean,
     defaultValue: string | Array<string> | null,
 }
 

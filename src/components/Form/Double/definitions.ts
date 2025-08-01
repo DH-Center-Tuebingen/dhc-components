@@ -1,6 +1,5 @@
-export interface DoubleProps {
-    name?: string,
-    disabled?: boolean,
-    required?: boolean,
+import { baseAttributeProps } from '../Attribute/definitions';
+
+export interface DoubleProps extends baseAttributeProps {
     defaultValue: number | string,
 }

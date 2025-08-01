@@ -1,6 +1,5 @@
-export interface StringProps {
-    name?: string,
-    disabled?: boolean,
-    required?: boolean,
+import { baseAttributeProps } from '../Attribute/definitions';
+
+export interface StringProps extends baseAttributeProps {
     defaultValue: string,
 }

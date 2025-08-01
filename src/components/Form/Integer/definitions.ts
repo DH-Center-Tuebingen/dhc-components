@@ -1,6 +1,5 @@
-export interface IntegerProps {
-    name?: string,
-    disabled?: boolean,
-    required?: boolean,
+import { baseAttributeProps } from '../Attribute/definitions';
+
+export interface IntegerProps extends baseAttributeProps {
     defaultValue: number | string,
 }
