@@ -12,7 +12,8 @@
 
 <script setup lang="ts">
     import Container from '../Container/Container.vue';
-    import List, { ListItem } from '../List/List.vue';
+    import List from '../List/List.vue';
+    import type { ListItem } from '@/types/List';
 
     type MenuSection = {
         name: string;
