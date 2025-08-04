@@ -35,7 +35,7 @@
                         {{ siSymbolToStr(unit.symbol) }}
                     </span>
                     <span
-                        :class="{ 'text-light text-opacity-75': unit.label == validatedUnit?.label, 'text-muted': unit.label != validatedUnit?.label }"
+                        :class="{ 'text-light text-opacity-75': unit.label == validatedUnit?.label, 'text-body-secondary': unit.label != validatedUnit?.label }"
                     >
                         {{ t(`${unitGrp}.units.${unit.label}`) }}
                     </span>

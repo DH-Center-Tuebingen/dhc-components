@@ -15,7 +15,7 @@
                         for="username"
                         class="mb-2"
                     >
-                        <i class="text-muted fas fa-fw fa-user me-2"></i>
+                        <i class="text-body-secondary fas fa-fw fa-user me-2"></i>
                         {{ t('login.email_or_nick') }}
                     </label>
 
@@ -40,7 +40,7 @@
                         for="password"
                         class="mb-2"
                     >
-                        <i class="text-muted fas fa-fw fa-unlock-alt me-2"></i>
+                        <i class="text-body-secondary fas fa-fw fa-unlock-alt me-2"></i>
                         {{ t('login.password') }}
                     </label>
 

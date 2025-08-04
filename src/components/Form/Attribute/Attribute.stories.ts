@@ -82,6 +82,16 @@ export const Date_Range: Story = {
     },
 };
 
+export const List: Story = {
+    args: {
+        disabled: false,
+        defaultValue: ['A', 'B', 'C'],
+        type: 'list',
+        name: 'ListAttribute',
+        debug: true,
+    },
+};
+
 export const Si_Unit: StoryObj<SiUnitProps | AttributeProps> = {
     args: {
         disabled: false,

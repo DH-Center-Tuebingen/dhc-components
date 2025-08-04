@@ -1,4 +1,4 @@
-export type AttributeTypeDef = 'boolean' | 'date' | 'daterange' | 'double' | 'integer' | 'si-unit' | 'string' | 'stringfield';
+export type AttributeTypeDef = 'boolean' | 'date' | 'daterange' | 'double' | 'integer' | 'list' | 'si-unit' | 'string' | 'stringfield';
 
 export interface baseAttributeProps {
     defaultValue: any,

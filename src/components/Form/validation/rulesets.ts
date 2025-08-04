@@ -1,8 +1,9 @@
 import {
-    setLocale,
+    array,
     number,
-    string,
     object,
+    string,
+    setLocale,
 } from 'yup';
 
 import { initI18n } from '../../../i18n/i18n';
@@ -31,8 +32,9 @@ setLocale({
 const integer = () => number().integer();
 
 export {
-    number,
+    array,
     integer,
-    string,
+    number,
     object,
+    string,
 };

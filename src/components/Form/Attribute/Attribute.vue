@@ -16,7 +16,7 @@
             v-if="debug"
             class="font-monospace d-flex flex-column rounded-3 bg-danger bg-opacity-10 mt-3 py-2 px-3"
         >
-            <span class="text-muted">Debug</span>
+            <span class="text-body-secondary">Debug</span>
             <span>Value: {{ eventData.value }}</span>
             <span>Valid: {{ eventData.valid }}</span>
             <span>Dirty: {{ eventData.dirty }}</span>
@@ -32,6 +32,7 @@
     import Date from '../Datepicker/Datepicker.vue';
     import Double from '../Double/Double.vue';
     import Integer from '../Integer/Integer.vue';
+    import List from '../List/List.vue';
     import SiUnit from '../SiUnit/SiUnit.vue';
     import String from '../String/String.vue';
     import Stringfield from '../Stringfield/Stringfield.vue';
@@ -64,6 +65,7 @@
         daterange: Date,
         double: Double,
         integer: Integer,
+        list: List,
         'si-unit': SiUnit,
         string: String,
         stringfield: Stringfield,

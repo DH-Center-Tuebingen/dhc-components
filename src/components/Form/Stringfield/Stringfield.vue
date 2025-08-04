@@ -8,7 +8,7 @@
             :name="name"
             @input="handleInput"
         />
-        <div class="text-muted small text-end">
+        <div class="text-body-secondary small text-end">
             {{ t('words') }}: {{ wordCount }} ({{ validatedValue.length }})
         </div>
         <div class="invalid-feedback">
