@@ -6,6 +6,7 @@
         <button
             class="btn btn-sm rounded-start-pill flex-grow-0 px-3"
             :class="selectionBtnClasses"
+            :disabled="disabled"
             @click="handleChange(false)"
         >
             <span v-if="isSelected">
@@ -25,7 +26,7 @@
             </span>
         </button>
         <button
-            v-if="isSet"
+            v-if="isSet && !disabled"
             class="btn btn-sm btn-outline-secondary flex-grow-0 px-3"
             :class="unsetBtnClasses"
             @click="handleUnset"
@@ -66,10 +67,10 @@
     import { BooleanProps } from './definitions';
 
     const props = withDefaults(defineProps<BooleanProps>(), {
-        name: 'Integer',
+        name: 'Boolean',
         disabled: false,
         required: false,
-        defaultValue: '',
+        defaultValue: null,
         showText: false,
     });
 
@@ -86,8 +87,8 @@
     };
     const i18n = initI18n(messages);
     const t = i18n.global.t;
-    const initialValue = ref<boolean | null>(false);
-    const currentValue = ref<boolean | null>(false);
+    const initialValue = ref<boolean | null>(null);
+    const currentValue = ref<boolean | null>(null);
 
     const isSelected = computed(() => currentValue.value === true);
     const isNotSelected = computed(() => currentValue.value === false);
@@ -117,7 +118,13 @@
     })
 
     const trueify = (value: boolean | string | null) => {
-        return value === 'true' || value === true || value === '1';
+        if(value === 'true' || value === true || value === '1') {
+            return true;
+        } else if(value === 'false' || value === false || value === '0') {
+            return false;
+        }
+
+        return null;
     };
 
     const reset = (value: boolean | string | null) => {
