@@ -56,7 +56,7 @@ export const Double: Story = {
 export const Date: Story = {
     args: {
         disabled: false,
-        defaultValue: 13.37,
+        defaultValue: '2025-03-10',
         type: 'date',
         name: 'DateAttribute',
         debug: true,
@@ -66,7 +66,7 @@ export const Date: Story = {
 export const Date_Range: Story = {
     args: {
         disabled: false,
-        defaultValue: 13.37,
+        defaultValue: ['2025-03-10', '2025-04-01'],
         type: 'daterange',
         name: 'DateRangeAttribute',
         debug: true,
