@@ -1,15 +1,16 @@
 <template>
     <div class="was-validated">
-        <input
+        <textarea
             :id="name"
             v-model="validatedValue"
             class="form-control"
-            type="text"
-            placeholder="…"
             :disabled="disabled"
             :name="name"
             @input="handleInput"
-        >
+        />
+        <div class="text-muted small text-end">
+            {{ t('words') }}: {{ wordCount }} ({{ validatedValue.length }})
+        </div>
         <div class="invalid-feedback">
             <span
                 v-for="(msg, i) in validationErrors"
@@ -22,7 +23,7 @@
 </template>
 
 <script setup lang="ts">
-    import { onMounted } from 'vue';
+    import { computed, onMounted } from 'vue';
 
     import { useField } from 'vee-validate';
 
@@ -33,14 +34,14 @@
     import * as de from './i18n/de.json';
     import * as en from './i18n/en.json';
 
-    import { StringProps } from './definitions';
+    import { StringfieldProps } from './definitions';
 
     onMounted(() => {
         setInitialValue();
     });
 
-    const props = withDefaults(defineProps<StringProps>(), {
-        name: 'String',
+    const props = withDefaults(defineProps<StringfieldProps>(), {
+        name: 'Stringfield',
         disabled: false,
         required: false,
         defaultValue: '',
@@ -54,6 +55,10 @@
     };
     const i18n = initI18n(messages);
     const t = i18n.global.t;
+
+    const wordCount = computed(() => {
+        return (validatedValue.value.match(/\b\w+\b/g) || []).length;
+    });
 
     const setInitialValue = () => {
         return props.defaultValue || '';
@@ -74,7 +79,7 @@
     const handleInput = (event: Event) => {
         const target = event.currentTarget as HTMLInputElement;
         handleChange(target.value);
-        console.log("[String] changed value to", meta.valid, meta.dirty, validatedValue.value);
+        console.log("[Stringfield] changed value to", meta.valid, meta.dirty, validatedValue.value);
         emit('change', {
             valid: meta.valid,
             dirty: meta.dirty,
@@ -92,7 +97,7 @@
         meta,
         resetField,
         handleChange,
-    } = useField(`string_${props.name}`, rules, {
+    } = useField(`stringfield_${props.name}`, rules, {
         initialValue: setInitialValue(),
     });
 </script>
