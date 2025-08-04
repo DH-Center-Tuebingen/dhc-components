@@ -136,13 +136,17 @@
         initialValue.value = currentValue.value;
     };
 
-    const handleUnset = () => {
-        currentValue.value = null;
+    const emitChange = () => {
         emit('change', {
             valid: true,
-            dirty: currentValue.value === initialValue.value,
+            dirty: currentValue.value !== initialValue.value,
             value: currentValue.value,
         });
+    }
+
+    const handleUnset = () => {
+        currentValue.value = null;
+        emitChange();
     };
 
     const handleChange = (defaultValue: boolean) => {
@@ -151,11 +155,7 @@
         } else {
             currentValue.value = !currentValue.value;
         }
-        emit('change', {
-            valid: true,
-            dirty: currentValue.value === initialValue.value,
-            value: currentValue.value,
-        });
+        emitChange();
     };
 </script>
 
