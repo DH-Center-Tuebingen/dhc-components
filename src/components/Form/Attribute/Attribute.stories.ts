@@ -3,6 +3,7 @@ import type { Meta, StoryObj } from '@storybook/vue3';
 import Attribute from './Attribute.vue';
 import { AttributeProps } from './definitions';
 import { SiUnitProps } from '../SiUnit/definitions';
+import { BooleanProps } from '../Boolean/definitions';
 
 const meta: Meta<typeof Attribute> = {
   component: Attribute,
@@ -27,6 +28,17 @@ export const Integer: Story = {
         defaultValue: 42,
         type: 'integer',
         name: 'IntegerAttribute',
+        debug: true,
+    },
+};
+
+export const Boolean: StoryObj<BooleanProps | AttributeProps> = {
+    args: {
+        disabled: false,
+        defaultValue: true,
+        type: 'boolean',
+        name: 'BooleanAttribute',
+        showText: true,
         debug: true,
     },
 };

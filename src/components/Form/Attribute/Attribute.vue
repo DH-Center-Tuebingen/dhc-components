@@ -5,6 +5,7 @@
             :mode="attributeSubtype"
             :default-value="defaultValue"
             :metadata="metadata"
+            :show-text="showText"
             :name="name"
             :disabled="disabled"
             :required="required"
@@ -27,6 +28,7 @@
     import { computed, onMounted, ref } from 'vue';
     import type { Component } from 'vue';
 
+    import Boolean from '../Boolean/Boolean.vue';
     import Date from '../Datepicker/Datepicker.vue';
     import Double from '../Double/Double.vue';
     import Integer from '../Integer/Integer.vue';
@@ -56,6 +58,7 @@
     const emit = defineEmits(['change']);
 
     const registeredAttributes: Record<AttributeTypeDef, Component> = {
+        boolean: Boolean,
         date: Date,
         daterange: Date,
         double: Double,
