@@ -42,12 +42,12 @@
                 </a>
             </div>
             <div class="invalid-feedback">
-                <span
+                <div
                     v-for="(msg, i) in combinedErrors"
-                    :key="i"
+                    :key="`error-${props.name}-${i}`"
                 >
                     {{ msg }}
-                </span>
+                </div>
             </div>
         </div>
     </div>
@@ -205,7 +205,6 @@
             // baseunit: unitGrp,
         };
     });
-    console.log(groupUnits.value)
 </script>
 
 <style lang="scss" scoped>

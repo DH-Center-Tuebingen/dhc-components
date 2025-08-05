@@ -30,6 +30,7 @@
 
     import Boolean from '../Boolean/Boolean.vue';
     import Date from '../Datepicker/Datepicker.vue';
+    import Dimension from '../Dimension/Dimension.vue';
     import Double from '../Double/Double.vue';
     import Integer from '../Integer/Integer.vue';
     import List from '../List/List.vue';
@@ -63,6 +64,7 @@
         boolean: Boolean,
         date: Date,
         daterange: Date,
+        dimension: Dimension,
         double: Double,
         integer: Integer,
         list: List,

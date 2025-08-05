@@ -62,6 +62,21 @@ export const Double: Story = {
     },
 };
 
+export const Dimension: Story = {
+    args: {
+        disabled: false,
+        defaultValue: {
+            B: 1,
+            H: 2,
+            T: 3,
+            unit: 'm'
+        },
+        type: 'dimension',
+        name: 'DimensionAttribute',
+        debug: true,
+    },
+};
+
 export const Date: Story = {
     args: {
         disabled: false,

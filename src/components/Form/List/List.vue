@@ -98,12 +98,12 @@
             </li>
         </ul>
         <div class="invalid-feedback">
-            <span
+            <div
                 v-for="(msg, i) in validationErrors"
-                :key="i"
+                :key="`error-${props.name}-${i}`"
             >
                 {{ msg }}
-            </span>
+            </div>
         </div>
     </div>
 </template>

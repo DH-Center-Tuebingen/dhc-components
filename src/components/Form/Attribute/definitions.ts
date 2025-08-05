@@ -1,4 +1,16 @@
-export type AttributeTypeDef = 'boolean' | 'date' | 'daterange' | 'double' | 'integer' | 'list' | 'si-unit' | 'string' | 'stringfield';
+const attributeTypes = [
+    'boolean',
+    'date',
+    'daterange',
+    'dimension',
+    'double',
+    'integer',
+    'list',
+    'si-unit',
+    'string',
+    'stringfield',
+] as const;
+export type AttributeTypeDef = typeof attributeTypes[number];
 
 export interface baseAttributeProps {
     defaultValue: any,
