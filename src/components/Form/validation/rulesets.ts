@@ -29,6 +29,8 @@ setLocale({
     }
 });
 
+const url = () => string().url();
+
 const integer = () => number().integer();
 
 export {
@@ -37,4 +39,5 @@ export {
     number,
     object,
     string,
+    url,
 };

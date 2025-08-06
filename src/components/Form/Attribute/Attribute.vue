@@ -37,6 +37,7 @@
     import SiUnit from '../SiUnit/SiUnit.vue';
     import String from '../String/String.vue';
     import Stringfield from '../Stringfield/Stringfield.vue';
+    import Url from '../Url/Url.vue';
 
     import { initI18n } from '../../../i18n/i18n';
 
@@ -71,6 +72,7 @@
         'si-unit': SiUnit,
         string: String,
         stringfield: Stringfield,
+        url: Url,
     };
 
     const messages = {

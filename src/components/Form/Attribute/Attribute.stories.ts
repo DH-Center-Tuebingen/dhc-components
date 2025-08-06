@@ -31,6 +31,15 @@ export const Stringfield: Story = {
     },
 };
 
+export const Url: Story = {
+    args: {
+        disabled: false,
+        defaultValue: 'https://github.com/DH-Center-Tuebingen/Spacialist',
+        type: 'url',
+        debug: true,
+    },
+};
+
 export const Integer: Story = {
     args: {
         disabled: false,

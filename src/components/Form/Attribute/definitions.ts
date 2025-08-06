@@ -9,6 +9,7 @@ const attributeTypes = [
     'si-unit',
     'string',
     'stringfield',
+    'url',
 ] as const;
 export type AttributeTypeDef = typeof attributeTypes[number];
 
