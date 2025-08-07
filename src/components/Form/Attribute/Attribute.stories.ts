@@ -40,6 +40,18 @@ export const Url: Story = {
     },
 };
 
+export const Iconclass: Story = {
+    args: {
+        disabled: false,
+        defaultValue: '71H136',
+        type: 'iconclass',
+        metadata: {
+            language: 'fr',
+        },
+        debug: true,
+    },
+};
+
 export const Integer: Story = {
     args: {
         disabled: false,
@@ -112,6 +124,15 @@ export const List: Story = {
         defaultValue: ['A', 'B', 'C'],
         type: 'list',
         name: 'ListAttribute',
+        debug: true,
+    },
+};
+
+export const Rism: Story = {
+    args: {
+        disabled: false,
+        defaultValue: '653004410',
+        type: 'rism',
         debug: true,
     },
 };

@@ -32,8 +32,10 @@
     import Date from '../Datepicker/Datepicker.vue';
     import Dimension from '../Dimension/Dimension.vue';
     import Double from '../Double/Double.vue';
+    import Iconclass from '../Iconclass/Iconclass.vue';
     import Integer from '../Integer/Integer.vue';
     import List from '../List/List.vue';
+    import Rism from '../Rism/Rism.vue';
     import SiUnit from '../SiUnit/SiUnit.vue';
     import String from '../String/String.vue';
     import Stringfield from '../Stringfield/Stringfield.vue';
@@ -67,8 +69,10 @@
         daterange: Date,
         dimension: Dimension,
         double: Double,
+        iconclass: Iconclass,
         integer: Integer,
         list: List,
+        rism: Rism,
         'si-unit': SiUnit,
         string: String,
         stringfield: Stringfield,
