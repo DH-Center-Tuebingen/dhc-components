@@ -4,16 +4,24 @@ const attributeTypes = [
     'daterange',
     'dimension',
     'double',
+    'epoch',
     'iconclass',
     'integer',
     'list',
+    'range',
     'rism',
     'si-unit',
     'string',
     'stringfield',
+    'string-sc',
+    'string-mc',
+    'timeperiod',
     'url',
 ] as const;
 export type AttributeTypeDef = typeof attributeTypes[number];
+
+export type metaKeys = 'valid' | 'dirty' | 'value';
+export type metaValues = {valid: boolean, dirty: boolean, value: any};
 
 export interface baseAttributeProps {
     defaultValue: any,

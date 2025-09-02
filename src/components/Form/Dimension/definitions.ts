@@ -1,7 +1,5 @@
 import { baseAttributeProps } from '../Attribute/definitions';
 
-export type metaKeys = 'valid' | 'dirty' | 'value';
-export type metaValues = {valid: boolean, dirty: boolean, value: any};
 export type metaValueKeys = { B: number, H: number, T: number, unit: unitKeys};
 
 export const unitsAsArray = ['nm', 'µm', 'mm', 'cm', 'dm', 'm', 'km'] as const;

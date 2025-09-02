@@ -62,30 +62,29 @@
 
     defineProps<{
         options: SidebarOptions
-    }>()
+    }>();
 
-    const open = ref(true)
+    const open = ref(true);
 
-    const width = computed(() => open.value ? '30%' : '0')
-    const containerMaxWidth = computed(() => open.value ? '100%' : '0')
-    const minWidth = computed(() => open.value ? '300px' : '0')
+    const width = computed(() => open.value ? '30%' : '0');
+    const containerMaxWidth = computed(() => open.value ? '100%' : '0');
+    const minWidth = computed(() => open.value ? '300px' : '0');
 
     const toggle = () => {
-        open.value = !open.value
-        emits('changed', open.value)
-    }
+        open.value = !open.value;
+        emits('changed', open.value);
+    };
 
     const dynamicWrapperClasses = computed(() => {
         return {
             'border-start': open.value,
             'border-secondary': open.value,
-        }
-    })
+        };
+    });
 
     const dynamicButtonClasses = computed(() => {
         return {
             'border-end-0': open.value,
-        }
-    })
-
+        };
+    });
 </script>

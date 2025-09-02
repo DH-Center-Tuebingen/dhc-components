@@ -83,10 +83,12 @@
 
     import NumberBase from '../NumberBase/NumberBase.vue';
 
-    import { ChangeEvent } from '../Attribute/definitions';
+    import {
+        ChangeEvent,
+        metaValues,
+    } from '../Attribute/definitions';
     import {
             DimensionProps,
-            metaValues,
             unitsAsArray,
             dimKeys,
             unitKeys,
@@ -152,7 +154,7 @@
         }
     };
 
-    const reset = (value: Record<valueKeys, any>) => {
+    const reset = (value: metaValueKeys) => {
         value = value || props.defaultValue;
         widthInputRef.value?.reset(value?.B);
         heightInputRef.value?.reset(value?.H);
@@ -162,7 +164,7 @@
         });
     };
 
-    const undirty = (value: Record<valueKeys, any>) => {
+    const undirty = (value: metaValueKeys) => {
         value = value || meta.value;
         reset(value);
     };
@@ -170,7 +172,7 @@
     const setUnit = (unit: unitKeys) => {
         handleUnitChange(unit);
         emitChanges();
-    }
+    };
 
     const handleChange = (event: ChangeEvent, key: dimKeys) => {
         numberMetas.value[key].dirty = event.dirty;
@@ -185,7 +187,7 @@
             dirty: meta.value.dirty,
             value: meta.value.value,
         });
-    }
+    };
 
     const updateErrors = (errors: string[], key: dimKeys) => {
         validationErrors.value[key] = errors.slice();
@@ -207,12 +209,8 @@
 
     const combinedErrors = computed(() => {
         return Object.values(validationErrors.value).flat().concat(validationUnitErrors.value);
-        // return [
-        //     ...new Set(
-        //         Object.values(validationErrors.value).flat().concat(validationUnitErrors.value)
-        //     )
-        // ];
     });
+
     const meta = computed(() => {
         // only dimensions without unit need to pass validity check
         let isValid = true;

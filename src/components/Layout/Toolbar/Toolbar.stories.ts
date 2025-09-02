@@ -71,7 +71,7 @@ const toolGroups: Tool[][] = [
             }
         }
     ]
-]
+];
 
 export const Default: Story = {
     args: {
@@ -79,13 +79,10 @@ export const Default: Story = {
     },
 };
 
-
-
 export const Interactive: Story = {
     render: (args: any) => ({
         components: { Toolbar },
         setup() {
-
             const disabled = ref(false);
 
             const interactiveToolGroups: ComputedRef<Tool[][]> = computed(_ =>[
@@ -100,8 +97,7 @@ export const Interactive: Story = {
                         }
                     }
                 ],
-            ])
-
+            ]);
 
             return {
                 toolGroups: interactiveToolGroups,
@@ -109,7 +105,7 @@ export const Interactive: Story = {
             };
         },
         template: `
-        <Toolbar :toolGroups="toolGroups" :disabled="disabled"/> 
+        <Toolbar :toolGroups="toolGroups" :disabled="disabled"/>
         <button class="btn btn-primary btn-sm mt-2" @click="disabled = !disabled">Toggle Disabled: {{disabled ? 'disabled' : 'enabled'}}</button>
         `,
     }),

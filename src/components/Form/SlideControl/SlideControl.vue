@@ -7,10 +7,10 @@
 
     /**
      * Slider component for special purposes:
-     * 
+     *
      * + Vertical slider
      * + TBA
-     * 
+     *
      */
 
     const emit = defineEmits(['update:modelValue']);
@@ -49,8 +49,8 @@
     const origin = computed(() => {
         return props.origin ?? props.min;
     });
-    
-    
+
+
     const useOrigin = computed(() => {
         return props.origin != null;
     });
@@ -111,7 +111,7 @@
     // }
 
     const thumbStyle = computed(() => {
-        
+
         const thumbStyle: CSSProperties = {
             position: 'absolute',
             left: `${thumbPosition.value}%`,
@@ -174,7 +174,7 @@
         }
 
     })
-    
+
     const originStyle = computed(() => {
         const originStyle: CSSProperties = {
             position: 'absolute',

@@ -128,6 +128,21 @@ export const List: Story = {
     },
 };
 
+export const Range: Story = {
+    args: {
+        disabled: false,
+        defaultValue: 77,
+        type: 'range',
+        debug: true,
+        metadata: {
+            min: 0,
+            max: 100,
+            step: 1,
+            unit: '%',
+        }
+    },
+};
+
 export const Rism: Story = {
     args: {
         disabled: false,
@@ -149,6 +164,34 @@ export const Si_Unit: StoryObj<SiUnitProps | AttributeProps> = {
             si_baseunit: 'pressure',
         },
         name: 'SiUnitAttribute',
+        debug: true,
+    },
+};
+
+export const Timeperiod: Story = {
+    args: {
+        disabled: false,
+        defaultValue: {
+            startLabel: 'BC',
+            start: 10,
+            endLabel: 'AD',
+            end: 200,
+        },
+        type: 'timeperiod',
+        debug: true,
+    },
+};
+
+export const Epoch: Story = {
+    args: {
+        disabled: false,
+        defaultValue: {
+            startLabel: 'BC',
+            start: 10,
+            endLabel: 'AD',
+            end: 200,
+        },
+        type: 'epoch',
         debug: true,
     },
 };

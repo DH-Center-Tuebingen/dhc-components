@@ -1,0 +1,5 @@
+{
+    "start_label_after_end": "Startzeitraum kann nicht nach dem Endzeitraum liegen",
+    "start_after_end": "Das Startdatum muss vor dem Enddatum liegen",
+    "missing_combination": "Du kannst keinen Zeitraum ohne eine Jahreszahl angeben"
+}

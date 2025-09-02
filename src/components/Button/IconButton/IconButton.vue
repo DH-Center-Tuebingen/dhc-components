@@ -82,6 +82,7 @@
         small: false,
         unbutton: false,
     });
+
     function resolveIconProp(prop: string | IconDefinition, category: string) {
         if(typeof prop === 'string') {
             return `${category} fa-fw fa-${prop}`;
@@ -108,7 +109,7 @@
         const classes = [
             'btn',
             `btn-${isActive.value ? props.activeButtonClass : props.buttonClass}`,
-        ]
+        ];
 
         if(props.small) {
             classes.push('btn-sm');
@@ -125,7 +126,6 @@
             } else {
                 classes.push(`text-${props.activeButtonClass}`);
             }
-
         }
 
         return classes;

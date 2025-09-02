@@ -5,7 +5,7 @@
         ref="inputRef"
         class="form-control"
         type="number"
-        placeholder="0.0"
+        :placeholder="float ? '0.0' : '0'"
         :step="numberClassStep"
         :disabled="disabled"
         :name="name"
@@ -127,7 +127,6 @@
     });
 
     watch(validationErrors, () => {
-        console.log("validationErrors", validationErrors.value);
         emit('error', validationErrors.value);
     });
 

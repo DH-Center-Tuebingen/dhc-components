@@ -35,10 +35,13 @@
     import Iconclass from '../Iconclass/Iconclass.vue';
     import Integer from '../Integer/Integer.vue';
     import List from '../List/List.vue';
+    import Range from '../Range/Range.vue';
     import Rism from '../Rism/Rism.vue';
     import SiUnit from '../SiUnit/SiUnit.vue';
     import String from '../String/String.vue';
     import Stringfield from '../Stringfield/Stringfield.vue';
+    import Multiselect from '../Multiselect/Multiselect.vue';
+    import Timeperiod from '../Timeperiod/Timeperiod.vue';
     import Url from '../Url/Url.vue';
 
     import { initI18n } from '../../../i18n/i18n';
@@ -69,13 +72,18 @@
         daterange: Date,
         dimension: Dimension,
         double: Double,
+        epoch: Timeperiod,
         iconclass: Iconclass,
         integer: Integer,
         list: List,
+        range: Range,
         rism: Rism,
         'si-unit': SiUnit,
         string: String,
         stringfield: Stringfield,
+        'string-sc': Multiselect,
+        'string-mc': Multiselect,
+        timeperiod: Timeperiod,
         url: Url,
     };
 
@@ -99,6 +107,12 @@
     const attributeSubtype = computed(() => {
         if(props.type === 'daterange') {
             return 'range';
+        }
+        if(props.type === 'epoch') {
+            return 'epoch';
+        }
+        if(props.type === 'string-mc') {
+            return 'multiple';
         }
 
         return null;

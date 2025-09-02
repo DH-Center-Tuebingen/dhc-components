@@ -11,34 +11,36 @@ export default meta;
 
 type Story = StoryObj<typeof Multiselect>;
 
+const options: Array<any> = [
+    {
+        id: 1,
+        label: 'Apfel',
+    },
+    {
+        id: 2,
+        label: 'Birne',
+    },
+    {
+        id: 3,
+        label: 'Banane',
+    },
+    {
+        id: 4,
+        label: 'Kiwi',
+    }
+];
+
 export const Default: Story = {
   args: {
-    options: ['Apfel', 'Birne', 'Banane', 'Kiwi'],
-    modelValue: ['Apfel'],
+    options: options,
+    defaultValue: {id: 1, label: 'Apfel'},
   },
-  render: (args : any) => ({
-    components: { Multiselect },
-    setup() {
-        const model = ref(['Apfel']);
-        return { args, model };
-    },
-    template: '<Multiselect v-bind="args" v-model="model" />',
-  }),
 };
 
 export const Multiple: Story = {
     args: {
-      options: ['Apfel', 'Birne', 'Banane', 'Kiwi'],
-      modelValue: ['Birne', 'Kiwi'],
-      multiple: true,
+      options: options,
+      defaultValue: [{id: 2, label: 'Birne'}, {id: 4, label: 'Kiwi'}],
+      mode: 'multiple',
     },
-    render: (args : any) => ({
-      components: { Multiselect },
-      setup() {
-          
-          const model = ref(['Birne', 'Kiwi']);
-          return { args, model };
-      },
-      template: '<Multiselect v-bind="args" v-model="model" />',
-    }),
   };

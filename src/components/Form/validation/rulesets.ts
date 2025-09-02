@@ -1,5 +1,6 @@
 import {
     array,
+    mixed,
     number,
     object,
     string,
@@ -36,6 +37,7 @@ const integer = () => number().integer();
 export {
     array,
     integer,
+    mixed,
     number,
     object,
     string,
