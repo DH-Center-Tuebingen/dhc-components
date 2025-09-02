@@ -108,7 +108,7 @@
             H: 2,
             T: 2,
             unit: 'mm',
-        },
+        } as any,
     });
 
     const emit = defineEmits(['change']);
