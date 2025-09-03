@@ -1,17 +1,17 @@
 import type { IconDefinition, SizeProp } from '@fortawesome/fontawesome-svg-core';
 
-import { StackedIconProps } from '@/components/Layout/StackedIcon/definitions';
+import { StackedIcon } from '@/components/Layout/StackedIcon/definitions';
 
 export interface IconButtonProps {
     active?: boolean;
     activeButtonClass?: string;
-    activeIcon?: string | IconDefinition;
+    activeIcon?: string | IconDefinition | IconDefinition[];
     activeIconCategory?: string;
     buttonClass?: string;
     disabled?: boolean;
     fixedWidth?: boolean;
-    icon?: string | IconDefinition;
-    icons?: StackedIconProps;
+    icon?: string | IconDefinition | IconDefinition[];
+    icons?: StackedIcon;
     iconCategory?: string;
     loading?: boolean;
     size?: SizeProp;

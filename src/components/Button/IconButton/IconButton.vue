@@ -24,8 +24,19 @@
                     v-if="!isActive"
                     class="icon"
                 >
+                    <div
+                        v-if="hasMultipleIcons"
+                        class="icon-group d-flex gap-1"
+                    >
+                        <FontAwesomeIcon
+                            v-for="iconPart of icon"
+                            :key="iconPart"
+                            :icon="iconPart"
+                            :size="size"
+                        />
+                    </div>
                     <FontAwesomeIcon
-                        v-if="!isStackedIcon"
+                        v-else-if="!isStackedIcon"
                         :icon="icon"
                         :size="size"
                         :fixed-width="fixedWidth"
@@ -103,16 +114,30 @@
         emit('action');
     }
 
+    const hasMultipleIcons = computed(() => {
+        return Array.isArray(props.icon);
+    });
+
     const isStackedIcon = computed(() => {
         return !props.icon && props.icons?.items;
     });
 
     const icon = computed(() => {
-        return resolveIconProp(props.icon ?? '', props.iconCategory);
+        if(Array.isArray(props.icon)) {
+            return props.icon;
+        } else {
+            return resolveIconProp(props.icon ?? '', props.iconCategory);
+        }
     });
 
     const activeIcon = computed(() => {
-        return resolveIconProp(props.activeIcon ?? props.icon ?? '', props.activeIconCategory);
+        if(props.activeIcon && Array.isArray(props.activeIcon)) {
+            return props.activeIcon;
+        } else if(props.icon && Array.isArray(props.icon)) {
+            return props.icon;
+        } else {
+            return resolveIconProp(props.activeIcon ?? props.icon ?? '', props.activeIconCategory);
+        }
     });
 
     const buttonClass = computed(() => {

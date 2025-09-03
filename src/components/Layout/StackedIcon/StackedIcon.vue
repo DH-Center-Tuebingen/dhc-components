@@ -1,6 +1,6 @@
 <template>
     <div
-        class="icon-group d-flex gap-1"
+        class="fa-stack"
         :class="wrapperClasses"
     >
         <FontAwesomeIcon

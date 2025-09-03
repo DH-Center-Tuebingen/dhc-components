@@ -114,22 +114,22 @@
         {
             name: 'heading',
             action: () => heading(1),
-            icons: [faH, fa1],
+            icon: [faH, fa1],
         },
         {
             name: 'heading',
             action: () => heading(2),
-            icons: [faH, fa2],
+            icon: [faH, fa2],
         },
         {
             name: 'heading',
             action: () => heading(3),
-            icons: [faH, fa3],
+            icon: [faH, fa3],
         },
         {
             name: 'heading',
             action: () => heading(4),
-            icons: [faH, fa4],
+            icon: [faH, fa4],
         },
         {
             name: 'paragraph',

@@ -38,7 +38,7 @@
     export type Tool = {
         name: string,
         action: () => void,
-        icon?: IconDefinition,
+        icon?: IconDefinition | IconDefinition[],
         icons?: StackedIcon,
         class?: Ref<string>,
         disabled?: boolean
