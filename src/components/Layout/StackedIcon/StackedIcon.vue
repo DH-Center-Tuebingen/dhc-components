@@ -1,6 +1,5 @@
 <template>
     <div
-        class="fa-stack"
         :class="wrapperClasses"
     >
         <FontAwesomeIcon
