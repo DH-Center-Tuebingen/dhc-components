@@ -2,4 +2,4 @@
 A collection of components used in the DHC apps.
 
 
-Preview: [https://dh-center-tuebingen.github.io/dhc-components](https://dh-center-tuebingen.github.io/dhc-components)
+Preview: <a href="https://dh-center-tuebingen.github.io/dhc-components" target="_blank">https://dh-center-tuebingen.github.io/dhc-components</a>
