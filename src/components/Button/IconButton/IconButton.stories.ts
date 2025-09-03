@@ -3,19 +3,19 @@
 import type { Meta, StoryObj } from '@storybook/vue3';
 
 import IconButton from './IconButton.vue';
-import { faEnvelope, faEnvelopeOpen, faFaceMehBlank, faFaceSadCry, faFaceSmile, faFaceSmileWink } from '@fortawesome/free-solid-svg-icons';
+import { faEnvelope, faEnvelopeOpen, faFaceMehBlank, faFaceSadCry, faFaceSmile, faFaceSmileWink, faCircleCheck } from '@fortawesome/free-solid-svg-icons';
+import { faCircle } from '@fortawesome/free-regular-svg-icons';
 import { onMounted, ref, watch } from 'vue';
 import { FontAwesomeIcon, FontAwesomeLayers, FontAwesomeLayersText } from '@fortawesome/vue-fontawesome';
 
 /**
  * Use the IconButton component if you need a button only with a single icon.
  * This button supports loading, custom styling and can be used as a toggle, by passing a v-model.
- * 
+ *
  */
 const meta: Meta<typeof IconButton> = {
     component: IconButton,
 };
-
 
 export default meta;
 
@@ -29,6 +29,34 @@ export const Default: Story = {
         components: { IconButton },
         setup() {
             args.icon = faFaceSmile;
+            return { args };
+        },
+        template: '<IconButton v-bind="args" />',
+    }),
+};
+
+export const Stacked: Story = {
+    args: {
+        icons: {
+            type: 'fa-layers',
+            classes: ['fa-fw'],
+            items: [
+                {
+                    icon: faCircle,
+                    transforms: ['shrink-2', 'up-1', 'left-2'],
+                    style: { opacity: 0.5 },
+                },
+                {
+                    icon: faCircleCheck,
+                    transforms: ['shrink-2', 'down-1', 'right-2'],
+                }
+            ]
+        },
+        title: 'Stacked Action Button'
+    },
+    render: (args: any) => ({
+        components: { IconButton },
+        setup() {
             return { args };
         },
         template: '<IconButton v-bind="args" />',
@@ -93,7 +121,12 @@ export const IconSlot: Story = {
         // Add props here
     },
     render: (args: any) => ({
-        components: { IconButton, FontAwesomeIcon, FontAwesomeLayers, FontAwesomeLayersText },
+        components: {
+            IconButton,
+            FontAwesomeIcon,
+            FontAwesomeLayers,
+            FontAwesomeLayersText
+        },
         setup() {
             const modelValue = ref(false);
             const icons = {
@@ -108,7 +141,7 @@ export const IconSlot: Story = {
                     <template v-if="active">
                         <FontAwesomeLayers full-width>
                             <FontAwesomeIcon :icon="icons.faEnvelope" transform="down-2 grow-3" />
-                            <FontAwesomeLayersText counter value="100" transform="shrink-7 right-28 down-4"  />
+                            <FontAwesomeLayersText counter value="100" transform="shrink-7 right-28 down-4" />
                         </FontAwesomeLayers>
                     </template>
                     <template v-else>
@@ -165,7 +198,7 @@ export const Loading: Story = {
 };
 
 /**
- * 
+ *
  */
 export const Active: Story = {
     args: {
@@ -175,17 +208,17 @@ export const Active: Story = {
     render: (args: any) => ({
         components: { IconButton },
         setup() {
-            
+
             const icons = [
                 faFaceSmile,
                 faFaceSmileWink,
                 faFaceSadCry,
                 faFaceMehBlank,
             ]
-            const mappedIcons = icons.map((icon, id) => ({id, icon})); 
-            
+            const mappedIcons = icons.map((icon, id) => ({id, icon}));
+
             const selectedIcon = ref(0);
-           
+
             return { args, mappedIcons, selectedIcon};
         },
         template: `

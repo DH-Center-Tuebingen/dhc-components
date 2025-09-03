@@ -1,4 +1,4 @@
-import { setup, type Meta, type StoryObj } from '@storybook/vue3';
+import { type Meta, type StoryObj } from '@storybook/vue3';
 
 import { ref, computed, ComputedRef } from 'vue';
 

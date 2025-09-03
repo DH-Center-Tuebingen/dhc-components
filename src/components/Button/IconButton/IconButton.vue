@@ -5,6 +5,7 @@
         style="user-select: none; cursor: pointer;"
         :aria-pressed="active"
         :disabled="disabled"
+        :title="title"
         @click="clicked()"
     >
         <LoadingSpinner
@@ -15,7 +16,7 @@
             <!-- Can be used to render your own custom icon, e.g. if you need to create an icon composition.  -->
             <slot
                 name="icon"
-                :active="active"
+                :active="isActive"
             >
             </slot>
             <template v-if="!slots.icon">
@@ -24,7 +25,14 @@
                     class="icon"
                 >
                     <FontAwesomeIcon
+                        v-if="!isStackedIcon"
                         :icon="icon"
+                        :size="size"
+                        :fixed-width="fixedWidth"
+                    />
+                    <StackedIcon
+                        v-else
+                        :data="icons"
                         :size="size"
                         :fixed-width="fixedWidth"
                     />
@@ -34,7 +42,14 @@
                     class="icon"
                 >
                     <FontAwesomeIcon
+                        v-if="!isStackedIcon"
                         :icon="activeIcon"
+                        :size="size"
+                        :fixed-width="fixedWidth"
+                    />
+                    <StackedIcon
+                        v-else
+                        :data="icons"
                         :size="size"
                         :fixed-width="fixedWidth"
                     />
@@ -49,28 +64,18 @@
     lang="ts"
 >
     import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-    import type { IconDefinition, SizeProp } from '@fortawesome/fontawesome-svg-core';
+    import type { IconDefinition } from '@fortawesome/fontawesome-svg-core';
     import { computed, ModelRef, useSlots } from 'vue';
+    import StackedIcon from '@/components/Layout/StackedIcon/StackedIcon.vue';
     import LoadingSpinner from '@/components/LoadingSpinner/LoadingSpinner.vue';
 
+    import { IconButtonProps } from './definitions';
+
     const slots = useSlots();
+    const emit = defineEmits(['action']);
 
     const value: ModelRef<boolean | undefined, string> = defineModel();
-    const props = withDefaults(defineProps<{
-        active?: boolean;
-        activeButtonClass?: string;
-        activeIcon?: string | IconDefinition;
-        activeIconCategory?: string;
-        buttonClass?: string;
-        disabled?: boolean;
-        fixedWidth?: boolean;
-        icon: string | IconDefinition;
-        iconCategory?: string;
-        loading?: boolean;
-        size?: SizeProp;
-        small?: boolean;
-        unbutton?: boolean;
-    }>(), {
+    const props = withDefaults(defineProps<IconButtonProps>(), {
         active: undefined,
         activeButtonClass: 'primary',
         activeIconCategory: 'fas',
@@ -95,14 +100,19 @@
         if(value.value !== undefined) {
             value.value = !value.value;
         }
+        emit('action');
     }
 
+    const isStackedIcon = computed(() => {
+        return !props.icon && props.icons?.items;
+    });
+
     const icon = computed(() => {
-        return resolveIconProp(props.icon, props.iconCategory);
+        return resolveIconProp(props.icon ?? '', props.iconCategory);
     });
 
     const activeIcon = computed(() => {
-        return resolveIconProp(props.activeIcon ?? props.icon, props.activeIconCategory);
+        return resolveIconProp(props.activeIcon ?? props.icon ?? '', props.activeIconCategory);
     });
 
     const buttonClass = computed(() => {
