@@ -22,17 +22,24 @@ jobs:
     steps:
       # Manual Checkout
       - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
  
       # Set up Node
       - uses: actions/setup-node@v4
         with:
           node-version: '>=18.16'
-      - run: corepack enable
+          cache: 'npm'
+      
+      # Configure git for private repo access
+      - name: Configure git
+        run: |
+          git config --global url."https://${{ secrets.GITHUB_TOKEN }}@github.com/".insteadOf "https://github.com/"
  
       #👇 Add Storybook build and deploy to GitHub Pages as a step in the workflow
       - uses: bitovi/github-actions-storybook-to-github-pages@v1.0.3
         with:
-          install_command: yarn install # default: npm ci
-          build_command: yarn build-storybook # default: npm run build-storybook
+          install_command: npm ci
+          build_command: npm run build-storybook 
           path: storybook-static # default: dist/storybook
           checkout: false # default: true
