@@ -115,7 +115,7 @@
     }
 
     const hasMultipleIcons = computed(() => {
-        return Array.isArray(props.icon);
+        return Array.isArray(props.icon) && (typeof props.icon[0] !== 'string');
     });
 
     const isStackedIcon = computed(() => {
