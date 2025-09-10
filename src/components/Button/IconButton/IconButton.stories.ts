@@ -1,5 +1,3 @@
-
-
 import type { Meta, StoryObj } from '@storybook/vue3';
 
 import IconButton from './IconButton.vue';
@@ -93,6 +91,23 @@ export const Disabled: Story = {
     }),
 };
 
+export const DisabledFunction: Story = {
+    args: {
+        // Add props here
+        disabled: () => {
+            return 6 % 2 == 0;
+        },
+    },
+    render: (args: any) => ({
+        components: { IconButton },
+        setup() {
+            args.icon = faFaceSadCry;
+            return { args };
+        },
+        template: '<IconButton v-bind="args" />',
+    }),
+};
+
 export const Toggle: Story = {
     args: {
     },
@@ -167,7 +182,7 @@ export const Loading: Story = {
 
             const loading = ref(args.loading.value);
             const loadingTimeout = ref<NodeJS.Timeout | null>(null);
-            const clicked = () => setLoadingTimeout()
+            const clicked = () => setLoadingTimeout();
 
             onMounted(() => {
                 if(args.loading) {
@@ -183,7 +198,7 @@ export const Loading: Story = {
                     loadingTimeout.value = null;
                     // args.loading.value = false;
                 }, 2000);
-            }
+            };
 
             watch(() => args.loading, (newValue) => {
                 if(loading.value !== newValue && newValue === true) {

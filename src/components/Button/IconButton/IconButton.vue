@@ -4,7 +4,7 @@
         :class="buttonClass"
         style="user-select: none; cursor: pointer;"
         :aria-pressed="active"
-        :disabled="disabled"
+        :disabled="isDisabled"
         :title="title"
         @click="clicked()"
     >
@@ -169,4 +169,12 @@
     const isActive = computed(() => {
         return props.active != null ? props.active : value.value;
     });
+
+    const isDisabled = computed(() => {
+        if(typeof props.disabled === 'boolean') {
+            return props.disabled;
+        } else {
+            return props.disabled();
+        }
+    })
 </script>

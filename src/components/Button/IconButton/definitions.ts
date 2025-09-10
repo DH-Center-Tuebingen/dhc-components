@@ -8,7 +8,7 @@ export interface IconButtonProps {
     activeIcon?: string | IconDefinition | IconDefinition[];
     activeIconCategory?: string;
     buttonClass?: string;
-    disabled?: boolean;
+    disabled?: boolean | Function;
     fixedWidth?: boolean;
     icon?: string | IconDefinition | IconDefinition[];
     icons?: StackedIcon;
