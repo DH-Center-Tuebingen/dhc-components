@@ -61,6 +61,9 @@ export { default as TextFile } from './components/Display/TextFile/TextFile.vue'
 // Layout
 export { default as ResizableColumns } from './components/Layout/ResizableColumns/ResizableColumns.vue';
 
+// Navigation
+export { default as Breadcrumbs } from './components/Navigation/Breadcrumbs/Breadcrumbs.vue';
+
 // Composables
 export { default as useResizeObserver } from './composables/resize-observer';
 
