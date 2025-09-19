@@ -81,7 +81,7 @@
     };
 
     const getCrumbActiveClasses = () => {
-        return props.crumbActiveClasses ? props.crumbActiveClasses + ' active' : 'btn btn-outline-primary fw-bold px-1 py-0 border-0 active';
+        return props.crumbActiveClasses ? props.crumbActiveClasses : 'fw-bold text-secondary pe-none';
     };
 
 </script>
