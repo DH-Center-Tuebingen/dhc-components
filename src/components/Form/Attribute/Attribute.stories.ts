@@ -5,6 +5,10 @@ import { AttributeProps } from './definitions';
 import { SiUnitProps } from '../SiUnit/definitions';
 import { BooleanProps } from '../Boolean/definitions';
 
+import {
+    testEpochs,
+} from '../Timeperiod/definitions';
+
 const meta: Meta<typeof Attribute> = {
   component: Attribute,
 };
@@ -190,6 +194,10 @@ export const Epoch: Story = {
             start: 10,
             endLabel: 'AD',
             end: 200,
+            epoch: {},
+        },
+        metadata: {
+            epochs: testEpochs,
         },
         type: 'epoch',
         debug: true,

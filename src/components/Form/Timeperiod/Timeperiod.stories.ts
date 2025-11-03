@@ -1,7 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/vue3';
 
 import Timeperiod from './Timeperiod.vue';
-import { ReducedThesaurusConcept } from 'src/types/Concept';
+
+import {
+    testEpochs,
+} from './definitions';
 
 const meta: Meta<typeof Timeperiod> = {
   component: Timeperiod,
@@ -10,21 +13,6 @@ const meta: Meta<typeof Timeperiod> = {
 export default meta;
 
 type Story = StoryObj<typeof Timeperiod>;
-
-const testEpochs: Array<ReducedThesaurusConcept> = [
-    {
-        id: 1,
-        label: 'Stone Age'
-    },
-    {
-        id: 2,
-        label: 'Iron Age'
-    },
-    {
-        id: 3,
-        label: 'Bronze Age'
-    },
-];
 
 export const Default: Story = {
     args: {
@@ -45,7 +33,10 @@ export const Epoch: Story = {
             startLabel: 'BC',
             end: 100,
             endLabel: 'AD',
-            epoch: 1
+            epoch: {
+                id: 1,
+                label: 'Stone Age'
+            },
         }
     },
 };

@@ -76,9 +76,13 @@
         </div>
         <div
             v-if="epochMode"
-            class="bg-danger w-100 h-25"
+            class="mt-3"
         >
-            {{ mode }}
+            <Multiselect
+                :default-value="epochValue"
+                :options="metadata.epochs"
+                @change="handleEpochChange"
+            />
         </div>
         <div
             v-if="combinedErrors.length > 0"
@@ -101,11 +105,15 @@
 
     import { initI18n } from '../../../i18n/i18n';
 
-    import { string } from '../validation/rulesets';
+    import {
+        object,
+        string,
+    } from '../validation/rulesets';
 
     import * as de from './i18n/de.json';
     import * as en from './i18n/en.json';
 
+    import Multiselect from '../Multiselect/Multiselect.vue';
     import NumberBase from '../NumberBase/NumberBase.vue';
 
     import {
@@ -120,6 +128,7 @@
         metaValueKeys,
         valueKeys,
         TimeperiodProps,
+        Epoch,
     } from './definitions';
 
     onMounted(() => {
@@ -130,7 +139,11 @@
         name: 'Timeperiod',
         disabled: false,
         mode: 'timeperiod',
-        epochs: [] as any, // TODO
+        metadata: () => {
+            return {
+                epochs: [],
+            };
+        },
         defaultValue: () => ({}),
     });
 
@@ -184,6 +197,9 @@
         endLabelReset({
             value: value?.endLabel,
         });
+        epochReset({
+            value: value?.epoch,
+        });
     };
 
     const undirty = (value: metaValueKeys) => {
@@ -206,6 +222,11 @@
         numberMetas.value[key].dirty = event.dirty;
         numberMetas.value[key].valid = event.valid;
         numberMetas.value[key].value = event.value;
+        emitChanges();
+    };
+
+    const handleEpochChange = (event: ChangeEvent) => {
+        epochChange(event.value);
         emitChanges();
     };
 
@@ -290,10 +311,11 @@
             }
             isDirty = isDirty || meta.dirty;
         }
-        isDirty = isDirty || startLabelMeta.dirty || endLabelMeta.dirty;
+        isDirty = isDirty || startLabelMeta.dirty || endLabelMeta.dirty || epochMeta.dirty;
         isValid = isValid && !invalidLabels.value && !invalidCombination.value && fieldCombinationSet.value;
         computedValue.startLabel = startLabelValue.value as timeLabels;
         computedValue.endLabel = endLabelValue.value as timeLabels;
+        computedValue.epoch = epochValue.value as Epoch;
         return {
             valid: isValid,
             dirty: isDirty,
@@ -321,6 +343,14 @@
         handleChange: endLabelChange,
     } = useField(`timeperiod_endlabel_${props.name}`, stringRules, {
         initialValue: setInitialValue('endLabel') as string,
+    });
+    const {
+        value: epochValue,
+        meta: epochMeta,
+        resetField: epochReset,
+        handleChange: epochChange,
+    } = useField(`timeperiod_epochs_${props.name}`, object(), {
+        initialValue: setInitialValue('epoch') as Epoch,
     });
 </script>
 

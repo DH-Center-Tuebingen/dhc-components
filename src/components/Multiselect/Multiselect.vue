@@ -67,8 +67,6 @@
         multiple: false,
     });
 
-    console.log(props.options, props.defaultValue)
-
     const emit = defineEmits(['change']);
 
     const reset = (value: string | number | Array<any> | Record<string, any>) => {

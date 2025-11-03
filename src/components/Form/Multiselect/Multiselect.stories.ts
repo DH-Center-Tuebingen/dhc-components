@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/vue3';
 
 import Multiselect from './Multiselect.vue';
-import { ref } from 'vue';
 
 const meta: Meta<typeof Multiselect> = {
   component: Multiselect,
