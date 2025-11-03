@@ -11,8 +11,7 @@
                 aria-expanded="false"
             >
                 <span v-if="startLabelValue">
-                    <!-- {{ t(`main.entity.attributes.${v.startLabel.value}`) }} -->
-                    {{ startLabelValue }}
+                    {{ t(startLabelValue) }}
                 </span>
             </button>
             <ul class="dropdown-menu">
@@ -23,8 +22,7 @@
                     href="#"
                     @click.prevent="setLabel('start', label)"
                 >
-                    <!-- {{ t(`main.entity.attributes.${label}`) }} -->
-                    {{ label }}
+                    {{ t(label) }}
                 </a>
             </ul>
             <NumberBase
@@ -58,8 +56,7 @@
                 aria-expanded="false"
             >
                 <span v-if="endLabelValue">
-                    <!-- {{ t(`main.entity.attributes.${v.endLabel.value}`) }} -->
-                    {{ endLabelValue }}
+                    {{ t(endLabelValue) }}
                 </span>
             </button>
             <ul
@@ -73,8 +70,7 @@
                     href="#"
                     @click.prevent="setLabel('end', label)"
                 >
-                    <!-- {{ t(`main.entity.attributes.${label}`) }} -->
-                    {{ label }}
+                    {{ t(label) }}
                 </a>
             </ul>
         </div>
@@ -195,7 +191,7 @@
         reset(value);
     };
 
-    const setLabel = (prop: 'start' | 'end', value: 'BC' | 'AD') => {
+    const setLabel = (prop: inputFieldKeys, value: timeLabels) => {
         if(prop == 'start') {
             startLabelValue.value = value;
             startLabelChange(startLabelValue.value);
@@ -316,7 +312,7 @@
         resetField: startLabelReset,
         handleChange: startLabelChange,
     } = useField(`timeperiod_startlabel_${props.name}`, stringRules, {
-        initialValue: setInitialValue('startLabel'),
+        initialValue: setInitialValue('startLabel') as string,
     });
     const {
         value: endLabelValue,
@@ -324,7 +320,7 @@
         resetField: endLabelReset,
         handleChange: endLabelChange,
     } = useField(`timeperiod_endlabel_${props.name}`, stringRules, {
-        initialValue: setInitialValue('endLabel'),
+        initialValue: setInitialValue('endLabel') as string,
     });
 </script>
 

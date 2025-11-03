@@ -1,5 +1,9 @@
 {
     "start_label_after_end": "Start era can not be after end era",
     "start_after_end": "Start date must be before end date",
-    "missing_combination": "You can not set a label without a date or vice versa"
+    "missing_combination": "You can not set a label without a date or vice versa",
+    "BC": "BC",
+    "bc": "@:BC",
+    "AD": "AD",
+    "ad": "@:AD"
 }
