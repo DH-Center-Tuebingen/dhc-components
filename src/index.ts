@@ -5,9 +5,10 @@ export { default as SlideControl } from './components/Form/SlideControl/SlideCon
 export { default as EmojiPicker } from './components/EmojiPicker/EmojiPicker.vue';
 
 // Buttons
+export { default as FabButtonList } from './components/Button/FabButtonList/FabButtonList.vue';
+export { default as IconButton } from './components/Button/IconButton/IconButton.vue';
 export { default as LoadingButton } from './components/Button/LoadingButton/LoadingButton.vue';
 export { default as Toggle } from './components/Button/Toggle/Toggle.vue';
-export { default as IconButton } from './components/Button/IconButton/IconButton.vue';
 
 // Form
 export { default as Attribute } from './components/Form/Attribute/Attribute.vue';
