@@ -37,6 +37,7 @@
     import List from '../List/List.vue';
     import Range from '../Range/Range.vue';
     import Rism from '../Rism/Rism.vue';
+    import Serial from '../Serial/Serial.vue';
     import SiUnit from '../SiUnit/SiUnit.vue';
     import String from '../String/String.vue';
     import Stringfield from '../Stringfield/Stringfield.vue';
@@ -78,6 +79,7 @@
         list: List,
         range: Range,
         rism: Rism,
+        serial: Serial,
         'si-unit': SiUnit,
         string: String,
         stringfield: Stringfield,

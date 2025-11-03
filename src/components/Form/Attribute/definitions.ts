@@ -10,6 +10,7 @@ const attributeTypes = [
     'list',
     'range',
     'rism',
+    'serial',
     'si-unit',
     'string',
     'stringfield',

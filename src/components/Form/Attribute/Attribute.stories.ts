@@ -35,6 +35,15 @@ export const Stringfield: Story = {
     },
 };
 
+export const Serial: Story = {
+    args: {
+        disabled: false,
+        defaultValue: 'Object_758_Imported',
+        type: 'serial',
+        debug: true,
+    },
+};
+
 export const Url: Story = {
     args: {
         disabled: false,
