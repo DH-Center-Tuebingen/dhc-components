@@ -14,4 +14,3 @@ export const initI18n = (messages: object) => {
         messages: messages,
     });
 };
-

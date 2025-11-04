@@ -1,7 +1,8 @@
 {
     "global": {
         "save": "save",
-        "cancel": "cancel"
+        "cancel": "cancel",
+        "edit": "Edit"
     },
     "login": {
         "title": "Login",
