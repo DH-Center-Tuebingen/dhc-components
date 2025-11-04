@@ -13,7 +13,7 @@ type Story = StoryObj<typeof FabButton>;
 
 export const Default: Story = {
     args: {
-        icon: faPlus,
+        icon: faPlus as any,
     },
     render: (args: any) => ({
         components: { FabButton },
@@ -26,7 +26,7 @@ export const Default: Story = {
 
 export const Sizes: Story = {
     args: {
-        icon: faPlus,
+        icon: faPlus as any,
     },
     render: (args: any) => ({
         components: { FabButton },
