@@ -4,11 +4,13 @@
         <FabButtonComponent
             v-for="(value, index) in buttons"
             :key="index"
-            :icon="value.icon"
-            :title="value.title"
-            :color="value.color"
-            :size="size"
+            :class="value.classes"
             :action="value.action"
+            :active="value.active"
+            :color="value.color"
+            :icon="value.icon"
+            :size="size"
+            :title="value.title"
         ></FabButtonComponent>
     </div>
 </template>
@@ -30,6 +32,7 @@
         classes?: string;
         color?: ColorName;
         action: Function;
+        active?: boolean;
     }
 
     defineProps<{
