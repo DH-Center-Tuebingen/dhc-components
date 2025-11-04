@@ -103,17 +103,17 @@
 </template>
 
 <script lang='ts' setup>
-    const { t } = useI18n()
-
     import {
         computed,
         ref
-    } from 'vue'
+    } from 'vue';
 
     import { useI18n } from 'vue-i18n';
 
     import Alert from '../Alert/Alert.vue';
     import LoadingButton from '../Button/LoadingButton/LoadingButton.vue';
+
+    const { t } = useI18n();
 
     const props = withDefaults(defineProps<{
         invalidClass?: string;
@@ -121,42 +121,38 @@
         errorMessage?: string;
     }>(), {
         errorMessage: '',
-        invalidClass: 'is-invalid'
-    })
+        invalidClass: 'is-invalid',
+    });
 
     const emit = defineEmits([
-        'login'
-    ])
+        'login',
+    ]);
 
-    const username = ref('')
-    const password = ref('')
-    const stayLoggedIn = ref(false)
+    const username = ref('');
+    const password = ref('');
+    const stayLoggedIn = ref(false);
     const validated = ref(false);
 
     const submit = (event: Event) => {
         const form: HTMLFormElement = event.currentTarget as HTMLFormElement;
 
         validated.value = true;
-        if (form.checkValidity()) {
+        if(form.checkValidity()) {
             login();
         }
-
-    }
+    };
 
     const login = () => {
         emit('login', {
             username: username.value,
             password: password.value,
             stayLoggedIn: stayLoggedIn.value
-        })
-    }
+        });
+    };
 
     const error = computed(_ => {
-        return props.errorMessage !== undefined && props.errorMessage.length > 0
-    })
-
-
-
+        return props.errorMessage !== undefined && props.errorMessage.length > 0;
+    });
 </script>
 
 <style lang='scss' scoped></style>
