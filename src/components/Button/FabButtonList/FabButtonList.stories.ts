@@ -14,9 +14,9 @@ type Story = StoryObj<typeof FabButtonList>;
 export const Default: Story = {
   args: {
     buttons: [
-        { icon: faPlus, classes: 'btn-outline-primary', action: () => alert('Add clicked') },
-        { icon: faEdit, classes: 'btn-outline-warning', action: () => alert('Edit clicked') },
-        { icon: faTrash, classes: 'btn-outline-danger', action: () => alert('Delete clicked') },
+        { icon: faPlus, color: 'primary', action: () => alert('Add clicked') },
+        { icon: faEdit, color: 'warning', action: () => alert('Edit clicked') },
+        { icon: faTrash, color: 'danger', action: () => alert('Delete clicked') },
     ]
   },
   render: (args : any) => ({
