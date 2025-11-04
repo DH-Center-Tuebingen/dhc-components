@@ -4,6 +4,7 @@
             v-if="!readonly"
             class="rounded pb-0 m-2 mb-0"
             :editor="editor"
+            :additional-tools="additionalTools"
             @toggle="setEditorType"
         />
         <Milkdown
@@ -14,7 +15,7 @@
         <textarea
             v-show="state.type !== 'md'"
             v-model="state.markdownString"
-            class="font-monospace border-0 px-5 p-4 flex-grow-1 w-100 rounded-3 bg-transparent"
+            class="font-monospace border-0 p-4 flex-grow-1 w-100 rounded-3 bg-transparent"
             style="outline: none;"
         />
     </div>
@@ -29,8 +30,6 @@
         watch,
     } from 'vue';
 
-    import MarkdownToolbar from './MarkdownToolbar.vue';
-
     import {
         Editor,
         rootCtx,
@@ -40,7 +39,7 @@
     } from '@milkdown/core';
     import {
         Milkdown,
-        useEditor
+        useEditor,
     } from '@milkdown/vue';
 
     import { commonmark } from '@milkdown/preset-commonmark';
@@ -51,7 +50,6 @@
     import { prism } from '@milkdown/plugin-prism';
     import { indent } from '@milkdown/plugin-indent';
     import { upload } from '@milkdown/plugin-upload';
-
     import {
         emojiAttr,
         remarkEmojiPlugin,
@@ -60,6 +58,9 @@
     import { replaceAll } from '@milkdown/utils';
 
     import { usePreventNavigation } from '@/composables/prevent-navigation';
+
+    import { Tool } from '@/components/Layout/Toolbar/definitions';
+    import MarkdownToolbar from './MarkdownToolbar.vue';
 
     export default {
         components: {
@@ -75,6 +76,10 @@
                 required: false,
                 type: Boolean,
                 default: false,
+            },
+            additionalTools: {
+                required: false,
+                type: Array<Tool>,
             },
         },
         emits: ['closing', 'update'],
@@ -111,9 +116,8 @@
                 .use(prism)
                 .use(emojiPlugin)
                 .use(indent)
-                .use(upload)
+                .use(upload);
 
-                console.log(editor.value, root);
                 return editor.value;
             });
 
@@ -122,8 +126,8 @@
                 show: false,
                 markdownString: data.value,
                 type: 'md',
-                editModeClasses: computed(_ => {
-                    if (!readonly.value) {
+                editModeClasses: computed(() => {
+                    if(!readonly.value) {
                         return [
                             'flex-grow-1',
                             'overflow-y-auto',
@@ -138,12 +142,12 @@
                 return state.markdownString;
             };
             const setMarkdown = (markdown: string) => {
-                if (editor.value) {
+                if(editor.value) {
                     editor.value.action(replaceAll(markdown));
                 }
             };
             const setEditorType = () => {
-                if (state.type == 'md') {
+                if(state.type == 'md') {
                     state.type = 'raw';
                 } else {
                     const markdown = getMarkdown();
@@ -159,18 +163,15 @@
                 emojiSchema,
             ].flat();
 
-
-
             // Only add the prevent navigation hook if the editor is not readonly
             // otherwise the hook will be added concurrently and unecessary when the editor is used
             // in preview mode.
-            if (!readonly.value) { usePreventNavigation(() => state.dirty); }
+            if(!readonly.value) { usePreventNavigation(() => state.dirty); }
 
             watch(() => state.markdownString, (markdownString: string) => {
                 state.dirty = markdownString != data.value;
                 context.emit('update', markdownString);
-            }
-            );
+            });
 
             // RETURN
             return {

@@ -5,6 +5,7 @@
             :class="classes"
             :data="data"
             :readonly="readonly"
+            :additional-tools="additionalTools"
             @update="emitUpdate"
         />
     </MilkdownProvider>
@@ -15,6 +16,8 @@
         ref,
         watch,
     } from 'vue';
+
+    import { Tool } from '@/components/Layout/Toolbar/definitions';
     import MilkdownEditor from './MarkdownEditor.vue';
     import { MilkdownProvider } from '@milkdown/vue';
 
@@ -37,6 +40,10 @@
                 required: false,
                 type: Boolean,
                 default: false,
+            },
+            additionalTools: {
+                required: false,
+                type: Array<Tool>,
             },
         },
         emits: ['update'],

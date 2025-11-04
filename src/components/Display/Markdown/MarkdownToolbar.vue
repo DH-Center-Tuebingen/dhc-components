@@ -14,9 +14,6 @@
         toRefs,
     } from 'vue';
 
-    import { useI18n } from 'vue-i18n';
-    const { t } = useI18n();
-
     import {
         toggleEmphasisCommand,
         toggleStrongCommand,
@@ -58,11 +55,14 @@
     } from '@fortawesome/free-solid-svg-icons';
     import { faMarkdown } from '@fortawesome/free-brands-svg-icons';
 
+    import { Tool } from '@/components/Layout/Toolbar/definitions';
     import { CmdKey, Editor } from '@milkdown/core';
-    import { default as Toolbar, Tool } from '@/components/Layout/Toolbar/Toolbar.vue';
+    import { default as Toolbar } from '@/components/Layout/Toolbar/Toolbar.vue';
 
     const props = defineProps<{
         editor: Editor | undefined;
+        additionalTools?: Array<Tool> | undefined;
+
     }>();
 
     const emit = defineEmits<{
@@ -79,7 +79,7 @@
         mde: computed(() => {
             return editor.value;
         }),
-        editMode: false,
+        renderMode: false,
     });
 
     // FUNCTIONS
@@ -93,9 +93,9 @@
         command(wrapInHeadingCommand.key, i);
     };
 
-    const toggleEditmode = () => {
-        state.editMode = !state.editMode;
-        emit('toggle', state.editMode);
+    const toggleRenderMode = () => {
+        state.renderMode = !state.renderMode;
+        emit('toggle', state.renderMode);
     };
 
     const redoGroup: Tool[] = [
@@ -180,15 +180,15 @@
     ];
 
     const markdownClass = computed(() => {
-        return state.editMode ?  'opacity-50': 'text-primary';
+        return state.renderMode ?  'link': 'text-primary';
     });
 
     const utilsGroup: Tool[] = [
         {
-            name: 'editmode',
-            action: () => toggleEditmode(),
+            name: 'wysiwyg',
+            action: () => toggleRenderMode(),
             icon: faMarkdown,
-            class: markdownClass
+            class: markdownClass,
         },
     ];
 
@@ -199,4 +199,7 @@
         listGroup,
         utilsGroup,
     ];
+    if(props.additionalTools) {
+        toolGroups.push(props.additionalTools);
+    }
 </script>

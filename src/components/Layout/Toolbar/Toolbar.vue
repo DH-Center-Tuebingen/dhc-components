@@ -28,22 +28,10 @@
     setup
     lang="ts"
 >
-    import type { Ref } from 'vue';
-    import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
-    import { StackedIcon } from '@/components/Layout/StackedIcon/definitions';
+    import { Tool } from './definitions';
 
     import IconButton from '@/components/Button/IconButton/IconButton.vue';
     import Spacer from '@/components/Layout/Spacer/Spacer.vue';
-
-    export type Tool = {
-        name: string,
-        action: () => void,
-        icon?: IconDefinition | IconDefinition[],
-        icons?: StackedIcon,
-        class?: Ref<string>,
-        disabled?: boolean
-        title?: string
-    };
 
     defineProps<{
         toolGroups: Tool[][];
