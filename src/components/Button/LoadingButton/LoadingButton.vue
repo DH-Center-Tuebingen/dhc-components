@@ -39,7 +39,7 @@
         outlined?: boolean
         color?: ColorName
         loading?: boolean
-        action: Function
+        action?: Function
     }>();
 
     const currentlyExecuted = ref(false);
@@ -60,15 +60,17 @@
         if(!props.loading) {
             try {
                 currentlyExecuted.value = true;
-                await props.action();
+                if(props.action) {
+                    await props.action();
+                }
             } catch(e) {
                 emits('error', e instanceof Error ? e.message : String(e));
             }
         }
-
-        const loading = computed(() => {
-            return props.loading || currentlyExecuted.value;
-        });
     }
+
+    const loading = computed(() => {
+        return props.loading || currentlyExecuted.value;
+    });
 
 </script>
