@@ -4,6 +4,7 @@
         :class="buttonClass"
         role="button"
         :disabled="loading"
+        @click="exec()"
     >
         <span
             v-if="loading"
@@ -22,15 +23,26 @@
     </button>
 </template>
 
-<script lang="ts" setup>
-    import { computed } from 'vue';
+<script
+    lang="ts"
+    setup
+>
+    import { computed, ref } from 'vue';
     import LoadingSpinner from '../../LoadingSpinner/LoadingSpinner.vue';
-    import { ColorName } from '../../../types/Colors';
+    import type { ColorName } from 'src/types/Colors';
+
+    const emits = defineEmits<{
+        (e: 'error', message: string): void;
+    }>();
+
     const props = defineProps<{
         outlined?: boolean
         color?: ColorName
-        loading: boolean
+        loading?: boolean
+        action: Function
     }>();
+
+    const currentlyExecuted = ref(false);
 
     const contentClass = computed(_ => {
         return {
@@ -43,5 +55,20 @@
         const baseName = props.outlined ? 'btn-outline' : 'btn';
         return `btn ${baseName}-${color}`;
     })
+
+    async function exec() {
+        if(!props.loading) {
+            try {
+                currentlyExecuted.value = true;
+                await props.action();
+            } catch(e) {
+                emits('error', e instanceof Error ? e.message : String(e));
+            }
+        }
+
+        const loading = computed(() => {
+            return props.loading || currentlyExecuted.value;
+        });
+    }
 
 </script>
