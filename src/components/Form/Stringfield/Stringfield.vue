@@ -8,7 +8,10 @@
             :name="name"
             @input="handleInput"
         />
-        <div class="text-body-secondary small text-end">
+        <div
+            v-if="showWordcount"
+            class="text-body-secondary small text-end font-sans-serif"
+        >
             {{ t('words') }}: {{ wordCount }} ({{ validatedValue.length }})
         </div>
         <div class="invalid-feedback">
@@ -45,6 +48,7 @@
         disabled: false,
         required: false,
         defaultValue: '',
+        showWordcount: true,
     });
 
     const emit = defineEmits(['change']);
