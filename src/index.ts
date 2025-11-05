@@ -31,6 +31,8 @@ export { default as Url } from './components/Form/Url/Url.vue';
 
 // Indicator
 export { default as DotIndicator } from './components/Indicators/Dot/Dot.vue';
+export { default as IconStat } from './components/Indicators/IconStat/IconStat.vue';
+export { default as IconStatsGroup } from './components/Indicators/IconStatGroup/IconStatsGroup.vue';
 
 // Layout
 export { default as Accordion } from './components/Layout/Accordion/Accordion.vue';

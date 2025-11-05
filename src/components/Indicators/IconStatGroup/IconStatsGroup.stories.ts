@@ -1,15 +1,15 @@
 import type { Meta, StoryObj } from '@storybook/vue3';
 
-import IconStatList from './IconStatList.vue';
+import IconStatsGroup from './IconStatsGroup.vue';
 import { faBookmark, faRetweet, faThumbsDown, faThumbsUp } from '@fortawesome/free-solid-svg-icons';
 
-const meta: Meta<typeof IconStatList> = {
-  component: IconStatList,
+const meta: Meta<typeof IconStatsGroup> = {
+  component: IconStatsGroup,
 };
 
 export default meta;
 
-type Story = StoryObj<typeof IconStatList>;
+type Story = StoryObj<typeof IconStatsGroup>;
 
 export const Default: Story = {
   args: {
@@ -21,10 +21,10 @@ export const Default: Story = {
     ]
   },
   render: (args : any) => ({
-    components: { IconStatList },
+    components: { IconStatsGroup },
     setup() {
         return { args };
     },
-    template: '<IconStatList v-bind="args" />',
+    template: '<IconStatsGroup v-bind="args" />',
   }),
 };
