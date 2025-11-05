@@ -1,17 +1,36 @@
 <template>
-    <div class="d-flex align-items-center text-secondary">
+    <div
+        :class="textColor"
+        class="d-flex align-items-center"
+    >
         <FontAwesomeIcon :icon="icon" />
-        <span v-if="!iconOnly" class="ms-2 fw-bold user-select-none">{{ data ?? "-" }}</span>
+        <span
+            v-if="!iconOnly"
+            class="ms-2 fw-bold user-select-none"
+        >{{ data ?? "-" }}</span>
     </div>
 </template>
 
-<script setup lang="ts">
+<script
+    setup
+    lang="ts"
+>
+    import { computed } from 'vue';
+    import type { ColorName } from '@/types/Colors';
+    
     import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
     import type { IconDefinition } from '@fortawesome/free-solid-svg-icons';
 
-    defineProps<{
+
+    const props = defineProps<{
         icon: IconDefinition;
         data?: string | number;
         iconOnly?: boolean;
+        color?: ColorName;
     }>();
+
+    const textColor = computed(() => {
+        const color = props.color ?? 'secondary';
+        return `text-${color}`;
+    });
 </script>

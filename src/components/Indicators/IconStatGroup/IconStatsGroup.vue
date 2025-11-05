@@ -6,6 +6,8 @@
             :icon="item.icon"
             :icon-only="item.iconOnly"
             :data="item.data"
+            :title="item.title"
+            :color:="item.color"
             @click="item.action ? item.action() : null"
         />
     </div>
@@ -15,14 +17,18 @@
     setup
     lang="ts"
 >
+    import type { ColorName } from '@/types/Colors';
+    import type { IconDefinition } from '@fortawesome/fontawesome-common-types';
+    
     import IconStatComponent from '../IconStat/IconStat.vue';
-    import { IconDefinition } from '@fortawesome/fontawesome-common-types';
 
     export interface IconStat {
+        action?: Function;
+        color?: ColorName;
+        data: string | number;
         icon: IconDefinition;
         iconOnly?: boolean;
-        data: string | number;
-        action?: Function;
+        title?: string;
     }
 
     defineProps<{
