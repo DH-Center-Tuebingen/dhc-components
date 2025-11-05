@@ -5,7 +5,7 @@
             :key="index"
             :icon="item.icon"
             :icon-only="item.iconOnly"
-            :data="item.data"
+            :text="item.text"
             :title="item.title"
             :color:="item.color"
             @click="item.action ? item.action() : null"
@@ -25,7 +25,7 @@
     export interface IconStat {
         action?: Function;
         color?: ColorName;
-        data: string | number;
+        text: string | number;
         icon: IconDefinition;
         iconOnly?: boolean;
         title?: string;

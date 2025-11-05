@@ -7,7 +7,7 @@
         <span
             v-if="!iconOnly"
             class="ms-2 fw-bold user-select-none"
-        >{{ data ?? "-" }}</span>
+        >{{ text ?? "-" }}</span>
     </div>
 </template>
 
@@ -24,7 +24,7 @@
 
     const props = defineProps<{
         icon: IconDefinition;
-        data?: string | number;
+        text?: string | number;
         iconOnly?: boolean;
         color?: ColorName;
     }>();
