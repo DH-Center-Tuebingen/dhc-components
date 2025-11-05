@@ -1,7 +1,7 @@
 <template>
     <div class="d-flex align-items-center text-secondary">
         <FontAwesomeIcon :icon="icon" />
-        <span v-if="!iconOnly" class="ms-2 fw-bold user-select-none">{{ data }}</span>
+        <span v-if="!iconOnly" class="ms-2 fw-bold user-select-none">{{ data ?? "-" }}</span>
     </div>
 </template>
 
@@ -11,7 +11,7 @@
 
     defineProps<{
         icon: IconDefinition;
-        data: string | number;
+        data?: string | number;
         iconOnly?: boolean;
     }>();
 </script>
