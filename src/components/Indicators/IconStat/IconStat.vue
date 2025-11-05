@@ -1,7 +1,8 @@
 <template>
     <div
-        :class="textColor"
+        :class="[textColor, interactable]"
         class="d-flex align-items-center"
+        @click="exec()"
     >
         <FontAwesomeIcon :icon="icon" />
         <span
@@ -17,7 +18,7 @@
 >
     import { computed } from 'vue';
     import type { ColorName } from '@/types/Colors';
-    
+
     import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
     import type { IconDefinition } from '@fortawesome/free-solid-svg-icons';
 
@@ -27,10 +28,21 @@
         text?: string | number;
         iconOnly?: boolean;
         color?: ColorName;
+        action?: Function;
     }>();
+
+    const interactable = computed(() => {
+        return props.action ? 'cursor-pointer' : '';
+    });
 
     const textColor = computed(() => {
         const color = props.color ?? 'secondary';
         return `text-${color}`;
     });
+    
+    const exec = () => {
+        if (props.action) {
+            props.action();
+        }
+    };
 </script>

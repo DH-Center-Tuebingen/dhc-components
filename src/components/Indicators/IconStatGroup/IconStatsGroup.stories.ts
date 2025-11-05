@@ -14,10 +14,10 @@ type Story = StoryObj<typeof IconStatsGroup>;
 export const Default: Story = {
   args: {
     value: [
-        { icon: faThumbsUp, data: ' 100'},
-        { icon: faThumbsDown, data: ' 25' },
-        { icon: faRetweet, data: ' 10' },
-        { icon: faBookmark, data: ' 5' },
+        { icon: faThumbsUp, text: '100', color: 'success' },
+        { icon: faThumbsDown, text: '25', color : 'danger' },
+        { icon: faRetweet, text: '10' },
+        { icon: faBookmark, text: '5' },
     ]
   },
   render: (args : any) => ({

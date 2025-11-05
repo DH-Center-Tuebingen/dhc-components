@@ -7,7 +7,7 @@
             :icon-only="item.iconOnly"
             :text="item.text"
             :title="item.title"
-            :color:="item.color"
+            :color="item.color"
             @click="item.action ? item.action() : null"
         />
     </div>
@@ -19,7 +19,7 @@
 >
     import type { ColorName } from '@/types/Colors';
     import type { IconDefinition } from '@fortawesome/fontawesome-common-types';
-    
+
     import IconStatComponent from '../IconStat/IconStat.vue';
 
     export interface IconStat {
