@@ -1,6 +1,6 @@
 <template>
     <span class="d-inline-flex">
-            <!-- :src="`api/download/avatar?path=${user.avatar}`" -->
+        <!-- :src="`api/download/avatar?path=${user.avatar}`" -->
         <img
             v-if="hasImage"
             alt="user avatar"
@@ -26,7 +26,7 @@
     setup
     lang="ts"
 >
-    import { computed } from 'vue';
+    import { CSSProperties, computed } from 'vue';
 
     import { avatarProps } from './definitions';
     import { User } from '../../../types/User';
@@ -74,7 +74,7 @@
     });
 
     const classes = computed(() => {
-        const classes= [];
+        const classes : Array<string> = [];
         if(props.rounded) {
             classes.push('rounded-circle');
         }
@@ -84,12 +84,12 @@
     const initialsStyles = computed(() => {
         const halfSize = props.size / 2;
 
-        const containerStyles = {
+        const containerStyles : CSSProperties = {
             height: `${props.size}px`,
             width: `${props.size}px`,
             'background-color': backgroundColor.value,
         };
-        const textStyles = {
+        const textStyles : CSSProperties = {
             'font-weight': 'bold',
             'font-size': `${halfSize}px`,
             'line-height': `${halfSize}px`,

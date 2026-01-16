@@ -114,7 +114,10 @@
         emits('goto', page);
     };
 
-    const emits = defineEmits(['goto']);
+    const emits = defineEmits<{
+        (e: 'goto', page: number): void;
+    }>();
+
 </script>
 
 <style lang="scss">

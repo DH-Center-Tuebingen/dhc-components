@@ -2,7 +2,6 @@ import { type Meta, type StoryObj } from '@storybook/vue3';
 
 import { ref, computed, ComputedRef } from 'vue';
 
-import Toolbar, { Tool } from './Toolbar.vue';
 import {
     faArrowLeft,
     faArrowRight,
@@ -11,6 +10,10 @@ import {
     faMagnifyingGlassPlus,
     faPlus
 } from '@fortawesome/free-solid-svg-icons';
+
+import Toolbar from './Toolbar.vue';
+
+import { Tool } from './definitions';
 
 const meta: Meta<typeof Toolbar> = {
     component: Toolbar,

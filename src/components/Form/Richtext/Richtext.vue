@@ -59,6 +59,7 @@
 
 <script setup lang="ts">
     import {
+        CSSProperties,
         computed,
         onMounted,
         onUnmounted,
@@ -140,7 +141,7 @@
     });
 
     const dynamicStyles = computed(() => {
-        const styles = {};
+        const styles : CSSProperties = {};
         if(zenMode.value) {
             styles.transform = 'translateY(-50%)';
         }
