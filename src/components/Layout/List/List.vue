@@ -22,14 +22,13 @@
     setup
     lang="ts"
 >
-    import type { 
-        ListItem as ListItemType, 
-        ListExecutionContext, 
+    import type {
+        ListItem as ListItemType,
+        ListExecutionContext,
     } from '@/types/List';
 
-    import { computed, provide, ref } from 'vue';
+    import { computed, provide, readonly, ref } from 'vue';
     import ListItem from './ListItem.vue';
-    import { readonly } from 'vue';
 
     const props = defineProps<{
         /** Specifies if icons should be displayed. Items that do not have an icon will be indented to match the items with icon. */
@@ -39,7 +38,7 @@
         /** Disables all items in the list when a single item is executing an action. */
         disableAll?: boolean;
     }>();
-    
+
     const emit = defineEmits<{
         /**
          * Executed is called after each action was executed, whether it was successful or not.
@@ -53,7 +52,7 @@
 
     /**
      * Execution context for the list items.
-     * 
+     *
      * This context is used to manage the execution state of the child items.
      * We keep track of the number of executions to determine if the list is currently executing.
      * This allows us to disable all items when an action is being executed.
