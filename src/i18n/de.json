@@ -2,7 +2,9 @@
     "global": {
         "save": "Speichern",
         "cancel": "Abbrechen",
-        "edit": "Bearbeiten"
+        "delete": "Löschen",
+        "edit": "Bearbeiten",
+        "edited": "Bearbeitet"
     },
     "login": {
         "title": "Login",
