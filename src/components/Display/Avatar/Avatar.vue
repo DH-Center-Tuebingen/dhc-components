@@ -28,17 +28,17 @@
 >
     import { CSSProperties, computed } from 'vue';
 
-    import { avatarProps } from './definitions';
+    import { AvatarProps } from './definitions';
     import { User } from '../../../types/User';
 
-    const props = withDefaults(defineProps<avatarProps>(), {
+    const props = withDefaults(defineProps<AvatarProps>(), {
         max: 2,
         rounded: true,
         shadow: false,
         size: 64,
     });
 
-    const hasImage = (props.name as User && !!(props.name as User).avatarUrl);
+    const hasImage = (props.name as User && !!(props.name as User).avatar_url);
 
     const fullName = computed(() => {
         let name : string;

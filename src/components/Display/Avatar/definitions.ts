@@ -1,6 +1,6 @@
 import { User } from '../../../types/User';
 
-export interface avatarProps {
+export interface AvatarProps {
     name: string | User,
     max?: number,
     rounded?: boolean,

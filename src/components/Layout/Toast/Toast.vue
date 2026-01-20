@@ -98,16 +98,15 @@
     });
 
     let timeoutRemain = ref(props.duration);
-    let timeoutId: number;
+    let timeoutId: number | undefined;
     const TIMEOUT_INTERVAL = 1000; // in ms
 
-    nextTick(_ => {
+    nextTick(() => {
         const toastInstance = new Toast(toastRef.value);
-        console.log(toastInstance);
-        timeoutId = setInterval(() => {
+        timeoutId = window.setInterval(() => {
             timeoutRemain.value -= TIMEOUT_INTERVAL;
             if(timeoutRemain.value <= 0) {
-                clearInterval(timeoutId);
+                window.clearInterval(timeoutId);
             }
         }, TIMEOUT_INTERVAL);
         toastInstance.show();
@@ -118,7 +117,7 @@
     });
 
     const iconDef = computed(() => {
-        let definition: IconDefinition;
+        let definition: IconDefinition | undefined;
         if(!props.icon) return;
 
         switch(props.channel) {
@@ -149,25 +148,25 @@
         let classes: Array<string> = ['border-0'];
         switch(props.channel) {
             case 'success':
-                classes.push(['bg-success', 'text-white']);
+                classes.push('bg-success', 'text-white');
                 break;
             case 'info':
-                classes.push(['bg-info', 'text-dark']);
+                classes.push('bg-info', 'text-dark');
                 break;
             case 'warning':
-                classes.push(['bg-warning', 'text-dark']);
+                classes.push('bg-warning', 'text-dark');
                 break;
             case 'danger':
-                classes.push(['bg-danger', 'text-white']);
+                classes.push('bg-danger', 'text-white');
                 break;
             case 'primary':
-                classes.push(['bg-primary', 'text-white']);
+                classes.push('bg-primary', 'text-white');
                 break;
             case 'secondary':
-                classes.push(['bg-secondary', 'text-white']);
+                classes.push('bg-secondary', 'text-white');
                 break;
             case 'dark':
-                classes.push(['bg-dark', 'text-white']);
+                classes.push('bg-dark', 'text-white');
                 break;
             default:
                 // use default bootstrap styling for unsupported/non-existing channel
