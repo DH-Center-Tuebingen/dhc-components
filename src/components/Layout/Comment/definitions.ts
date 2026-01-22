@@ -10,6 +10,7 @@ export type commentDataProps = {
     updated_at: string,
     deleted_at: string | null,
     replies_count: number,
+    replies: commentDataProps[],
     author: User,
 };
 
@@ -17,6 +18,7 @@ export type actions = { edit: boolean, delete: boolean, reply: boolean };
 
 export interface CommentProps {
     data: commentDataProps;
+    alternate: boolean;
     allowedActions: Partial<actions>;
 }
 

@@ -1,5 +1,8 @@
 <template>
-    <div class="d-flex">
+    <div
+        class="d-flex gap-3"
+        :class="alternate ? 'flex-row-reverse' : 'flex-row'"
+    >
         <slot
             name="avatar"
             :user="data.author"
@@ -13,16 +16,20 @@
                 />
             </a>
         </slot>
-        <div class="ms-3 flex-grow-1">
+        <div class="flex-grow-1">
             <div class="d-flex flex-column">
                 <div
-                    class="d-flex flex-row justify-content-between"
+                    class="d-flex justify-content-between"
+                    :class="alternate ? 'flex-row-reverse' : 'flex-row'"
                 >
                     <slot
                         name="author"
                         :comment="data.author"
                     >
-                        <div class="d-flex align-items-center">
+                        <div
+                            class="d-flex align-items-center gap-2"
+                            :class="alternate ? 'flex-row-reverse' : 'flex-row'"
+                        >
                             <!-- @click.prevent="showUserInfo(data.author)" -->
                             <a
                                 href="#"
@@ -37,16 +44,16 @@
                                 </span> -->
                             </a>
                             <span
-                                class="fw-light small ms-2 text-body-tertiary"
+                                class="fw-light small text-body-secondary d-flex flex-row gap-1"
                                 :title="date2string(data.updated_at)"
                             >
                                 {{ ago(data.updated_at) }}
                                 <span
                                     v-if="data.updated_at != data.created_at"
-                                    class="fst-italic"
+                                    class="d-flex flex-row gap-1"
                                 >
-                                    &bull;
-                                    {{ t('global.edited') }}
+                                    <span>&bull;</span>
+                                    <span>{{ t('global.edited') }}</span>
                                 </span>
                             </span>
                         </div>
@@ -102,19 +109,35 @@
                         </span> -->
                     </div>
                 </div>
-                <div v-if="!emptyMetadata">
+                <div
+                    v-if="!emptyMetadata"
+                    class="bg-white rounded-3 px-3 py-2 mw-75"
+                    :class="{
+                        'w-fit': !editMode.enabled && !answerMode.enabled,
+                        'ms-auto': alternate
+                    }"
+                >
                     <slot
                         v-if="!isDeleted && editMode.enabled"
                         name="body-editing"
                         :comment="data"
                         :content="editMode.content"
                     >
-                        <div class="mt-2">
+                        <div class="my-1">
                             <textarea
                                 v-model="editMode.content"
                                 class="form-control lh-1"
+                                style="height: 5em;"
                             />
-                            <div class="mt-1 d-flex flex-row align-items-center gap-2">
+                            <div class="mt-2 d-flex flex-row align-items-center justify-content-end gap-2">
+                                <button
+                                    type="button"
+                                    class="btn btn-outline-secondary btn-sm py-0"
+                                    @click="cancelEditing()"
+                                >
+                                    <FontAwesomeIcon :icon="faTimes" />
+                                    {{ t('global.cancel') }}
+                                </button>
                                 <button
                                     type="button"
                                     class="btn btn-outline-success btn-sm py-0"
@@ -123,14 +146,6 @@
                                 >
                                     <FontAwesomeIcon :icon="faSave" />
                                     {{ t('global.save') }}
-                                </button>
-                                <button
-                                    type="button"
-                                    class="btn btn-outline-danger btn-sm py-0"
-                                    @click="cancelEditing()"
-                                >
-                                    <FontAwesomeIcon :icon="faTimes" />
-                                    {{ t('global.cancel') }}
                                 </button>
                             </div>
                         </div>
@@ -143,7 +158,8 @@
                         <div
                             v-if="data.content"
                             ref="contentRef"
-                            class="mt-1 white-space-pre lh-1"
+                            class="white-space-pre lh-1"
+                            :class="alternate ? 'text-end' : 'text-start'"
                             :style="contentStyles"
                             @click="toggleHiddenContent"
                         >
@@ -164,11 +180,14 @@
                         name="options"
                         :comment="data"
                     >
-                        <div class="d-flex flex-row gap-2 text-body-tertiary mt-2">
+                        <div
+                            class="d-flex flex-row gap-2 text-body-tertiary mt-2"
+                            :class="alternate ? 'justify-content-end' : 'justify-content-start'"
+                        >
                             <a
                                 v-if="allowedActions.reply"
                                 href="#"
-                                class="btn btn-sm bg-none badge text-reset"
+                                class="btn btn-sm p-0 bg-none badge text-reset"
                                 @click.prevent="setReplyTo()"
                             >
                                 <FontAwesomeIcon
@@ -182,7 +201,7 @@
                             <a
                                 v-if="allowedActions.edit"
                                 href="#"
-                                class="btn btn-sm bg-none badge text-reset"
+                                class="btn btn-sm p-0 bg-none badge text-reset"
                                 @click.prevent="setEditMode()"
                             >
                                 <FontAwesomeIcon
@@ -196,7 +215,7 @@
                             <a
                                 v-if="allowedActions.delete"
                                 href="#"
-                                class="btn btn-sm bg-none badge text-reset"
+                                class="btn btn-sm p-0 bg-none badge text-reset"
                                 @click.prevent="confirmDelete()"
                             >
                                 <FontAwesomeIcon
@@ -235,12 +254,21 @@
                         :comment="data"
                         :content="answerMode.content"
                     >
-                        <div class="mt-2">
+                        <div class="my-1">
                             <textarea
                                 v-model="answerMode.content"
                                 class="form-control lh-1"
+                                style="height: 5em;"
                             />
-                            <div class="mt-1 d-flex flex-row align-items-center gap-2">
+                            <div class="mt-2 d-flex flex-row align-items-center justify-content-end gap-2">
+                                <button
+                                    type="button"
+                                    class="btn btn-outline-secondary btn-sm py-0"
+                                    @click="cancelReply()"
+                                >
+                                    <FontAwesomeIcon :icon="faTimes" />
+                                    {{ t('global.cancel') }}
+                                </button>
                                 <button
                                     type="button"
                                     class="btn btn-outline-success btn-sm py-0"
@@ -249,14 +277,6 @@
                                 >
                                     <FontAwesomeIcon :icon="faPaperPlane" />
                                     {{ t('send') }}
-                                </button>
-                                <button
-                                    type="button"
-                                    class="btn btn-outline-danger btn-sm py-0"
-                                    @click="cancelReply()"
-                                >
-                                    <FontAwesomeIcon :icon="faTimes" />
-                                    {{ t('global.cancel') }}
                                 </button>
                             </div>
                         </div>
@@ -287,6 +307,7 @@
     lang="ts"
 >
     import {
+        CSSProperties,
         computed,
         ref,
     } from 'vue';
@@ -314,6 +335,7 @@
     import { CommentProps } from './definitions';
 
     const props = withDefaults(defineProps<CommentProps>(), {
+        alternate: false,
         allowedActions: {
             edit: true,
             delete: true,
@@ -325,6 +347,7 @@
         (e: 'edit', content: string): void;
         (e: 'delete'): void;
         (e: 'reply', content: string): void;
+        (e: 'toggle-replies', status: boolean): void;
     }>();
 
     const messages = {
@@ -354,18 +377,19 @@
 
     const hasHiddenContent = computed(() => {
         if(!contentRef.value) return false;
-        return contentRef.value.scrollHeight > contentRef.value.clientHeight;
+        // A magic 2px offset is needed, because of different css rounding behaviour
+        return contentRef.value.scrollHeight > contentRef.value.clientHeight + 2;
     });
 
     const contentStyles = computed(() => {
+        const styles: CSSProperties = {
+            'max-height': showHiddenContent.value ? '' : '5em',
+            // 'overflow': 'hidden',
+        };
         if(hasHiddenContent.value && !showHiddenContent.value) {
-            return {
-                'max-height': '3em',
-                'mask-image': 'linear-gradient(180deg, #000 60%, transparent)'
-            };
-        } else {
-            return {};
+            styles['mask-image'] = 'linear-gradient(180deg, #000 60%, transparent)';
         }
+        return styles;
     });
 
     const setReplyTo = () => {
@@ -406,6 +430,7 @@
 
     const toggleReplies = () => {
         displayReplies.value = !displayReplies.value;
+        emits('toggle-replies', displayReplies.value);
     };
 
     const toggleHiddenContent = () => {
@@ -424,6 +449,8 @@
     lang="scss"
     scoped
 >
+    @use "@scss/utils.scss";
+
     .white-space-pre {
         white-space: pre;
     }

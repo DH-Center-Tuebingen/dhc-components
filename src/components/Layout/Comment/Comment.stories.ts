@@ -93,6 +93,10 @@ const deletedComment = {
     ...comments[0],
     deleted_at: '2026-01-01T10:10:10.000000Z',
 };
+const uneditedComment = {
+    ...comments[0],
+    updated_at: '2025-12-31T12:00:00.000000Z',
+};
 
 export const Default: Story = {
     args: {
@@ -103,6 +107,12 @@ export const Default: Story = {
 export const Deleted: Story = {
     args: {
         data: deletedComment,
+    },
+};
+
+export const NotEdited: Story = {
+    args: {
+        data: uneditedComment,
     },
 };
 
