@@ -173,7 +173,7 @@
                 classes = [];
         }
 
-        if(!props.hideTimeout) {
+        if(!props.hideTimeout && props.autohide) {
             classes.push('rounded-bottom-0');
         }
 
