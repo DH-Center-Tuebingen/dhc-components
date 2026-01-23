@@ -5,11 +5,28 @@
         <div
             v-for="comment in comments"
             :key="comment.id"
+            class="px-0 py-2"
         >
             <Comment
                 :data="comment"
+                :alternate="isAlternate(comment.author.id)"
+                @toggle-replies="status => toggleReplies(comment.id, status)"
             />
-            <hr class="text-body-tertiary">
+            <div
+                v-if="comment.replies?.length > 0 && repliesShown[comment.id]"
+                class="list-group rounded-4 ms-4 mt-2"
+            >
+                <template
+                    v-for="reply in comment.replies"
+                    :key="reply.id"
+                >
+                    <Comment
+                        :data="reply"
+                        :alternate="isAlternate(reply.author.id)"
+                        @toggle-replies="status => toggleReplies(reply.id, status)"
+                    />
+                </template>
+            </div>
         </div>
     </div>
 </template>
@@ -27,9 +44,20 @@
 
     import { CommentListProps } from './definitions';
 
+    const repliesShown = ref({});
+
     const props = withDefaults(defineProps<CommentListProps>(), {
     });
-    console.log("props list", props.comments)
+
+    const isAlternate = (user_id: number) => {
+        return user_id == 2;
+    };
+
+    const toggleReplies = (comment_id: number, status: boolean) => {
+        console.log("show?", comment_id, status);
+        repliesShown.value[comment_id] = status;
+    };
+
 </script>
 
 <style lang="scss">
