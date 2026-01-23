@@ -13,9 +13,12 @@
                 <div class="mb-2">
                     <label
                         for="username"
-                        class="mb-2"
+                        class="mb-2 d-flex flex-row align-items-center gap-1"
                     >
-                        <i class="text-body-secondary fas fa-fw fa-user me-2"></i>
+                        <FontAwesomeIcon
+                            :icon="faUser"
+                            class="text-secondary"
+                        />
                         {{ t('login.email_or_nick') }}
                     </label>
 
@@ -38,9 +41,12 @@
                 <div>
                     <label
                         for="password"
-                        class="mb-2"
+                        class="mb-2 d-flex flex-row align-items-center gap-1"
                     >
-                        <i class="text-body-secondary fas fa-fw fa-unlock-alt me-2"></i>
+                        <FontAwesomeIcon
+                            :icon="faUnlockAlt"
+                            class="text-secondary"
+                        />
                         {{ t('login.password') }}
                     </label>
 
@@ -109,6 +115,12 @@
     } from 'vue';
 
     import { useI18n } from 'vue-i18n';
+
+    import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+    import {
+        faUnlockAlt,
+        faUser,
+    } from '@fortawesome/free-solid-svg-icons';
 
     import Alert from '../Alert/Alert.vue';
     import LoadingButton from '../Button/LoadingButton/LoadingButton.vue';
