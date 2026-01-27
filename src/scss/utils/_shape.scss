@@ -1,6 +1,21 @@
-/* Mixins */
-@mixin circle($width) {
-    width: $width;
-    height: $width;
+.btn-fab {
+    height: calc((2*var(--bs-btn-padding-y)) + (var(--bs-btn-font-size) * var(--bs-btn-line-height)) + (2*var(--bs-btn-border-width)));
+    width: calc((2*var(--bs-btn-padding-y)) + (var(--bs-btn-font-size) * var(--bs-btn-line-height)) + (2*var(--bs-btn-border-width)));
     border-radius: 50%;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-xs {
+    --bs-btn-padding-y: 0.25rem;
+    --bs-btn-font-size: 0.7rem;
+    --bs-btn-line-height: 1;
+}
+
+.btn-xl {
+    --bs-btn-padding-y: 0.75rem;
+    --bs-btn-font-size: 2rem;
+    --bs-btn-line-height: 1.5;
 }

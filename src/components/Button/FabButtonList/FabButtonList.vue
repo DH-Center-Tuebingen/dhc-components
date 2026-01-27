@@ -1,6 +1,8 @@
 <template>
     <div
-        class="btn-fab-list btn-fab-list-sm gap-1 bg-white rounded px-1 py-1 d-inline-flex flex-align-center">
+        class="btn-fab-list d-inline-flex flex-align-center"
+        :class="customClasses"
+    >
         <FabButtonComponent
             v-for="(value, index) in buttons"
             :key="index"
@@ -25,7 +27,7 @@
 
     import FabButtonComponent, { FabButtonSize } from '../FabButton/FabButton.vue';
     import { ColorName } from 'src/types/Colors';
-    
+
     interface FabButton {
         icon: IconDefinition;
         title?: string;
@@ -35,11 +37,14 @@
         active?: boolean;
     }
 
-    defineProps<{
+    withDefaults(defineProps<{
         size?: FabButtonSize;
+        customClasses?: string;
         buttons: FabButton[];
-    }>();
-
+    }>(), {
+        size: 'md',
+        customClasses: 'bg-white gap-1 px-2 py-1 rounded-pill'
+    });
 </script>
 
 

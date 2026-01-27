@@ -21,7 +21,7 @@
     setup
     lang="ts"
 >
-    export type FabButtonSize = 'sm' | 'md' | 'lg' | 'xl';
+    export type FabButtonSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 
     import type {
         IconDefinition
@@ -53,7 +53,7 @@
     }>();
 
     const buttonClass = computed(() => {
-        return `btn-fab-${size}`;
+        return size != 'md' ? `btn-${size}` : '';
     });
 </script>
 
@@ -62,44 +62,4 @@
     scoped
 >
     @use "@scss/utils/shape";
-
-    .btn-fab {
-        padding: 0;
-        @include shape.circle(1.8rem);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .btn-fab:disabled {
-        // background-color: $gray-200;
-        opacity: 1;
-    }
-
-    .btn-fab-list-sm > .btn-fab,
-    .btn-fab-sm {
-        @include shape.circle(1.25rem);
-        padding: 0;
-        font-size: 0.7rem;
-        line-height: normal;
-    }
-
-    .btn-fab-list-md > .btn-fab {
-        @include shape.circle(1.5rem);
-        padding: 0;
-        font-size: 0.9rem;
-        line-height: normal;
-    }
-
-    .btn-fab-lg {
-        @extend .btn-fab;
-        @include shape.circle(2.5rem);
-        font-size: 1.2rem;
-    }
-
-    .btn-fab-xl {
-        @extend .btn-fab;
-        @include shape.circle(4rem);
-        font-size: 2.3rem;
-    }
 </style>
