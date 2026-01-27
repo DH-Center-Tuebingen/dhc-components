@@ -1,0 +1,17 @@
+@mixin circle($width) {
+    width: $width;
+    height: $width;
+    border-radius: 50%;
+}
+
+.not-allowed-handle {
+    cursor: not-allowed;
+}
+
+.w-fit {
+    width: fit-content;
+}
+
+.mw-75 {
+    max-width: 75%;
+}

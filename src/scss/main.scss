@@ -1,0 +1,22 @@
+@use "./imports/fontsource";
+@use "./variables/fonts";
+@use "./themes/default";
+
+@use "utils";
+@use "mde";
+
+.sans-serif {
+  font-family: var(--font-sans);
+}
+
+.serif {
+  font-family: var(--font-serif);
+}
+
+.monospace {
+  font-family: var(--font-mono);
+}
+
+html, body {
+    font-family: 'Outfit Variable', Arial, sans-serif !important;
+}

@@ -32,6 +32,10 @@
     "prepare": "npm run build"
   },
   "dependencies": {
+    "@fontsource-variable/merriweather": "^5.2.6",
+    "@fontsource-variable/outfit": "^5.2.8",
+    "@fontsource-variable/source-code-pro": "^5.2.7",
+    "@fontsource/zilla-slab": "^5.2.8",
     "@milkdown/core": "^7.5.0",
     "@milkdown/plugin-clipboard": "^7.5.0",
     "@milkdown/plugin-diagram": "^7.5.0",

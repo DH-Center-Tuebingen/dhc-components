@@ -70,4 +70,5 @@ export { default as Breadcrumbs } from './components/Navigation/Breadcrumbs/Brea
 // Composables
 export { default as useResizeObserver } from './composables/resize-observer';
 
-import './assets/main.css';
+// import './assets/main.css';
+import './scss/main.scss';
