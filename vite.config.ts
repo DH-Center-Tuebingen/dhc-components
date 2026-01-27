@@ -34,7 +34,7 @@ export default defineConfig({
                 't',
                 ///^@milkdown(\/.*)?$/  // Would be good to exclude milkdown as it takes up a lot of space:
                                         // With Milkdown: 1MB
-                                        // Without Milkdown: 0.3MB        
+                                        // Without Milkdown: 0.3MB
             ],
             output: {
                 globals: {

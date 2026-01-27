@@ -1,13 +1,6 @@
+/* Mixins */
 @mixin circle($width) {
     width: $width;
     height: $width;
     border-radius: 50%;
-}
-
-.w-fit {
-    width: fit-content;
-}
-
-.mw-75 {
-    max-width: 75%;
 }

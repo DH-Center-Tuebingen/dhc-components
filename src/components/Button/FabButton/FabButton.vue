@@ -61,11 +61,11 @@
     lang="scss"
     scoped
 >
-    @use "@scss/utils.scss";
+    @use "@scss/utils/shape";
 
     .btn-fab {
         padding: 0;
-        @include utils.circle(1.8rem);
+        @include shape.circle(1.8rem);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -78,14 +78,14 @@
 
     .btn-fab-list-sm > .btn-fab,
     .btn-fab-sm {
-        @include utils.circle(1.25rem);
+        @include shape.circle(1.25rem);
         padding: 0;
         font-size: 0.7rem;
         line-height: normal;
     }
 
     .btn-fab-list-md > .btn-fab {
-        @include utils.circle(1.5rem);
+        @include shape.circle(1.5rem);
         padding: 0;
         font-size: 0.9rem;
         line-height: normal;
@@ -93,13 +93,13 @@
 
     .btn-fab-lg {
         @extend .btn-fab;
-        @include utils.circle(2.5rem);
+        @include shape.circle(2.5rem);
         font-size: 1.2rem;
     }
 
     .btn-fab-xl {
         @extend .btn-fab;
-        @include utils.circle(4rem);
+        @include shape.circle(4rem);
         font-size: 2.3rem;
     }
 </style>
