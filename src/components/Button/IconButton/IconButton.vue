@@ -78,7 +78,7 @@
     import type { IconDefinition } from '@fortawesome/fontawesome-svg-core';
     import { computed, ModelRef, useSlots } from 'vue';
     import StackedIcon from '@/components/Layout/StackedIcon/StackedIcon.vue';
-    import LoadingSpinner from '@/components/LoadingSpinner/LoadingSpinner.vue';
+    import LoadingSpinner from '@/components/Indicators/LoadingSpinner/LoadingSpinner.vue';
 
     import { IconButtonProps } from './definitions';
 

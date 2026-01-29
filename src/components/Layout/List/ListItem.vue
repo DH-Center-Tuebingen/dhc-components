@@ -42,7 +42,7 @@
     import { ListItem, ListExecutionContext } from '@/types/List'
 
     import { computed, ref, inject, type ComputedRef, type Ref } from 'vue';
-    import LoadingSpinner from '@/components/LoadingSpinner/LoadingSpinner.vue';
+    import LoadingSpinner from '@/components/Indicators/LoadingSpinner/LoadingSpinner.vue';
 
     const props = defineProps<{
         item: ListItem;

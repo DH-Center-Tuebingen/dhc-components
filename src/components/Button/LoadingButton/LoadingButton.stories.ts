@@ -2,6 +2,8 @@ import type { Meta, StoryObj } from '@storybook/vue3';
 
 import LoadingButton from './LoadingButton.vue';
 
+const waitFor = async (ms: number = 1000) => new Promise(resolve => setTimeout(resolve, ms));
+
 const meta: Meta<typeof LoadingButton> = {
     component: LoadingButton,
     parameters: {
@@ -23,6 +25,7 @@ export const Default: Story = {
         loading: false,
         default: 'Click me',
         color: 'primary',
+        action: waitFor,
     },
 };
 
@@ -31,6 +34,7 @@ export const Loading: Story = {
         loading: true,
         default: 'Click me',
         color: 'primary',
+        action: waitFor,
     },
 };
 
@@ -39,7 +43,8 @@ export const Outline: Story = {
         loading: false,
         default: 'Click me',
         color: 'dark',
-        outlined: true
+        outlined: true,
+        action: waitFor,
     },
 };
 
@@ -48,6 +53,7 @@ export const OutlineLoading: Story = {
         loading: true,
         default: 'Click me',
         color: 'dark',
-        outlined: true
+        outlined: true,
+        action: waitFor,
     },
 };
