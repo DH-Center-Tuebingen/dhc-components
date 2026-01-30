@@ -13,11 +13,10 @@
                 <div class="mb-2">
                     <label
                         for="username"
-                        class="mb-1 d-flex flex-row align-items-center gap-1 text-secondary fw-bold"
+                        class="mb-1 d-flex flex-row align-items-center gap-2 text-secondary fw-bold"
                     >
                         <FontAwesomeIcon
                             :icon="faUser"
-                            class="me-2"
                         />
                         {{ t('login.email_or_nick') }}
                     </label>
@@ -41,11 +40,10 @@
                 <div>
                     <label
                         for="password"
-                        class="mb-1 d-flex flex-row align-items-center gap-1 text-secondary fw-bold"
+                        class="mb-1 d-flex flex-row align-items-center gap-2 text-secondary fw-bold"
                     >
                         <FontAwesomeIcon
                             :icon="faLock"
-                            class="me-2"
                         />
                         {{ t('login.password') }}
                     </label>
