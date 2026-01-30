@@ -1,14 +1,17 @@
 {
-  "files": [],
-  "references": [
-    {
-      "path": "./tsconfig.node.json"
-    },
-    {
-      "path": "./tsconfig.app.json"
-    },
-    {
-      "path": "./tsconfig.cypress-ct.json"
-    }
-  ]
+    "files": [],
+    "references": [
+        {
+            // Checks the vite building tools 
+            "path": "./.tsconfig/tsconfig.node.json"
+        },
+        {
+            // Main tsconfig for the application
+            "path": "./.tsconfig/tsconfig.app.json"
+        },
+        {
+            // tsconfig for cypress e2e tests
+            "path": "./.tsconfig/tsconfig.cypress-ct.json"
+        }
+    ]
 }
