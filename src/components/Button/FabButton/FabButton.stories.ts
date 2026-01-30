@@ -35,6 +35,7 @@ export const Sizes: Story = {
         },
         template: `
         <div class="d-flex gap-3 align-items-center">
+            <FabButton v-bind="args" size="xs" color="info" />
             <FabButton v-bind="args" size="sm" color="primary" />
             <FabButton v-bind="args" size="md" color="secondary" />
             <FabButton v-bind="args" size="lg" color="warning" />

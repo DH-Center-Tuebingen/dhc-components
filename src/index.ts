@@ -80,4 +80,5 @@ export { default as Toast } from './components/Notifications/Toast/Toast.vue';
 // Composables
 export { default as useResizeObserver } from './composables/resize-observer';
 
-import './assets/main.css';
+// import './assets/main.css';
+import './scss/main.scss';

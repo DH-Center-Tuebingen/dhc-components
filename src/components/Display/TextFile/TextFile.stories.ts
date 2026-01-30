@@ -40,3 +40,21 @@ Culpa proident proident ipsum id proident. Ut id et eiusmod ex do. Excepteur est
         template: '<TextFile style="max-height:512px" v-bind="args" />',
     }),
 };
+
+export const SansSerif: Story = {
+    args: {
+        // Add props here
+        sansSerif: true,
+        value: `Amet esse adipisicing deserunt fugiat amet eiusmod excepteur sunt cupidatat veniam ad eiusmod sit. Ullamco consectetur esse qui et ullamco tempor quis nisi elit amet labore non Lorem. Non eu in adipisicing fugiat voluptate. Excepteur occaecat magna duis anim officia voluptate dolore cupidatat commodo esse minim pariatur qui consectetur.
+
+Quis commodo laborum minim dolore eu amet duis. Officia deserunt esse sint commodo laboris eiusmod duis esse non. Pariatur incididunt ipsum laborum officia commodo ad aliquip duis. Nostrud culpa sunt tempor elit.
+        `},
+    render: (args: any) => ({
+        components: { TextFile },
+        setup() {
+            return { args };
+        },
+        // We set a max-height to check if the overflow behaves correctly
+        template: '<TextFile style="max-height:512px" v-bind="args" />',
+    }),
+};

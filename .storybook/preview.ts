@@ -4,7 +4,8 @@ import i18n from "./i18n";
 
 import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import '@/assets/main.css';
+// import '@/assets/main.css';
+import '@/scss/main.scss';
 
 setup((app) => {
   app.use(i18n)
