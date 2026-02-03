@@ -10,7 +10,13 @@
                 :aria-controls="`${identifier}`"
                 :disabled="options.disabled"
             >
-                {{ title }}
+                <template v-if="!$slots.header">
+                    {{ title }}
+                </template>
+                <slot
+                    name="header"
+                    :options="options"
+                ></slot>
             </button>
         </h2>
         <div
@@ -18,8 +24,13 @@
             :class="['accordion-collapse', 'collapse', { 'show': isOpen }]"
             :data-bs-parent="bsParent"
         >
-            <div class="accordion-body" :class="{ 'p-0': options.flush }">
-                <slot></slot>
+            <div
+                class="accordion-body"
+                :class="{ 'p-0': options.flush }"
+            >
+                <slot
+                    :options="options"
+                ></slot>
             </div>
         </div>
     </div>
