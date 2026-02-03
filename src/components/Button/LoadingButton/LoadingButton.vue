@@ -1,6 +1,6 @@
 <template>
     <button
-        class="position-relative d-flex align-items-center justify-content-center"
+        class="d-flex align-items-center justify-content-center gap-1"
         :class="buttonClass"
         role="button"
         :disabled="loading"
@@ -13,19 +13,15 @@
         -->
         <span
             v-if="loading"
-            class="position-absolute top-50 start-50 translate-middle"
         >
-            <LoadingSpinner :size="'lg'" />
+            <LoadingSpinner />
         </span>
         <slot
             v-else
             name="icon"
         ></slot>
 
-        <span
-            class="loading-button-content"
-            :class="contentClass"
-        >
+        <span class="loading-button-content">
             <slot></slot>
         </span>
     </button>
@@ -51,12 +47,6 @@
     }>();
 
     const currentlyExecuted = ref(false);
-
-    const contentClass = computed(_ => {
-        return {
-            'opacity-0': loading.value,
-        };
-    });
 
     const buttonClass = computed(_ => {
         const color = props.color ?? 'dark';
@@ -86,12 +76,7 @@
     const loading = computed(() => {
         return props.loading || currentlyExecuted.value;
     });
-
 </script>
 
 <style>
-    .loading-button-content {
-        opacity: 1;
-        transition: opacity .3s ease-in-out;
-    }
 </style>

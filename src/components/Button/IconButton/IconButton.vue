@@ -1,8 +1,8 @@
 <template>
     <button
-        class="icon-button"
-        :class="buttonClass"
-        style="user-select: none; cursor: pointer;"
+        class="icon-button user-select-none"
+        :class="buttonClasses"
+        style="cursor: pointer;"
         :aria-pressed="active"
         :disabled="isDisabled"
         :title="title"
@@ -12,7 +12,7 @@
             v-if="loading"
             :size="size"
         />
-        <template v-else>
+        <template v-else-if="!withoutIcon">
             <!-- Can be used to render your own custom icon, e.g. if you need to create an icon composition.  -->
             <slot
                 name="icon"
@@ -67,6 +67,9 @@
                 </div>
             </template>
         </template>
+        <span v-if="text">
+            {{ text }}
+        </span>
     </button>
 </template>
 
@@ -97,11 +100,22 @@
         loading: false,
         small: false,
         unbutton: false,
+        outlined: false,
+        text: '',
+        withoutIcon: false,
     });
 
     function resolveIconProp(prop: string | IconDefinition, category: string) {
+        if(props.withoutIcon) {
+            return;
+        }
+
         if(typeof prop === 'string') {
-            return `${category} fa-fw fa-${prop}`;
+            let stringDefinition = `${category} fa-${prop}`;
+            if(props.fixedWidth) {
+                stringDefinition += ' fa-fw';
+            }
+            return stringDefinition;
         } else {
             return prop;
         }
@@ -115,14 +129,26 @@
     }
 
     const hasMultipleIcons = computed(() => {
+        if(props.withoutIcon) {
+            return false;
+        }
+
         return Array.isArray(props.icon) && (typeof props.icon[0] !== 'string');
     });
 
     const isStackedIcon = computed(() => {
+        if(props.withoutIcon) {
+            return false;
+        }
+
         return !props.icon && props.icons?.items;
     });
 
     const icon = computed(() => {
+        if(props.withoutIcon) {
+            return;
+        }
+
         if(Array.isArray(props.icon)) {
             return props.icon;
         } else {
@@ -131,6 +157,10 @@
     });
 
     const activeIcon = computed(() => {
+        if(props.withoutIcon) {
+            return;
+        }
+
         if(props.activeIcon && Array.isArray(props.activeIcon)) {
             return props.activeIcon;
         } else if(props.icon && Array.isArray(props.icon)) {
@@ -140,10 +170,12 @@
         }
     });
 
-    const buttonClass = computed(() => {
+    const buttonClasses = computed(() => {
+        const baseName = props.outlined ? 'btn-outline' : 'btn';
+        const btnColor = isActive.value ? props.activeButtonClass : props.buttonClass;
         const classes = [
             'btn',
-            `btn-${isActive.value ? props.activeButtonClass : props.buttonClass}`,
+            `${baseName}-${btnColor}`,
         ];
 
         if(props.small) {
@@ -161,6 +193,13 @@
             } else {
                 classes.push(`text-${props.activeButtonClass}`);
             }
+        }
+
+        if(props.text) {
+            classes.push('d-flex');
+            classes.push('align-items-center');
+            classes.push('justify-content-center');
+            classes.push('gap-1');
         }
 
         return classes;

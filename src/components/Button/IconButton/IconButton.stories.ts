@@ -208,7 +208,115 @@ export const Loading: Story = {
 
             return { args, clicked, loading };
         },
-        template: '<IconButton v-bind="args" :loading="loading" v-model="modelValue" @click="clicked" />',
+        template: '<IconButton v-bind="args" :loading="loading" v-model="modelValue" @action="clicked" />',
+    }),
+};
+
+export const LoadingWithText: Story = {
+    args: {
+        loading: false,
+        text: 'Hello World',
+    },
+    render: (args: any) => ({
+        components: { IconButton },
+        setup() {
+            args.icon = faFaceSmile;
+
+            const loading = ref(args.loading.value);
+            const loadingTimeout = ref<NodeJS.Timeout | null>(null);
+            const clicked = () => setLoadingTimeout();
+
+            onMounted(() => {
+                if(args.loading) {
+                    setLoadingTimeout();
+                }
+            });
+
+            const setLoadingTimeout = () => {
+                if(loading.value) { return; }
+                loading.value = true;
+                loadingTimeout.value = setTimeout(() => {
+                    loading.value = false;
+                    loadingTimeout.value = null;
+                    // args.loading.value = false;
+                }, 2000);
+            };
+
+            watch(() => args.loading, (newValue) => {
+                if(loading.value !== newValue && newValue === true) {
+                    setLoadingTimeout();
+                }
+            });
+
+            return { args, clicked, loading };
+        },
+        template: '<IconButton v-bind="args" :loading="loading" v-model="modelValue" @action="clicked" />',
+    }),
+};
+
+export const LoadingWithoutIcon: Story = {
+    args: {
+        loading: false,
+        active: true,
+        disabled: false,
+        text: 'Hello World',
+        withoutIcon: true,
+    },
+    render: (args: any) => ({
+        components: { IconButton },
+        setup() {
+            args.icon = faFaceSmile;
+
+            const loading = ref(args.loading.value);
+            const active = ref(args.active.value);
+            const disabled = ref(args.disabled.value);
+            const loadingTimeout = ref<NodeJS.Timeout | null>(null);
+            const clicked = () => setLoadingTimeout();
+
+            onMounted(() => {
+                if(args.loading) {
+                    setLoadingTimeout();
+                }
+            });
+
+            const setLoadingTimeout = () => {
+                if(loading.value) { return; }
+                loading.value = true;
+                disabled.value = true;
+                active.value = false;
+                loadingTimeout.value = setTimeout(() => {
+                    active.value = true;
+                    disabled.value = false;
+                    loading.value = false;
+                    loadingTimeout.value = null;
+                    // args.loading.value = false;
+                }, 2000);
+            };
+
+            watch(() => args.loading, (newValue) => {
+                if(loading.value !== newValue && newValue === true) {
+                    setLoadingTimeout();
+                }
+            });
+
+            return { args, clicked, loading, active, disabled };
+        },
+        template: '<IconButton v-bind="args" :loading="loading" :active="active" :disabled="disabled" v-model="modelValue" @action="clicked" />',
+    }),
+};
+
+export const Iconless: Story = {
+    args: {
+        text: 'No Icon Button',
+        withoutIcon: true,
+    },
+    render: (args: any) => ({
+        components: { IconButton },
+        setup() {
+            args.icon = faFaceSmile;
+            return { args };
+        },
+        template: '<IconButton v-bind="args" />',
     }),
 };
 
@@ -239,7 +347,7 @@ export const Active: Story = {
         template: `
         <div class="d-flex gap-2 align-items-center">
             <div class="d-flex align-items-center text-center fw-bold">{{selectedIcon}}</div>
-            <IconButton v-for="icon in mappedIcons" :key="icon.id" :icon="icon.icon" :key="icon.id" @click="()=>selectedIcon=icon.id" :active="selectedIcon === icon.id"/>
+            <IconButton v-for="icon in mappedIcons" :key="icon.id" :icon="icon.icon" :key="icon.id" @action="()=>selectedIcon=icon.id" :active="selectedIcon === icon.id"/>
         </div>`,
     }),
 };
