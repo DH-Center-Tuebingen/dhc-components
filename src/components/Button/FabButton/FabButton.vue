@@ -29,7 +29,7 @@
 
     import { computed } from 'vue';
     import IconButton from '../IconButton/IconButton.vue';
-    import { BackgroundColor } from 'src/types/Colors';
+    import { ButtonColors } from 'src/types/Colors';
     import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
     /**
@@ -49,7 +49,7 @@
         action: Function;
         size?: FabButtonSize;
         active?: boolean;
-        color?: BackgroundColor
+        color?: ButtonColors;
     }>();
 
     const buttonClass = computed(() => {

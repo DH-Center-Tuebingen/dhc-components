@@ -33,7 +33,7 @@
 >
     import { computed, ref } from 'vue';
     import LoadingSpinner from '@/components/Indicators/LoadingSpinner/LoadingSpinner.vue';
-    import type { ColorName } from 'src/types/Colors';
+    import type { ButtonColors } from 'src/types/Colors';
 
     const emits = defineEmits<{
         (e: 'error', message: string): void;
@@ -41,7 +41,7 @@
 
     const props = defineProps<{
         outlined?: boolean
-        color?: ColorName
+        color?: ButtonColors
         loading?: boolean
         action?: Function
     }>();

@@ -12,25 +12,25 @@
             v-if="loading"
             :size="size"
         />
-        <template v-else-if="!withoutIcon">
+        <template v-else-if="hasIcon">
             <!-- Can be used to render your own custom icon, e.g. if you need to create an icon composition.  -->
             <slot
                 name="icon"
                 :active="isActive"
             >
             </slot>
-            <template v-if="!slots.icon">
+            <template v-if="icon &&!slots.icon">
                 <div
                     v-if="!isActive"
                     class="icon"
                 >
                     <div
-                        v-if="hasMultipleIcons"
+                        v-if="hasMultipleIcons && Array.isArray(icon)"
                         class="icon-group d-flex gap-1"
                     >
                         <FontAwesomeIcon
                             v-for="iconPart of icon"
-                            :key="iconPart"
+                            :key="iconPart.iconName"
                             :icon="iconPart"
                             :size="size"
                         />
@@ -53,7 +53,7 @@
                     class="icon"
                 >
                     <FontAwesomeIcon
-                        v-if="!isStackedIcon"
+                        v-if="icon !== undefined && !isStackedIcon"
                         :icon="activeIcon"
                         :size="size"
                         :fixed-width="fixedWidth"
@@ -102,14 +102,9 @@
         unbutton: false,
         outlined: false,
         text: '',
-        withoutIcon: false,
     });
 
     function resolveIconProp(prop: string | IconDefinition, category: string) {
-        if(props.withoutIcon) {
-            return;
-        }
-
         if(typeof prop === 'string') {
             let stringDefinition = `${category} fa-${prop}`;
             if(props.fixedWidth) {
@@ -129,26 +124,14 @@
     }
 
     const hasMultipleIcons = computed(() => {
-        if(props.withoutIcon) {
-            return false;
-        }
-
         return Array.isArray(props.icon) && (typeof props.icon[0] !== 'string');
     });
 
     const isStackedIcon = computed(() => {
-        if(props.withoutIcon) {
-            return false;
-        }
-
         return !props.icon && props.icons?.items;
     });
 
     const icon = computed(() => {
-        if(props.withoutIcon) {
-            return;
-        }
-
         if(Array.isArray(props.icon)) {
             return props.icon;
         } else {
@@ -157,10 +140,6 @@
     });
 
     const activeIcon = computed(() => {
-        if(props.withoutIcon) {
-            return;
-        }
-
         if(props.activeIcon && Array.isArray(props.activeIcon)) {
             return props.activeIcon;
         } else if(props.icon && Array.isArray(props.icon)) {
@@ -216,4 +195,8 @@
             return props.disabled();
         }
     })
+    
+    const hasIcon = computed(() => {
+        return props.icon !== undefined || slots.icon !== undefined || (props.icons && props.icons.items);
+    });
 </script>

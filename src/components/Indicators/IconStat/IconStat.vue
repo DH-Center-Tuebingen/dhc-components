@@ -17,7 +17,7 @@
     lang="ts"
 >
     import { computed } from 'vue';
-    import type { ColorName } from '@/types/Colors';
+    import type { TextColor } from '@/types/Colors';
 
     import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
     import type { IconDefinition } from '@fortawesome/free-solid-svg-icons';
@@ -27,7 +27,7 @@
         icon: IconDefinition;
         text?: string | number;
         iconOnly?: boolean;
-        color?: ColorName;
+        color?: TextColor;
         action?: Function;
     }>();
 

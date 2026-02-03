@@ -24,13 +24,13 @@
     } from '@fortawesome/free-solid-svg-icons';
 
     import FabButtonComponent, { FabButtonSize } from '../FabButton/FabButton.vue';
-    import { ColorName } from 'src/types/Colors';
+    import { ButtonColors } from 'src/types/Colors';
     
     interface FabButton {
         icon: IconDefinition;
         title?: string;
         classes?: string;
-        color?: ColorName;
+        color?: ButtonColors;
         action: Function;
         active?: boolean;
     }

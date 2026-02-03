@@ -2,14 +2,14 @@ import type { IconDefinition, SizeProp } from '@fortawesome/fontawesome-svg-core
 
 import { StackedIcon } from '@/components/Layout/StackedIcon/definitions';
 
-import { BackgroundColor } from '@/types/Colors';
+import { ButtonColors } from '@/types/Colors';
 
 export interface IconButtonProps {
     active?: boolean;
-    activeButtonClass?: BackgroundColor;
+    activeButtonClass?: ButtonColors;
     activeIcon?: string | IconDefinition | IconDefinition[];
     activeIconCategory?: string;
-    buttonClass?: BackgroundColor;
+    buttonClass?: ButtonColors;
     disabled?: boolean | Function;
     fixedWidth?: boolean;
     icon?: string | IconDefinition | IconDefinition[];
@@ -22,5 +22,4 @@ export interface IconButtonProps {
     outlined?: boolean;
     title?: string;
     text?: string;
-    withoutIcon: boolean;
 }
