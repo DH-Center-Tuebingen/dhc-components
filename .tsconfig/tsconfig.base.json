@@ -1,16 +1,17 @@
 {
     "compilerOptions": {
-        "baseUrl": "./",
-        "target": "ES2019",
-        "useDefineForClassFields": true,
+        "baseUrl": "..",
+        "composite": true,
+        "esModuleInterop": true,
+        "isolatedModules": true,
+        "jsx": "preserve",
         "module": "esnext",
         "moduleResolution": "node",
-        "isolatedModules": true,
-        "strict": true,
-        "jsx": "preserve",
-        "sourceMap": true,
         "resolveJsonModule": true,
-        "esModuleInterop": true,
+        "sourceMap": true,
+        "strict": true,
+        "target": "esnext",
+        "useDefineForClassFields": true,
         "paths": {
             "*": [
                 "*",
@@ -30,5 +31,5 @@
             "scripthost"
         ],
         "skipLibCheck": true
-    }
+    },
 }

@@ -1,18 +1,21 @@
 {
   "extends": "./tsconfig.base.json",
   "compilerOptions": {
+    "baseUrl": "..",
+    "rootDir": "..",
     "noImplicitThis": false,
     "outDir": "dist",
     "declaration": true
   },
-  "typeRoots": [
-    "node_modules/@types",
-    "src/types"
-  ],
-  "include": [
-    "vite.config.*",
-    "env.d.ts",
-    "src/**/*",
-    "src/**/*.vue"
-  ]
+    "typeRoots": [
+        "../node_modules/@types",
+        "../src/types"
+    ],
+    "include": [
+        "../vite.config.*",
+        "../env.d.ts",
+        "../src/**/*",
+        "../src/**/*.vue",
+        "../src/**/*.json"
+    ]
 }

@@ -1,9 +1,14 @@
 {
-  "extends": "./tsconfig.base.json",
-  "compilerOptions": {
-    "target": "esnext"
-  },
-  "include": [
-    "vite.config.*"
-  ]
+    "extends": "./tsconfig.base.json",
+    "compilerOptions": {
+        "typeRoots": [
+            "../node_modules/@types",
+            "../src/types"
+        ],
+    },
+    "include": [
+        "../.storybook/*",
+        "../vite.config.ts",
+        "../cypress.config.ts"
+    ]
 }
