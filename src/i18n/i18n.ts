@@ -1,4 +1,4 @@
-import { createI18n } from 'vue-i18n';
+import { createI18n, I18n } from 'vue-i18n';
 import * as de from './de.json';
 import * as en from './en.json';
 
@@ -8,7 +8,9 @@ declare global {
     }
 }
 
-export const initI18n = (messages: object, extendGlobal: boolean = false) => {
+export type Messages = Record<string, Record<string, any>>;
+
+export const initI18n = (messages: Messages, extendGlobal: boolean = false): I18n<Messages, {}, {}, string, false> => {
     if(extendGlobal) {
         if(messages.de) {
             messages.de = {
@@ -23,10 +25,10 @@ export const initI18n = (messages: object, extendGlobal: boolean = false) => {
             };
         }
     }
-    return createI18n<false, typeof messages>({
+    return createI18n({
         locale: window?.globalLocale || 'en',
         fallbackLocale: 'en',
         legacy: false,
-        messages: messages,
+        messages: messages as any,
     });
 };

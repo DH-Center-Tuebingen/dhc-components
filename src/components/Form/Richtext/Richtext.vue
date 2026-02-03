@@ -126,10 +126,6 @@
     const editMode = ref(false);
     const zenMode = ref(false);
 
-    const zenModeBtnClass = computed(() => {
-        return zenMode.value ?  'link': 'text-primary';
-    });
-
     const dynamicClasses = computed(() => {
         const classes = [];
         if(zenMode.value) {
@@ -153,7 +149,8 @@
             name: 'zenmode',
             action: () => setZenMode(!zenMode.value),
             icon: faArrowsToEye,
-            class: zenModeBtnClass,
+            class: ref('primary'),
+            active: ref(zenMode.value),
         },
         {
             name: 'editmode',

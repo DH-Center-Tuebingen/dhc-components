@@ -5,12 +5,14 @@
 </template>
 
 <script
-    lang="ts"
-    setup
+lang="ts"
+setup
 >
+    import { ButtonColors } from '§/Colors';
     import {
         computed,
         reactive,
+        ref,
         toRefs,
     } from 'vue';
 
@@ -179,16 +181,13 @@
         },
     ];
 
-    const markdownClass = computed(() => {
-        return state.renderMode ?  'link': 'text-primary';
-    });
-
     const utilsGroup: Tool[] = [
         {
             name: 'wysiwyg',
             action: () => toggleRenderMode(),
             icon: faMarkdown,
-            class: markdownClass,
+            class: ref<ButtonColors>('primary'),
+            active: computed(() => state.renderMode),
         },
     ];
 

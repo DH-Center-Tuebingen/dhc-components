@@ -72,7 +72,6 @@ export const LoadingWithIconSlot: Story = {
         loading: false,
         color: 'primary',
         action: waitFor,
-        icon: faUser,
     },
     render: (args: any) => ({
         components: {
