@@ -3,6 +3,7 @@ import { type Ref, type ComputedRef } from 'vue';
 
 export type ListItem = {
     name: string;
+    class?: Array<string> | string | Record<string, boolean>;
     icon?: IconDefinition;
     routerLink?: string;
     action?: Function;
