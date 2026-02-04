@@ -4,6 +4,7 @@ import {
     render,
 } from 'vue';
 
+// This should not be used here, bootstrap should not be bundled into the library!
 import {
     Toast,
 } from 'bootstrap';

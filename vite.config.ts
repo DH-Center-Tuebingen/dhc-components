@@ -32,6 +32,7 @@ export default defineConfig({
             external: [
                 'vue',
                 't',
+                'bootstrap',
                 ///^@milkdown(\/.*)?$/  // Would be good to exclude milkdown as it takes up a lot of space:
                                         // With Milkdown: 1MB
                                         // Without Milkdown: 0.3MB        
@@ -41,7 +42,7 @@ export default defineConfig({
                     vue: 'Vue',
                     t: 't',
                     'vue-i18n': 'VueI18n',
-
+                    bootstrap: 'bootstrap',
                 }
             }
         }
