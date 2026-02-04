@@ -23,6 +23,7 @@ const comments = [
         'updated_at': '2025-12-31T12:34:56.000000Z',
         'deleted_at': null,
         'replies_count': 0,
+        'replies': [],
         'author': {
             'id': 1,
             'name': 'John Doe',
@@ -48,6 +49,7 @@ const comments = [
         'updated_at': '2025-12-31T12:34:57.000000Z',
         'deleted_at': null,
         'replies_count': 0,
+        'replies': [],
         'author': {
             'id': 1,
             'name': 'John Doe',
@@ -73,6 +75,7 @@ const comments = [
         'updated_at': '2025-12-31T12:35:00.000000Z',
         'deleted_at': null,
         'replies_count': 0,
+        'replies': [],
         'author': {
             'id': 1,
             'name': 'John Doe',

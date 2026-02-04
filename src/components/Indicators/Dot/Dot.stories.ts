@@ -12,9 +12,16 @@ type Story = StoryObj<typeof Dot>;
 
 export const Default: Story = {
   args: {
-        size: '0.6rem',
         type: 'success',
-        classes: 'rounded-circle ratio ratio-1x1',
         opacity: 4,
+  },
+};
+
+export const SquareWarning: Story = {
+  args: {
+        size: '1rem',
+        type: 'warning',
+        opacity: 2,
+        classes: '',
   },
 };

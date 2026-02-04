@@ -5,9 +5,8 @@
         :style="{ minWidth: minWidth, width: width }"
     >
         <button
-            class="position-absolute top-0 right-0 btn bg-white border-secondary"
-            :class="dynamicButtonClasses"
-            style="transform: translate(calc(-100% + 1px), 1rem); border-top-right-radius: 0;border-bottom-right-radius: 0;"
+            class="position-absolute top-0 right-0 btn bg-white border-secondary rounded-end-0 border-end-0"
+            style="transform: translate(calc(-100%), 1rem);"
             @click.stop.prevent="toggle"
             role="button"
             :aria-expanded="open"
@@ -79,12 +78,6 @@
         return {
             'border-start': open.value,
             'border-secondary': open.value,
-        };
-    });
-
-    const dynamicButtonClasses = computed(() => {
-        return {
-            'border-end-0': open.value,
         };
     });
 </script>

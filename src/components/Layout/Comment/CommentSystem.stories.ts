@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/vue3';
 
 import CommentSystem from './CommentSystem.vue';
+import { commentDataProps } from './definitions';
 
 const meta: Meta<typeof CommentSystem> = {
     component: CommentSystem,
@@ -10,7 +11,7 @@ export default meta;
 
 type Story = StoryObj<typeof CommentSystem>;
 
-const comments = [
+const comments: Array<commentDataProps> = [
     {
         'id': 1,
         'user_id': 1,
@@ -23,6 +24,7 @@ const comments = [
         'updated_at': '2025-12-31T12:34:56.000000Z',
         'deleted_at': null,
         'replies_count': 0,
+        'replies': [],
         'author': {
             'id': 1,
             'name': 'John Doe',
@@ -61,6 +63,7 @@ const comments = [
                 'updated_at': '2025-12-31T16:34:56.000000Z',
                 'deleted_at': null,
                 'replies_count': 0,
+                'replies': [],
                 'author': {
                     'id': 1,
                     'name': 'John Doe',
@@ -86,6 +89,7 @@ const comments = [
                 'updated_at': '2025-12-31T17:00:00.000000Z',
                 'deleted_at': null,
                 'replies_count': 0,
+                'replies': [],
                 'author': {
                     'id': 1,
                     'name': 'John Doe',
@@ -125,6 +129,7 @@ const comments = [
         'updated_at': '2025-12-31T12:35:00.000000Z',
         'deleted_at': null,
         'replies_count': 0,
+        'replies': [],
         'author': {
             'id': 1,
             'name': 'John Doe',

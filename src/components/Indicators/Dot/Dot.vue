@@ -17,7 +17,7 @@
     }
 
     const props = withDefaults(defineProps<DotIndicatorProps>(), {
-        size: '0.6rem',
+        size: '0.5rem',
         type: 'default',
         classes: 'rounded-circle ratio ratio-1x1',
         opacity: 4,

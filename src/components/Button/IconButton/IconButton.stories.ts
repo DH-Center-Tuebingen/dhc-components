@@ -170,109 +170,148 @@ export const IconSlot: Story = {
     }),
 };
 
-export const Loading: Story = {
-    args: {
-        // Add props here
-        loading: true,
-    },
-    render: (args: any) => ({
-        components: { IconButton },
-        setup() {
-            args.icon = faFaceSmile;
+const useLoading = (args: any) => {
+    const loading = ref(args.loading.value);
+    const loadingTimeout = ref<NodeJS.Timeout | null>(null);
+    const clicked = () => setLoadingTimeout();
 
-            const loading = ref(args.loading.value);
-            const loadingTimeout = ref<NodeJS.Timeout | null>(null);
-            const clicked = () => setLoadingTimeout();
+    onMounted(() => {
+        if(args.loading) {
+            setLoadingTimeout();
+        }
+    });
 
-            onMounted(() => {
-                if(args.loading) {
-                    setLoadingTimeout();
-                }
-            });
+    const setLoadingTimeout = () => {
+        if(loading.value) { return; }
+        loading.value = true;
+        loadingTimeout.value = setTimeout(() => {
+            loading.value = false;
+            loadingTimeout.value = null;
+            // args.loading.value = false;
+        }, 2000);
+    };
 
-            const setLoadingTimeout = () => {
-                if(loading.value) { return; }
-                loading.value = true;
-                loadingTimeout.value = setTimeout(() => {
-                    loading.value = false;
-                    loadingTimeout.value = null;
-                    // args.loading.value = false;
-                }, 2000);
-            };
-
-            watch(() => args.loading, (newValue) => {
-                if(loading.value !== newValue && newValue === true) {
-                    setLoadingTimeout();
-                }
-            });
-
-            return { args, clicked, loading };
-        },
-        template: '<IconButton v-bind="args" :loading="loading" v-model="modelValue" @click="clicked" />',
-    }),
+    watch(() => args.loading, (newValue) => {
+        if(loading.value !== newValue && newValue === true) {
+            setLoadingTimeout();
+        }
+    });
+    return { loading, clicked };
 };
 
-/**
- *
- */
-export const Active: Story = {
-    args: {
-        // Add props here
-        loading: true,
-    },
-    render: (args: any) => ({
-        components: { IconButton },
-        setup() {
-
-            const icons = [
-                faFaceSmile,
-                faFaceSmileWink,
-                faFaceSadCry,
-                faFaceMehBlank,
-            ]
-            const mappedIcons = icons.map((icon, id) => ({id, icon}));
-
-            const selectedIcon = ref(0);
-
-            return { args, mappedIcons, selectedIcon};
+    export const Loading: Story = {
+        args: {
+            // Add props here
+            loading: true,
         },
-        template: `
+        render: (args: any) => ({
+            components: { IconButton },
+            setup() {
+                args.icon = faFaceSmile;
+                return { args, ...useLoading(args) };
+            },
+            template: '<IconButton v-bind="args" :loading="loading" v-model="modelValue" @action="clicked" />',
+        }),
+    };
+
+    export const LoadingWithText: Story = {
+        args: {
+            loading: false,
+            text: 'Hello World',
+        },
+        render: (args: any) => ({
+            components: { IconButton },
+            setup() {
+                args.icon = faFaceSmile;
+                return { args, ...useLoading(args) };
+            },
+            template: '<IconButton v-bind="args" :loading="loading" v-model="modelValue" @action="clicked" />',
+        }),
+    };
+
+    export const LoadingWithoutIcon: Story = {
+        args: {
+            loading: false,
+            active: true,
+            disabled: false,
+            text: 'Hello World',
+        },
+        render: (args: any) => ({
+            components: { IconButton },
+            setup() {
+                return { args, ...useLoading(args) };
+            },
+            template: '<IconButton v-bind="args" :loading="loading" :active="active" :disabled="disabled" v-model="modelValue" @action="clicked" />',
+        }),
+    };
+
+    export const Iconless: Story = {
+        args: {
+            text: 'No Icon Button',
+        },
+    };
+
+    /**
+     *
+     */
+    export const Active: Story = {
+        args: {
+            // Add props here
+            loading: true,
+        },
+        render: (args: any) => ({
+            components: { IconButton },
+            setup() {
+
+                const icons = [
+                    faFaceSmile,
+                    faFaceSmileWink,
+                    faFaceSadCry,
+                    faFaceMehBlank,
+                ]
+                const mappedIcons = icons.map((icon, id) => ({ id, icon }));
+
+                const selectedIcon = ref(0);
+
+                return { args, mappedIcons, selectedIcon };
+            },
+            template: `
         <div class="d-flex gap-2 align-items-center">
             <div class="d-flex align-items-center text-center fw-bold">{{selectedIcon}}</div>
-            <IconButton v-for="icon in mappedIcons" :key="icon.id" :icon="icon.icon" :key="icon.id" @click="()=>selectedIcon=icon.id" :active="selectedIcon === icon.id"/>
+            <IconButton v-for="icon in mappedIcons" :key="icon.id" :icon="icon.icon" :key="icon.id" @action="()=>selectedIcon=icon.id" :active="selectedIcon === icon.id"/>
         </div>`,
-    }),
-};
+        }),
+    };
 
-export const Unbutton: Story = {
-    args: {
-        // Add props here
-        small: true,
-        unbutton: true,
-    },
-    render: (args: any) => ({
-        components: { IconButton },
-        setup() {
-            args.icon = faFaceSmile;
-            return { args };
+    export const Unbutton: Story = {
+        args: {
+            // Add props here
+            small: true,
+            unbutton: true,
         },
-        template: '<IconButton v-bind="args" />',
-    }),
-};
+        render: (args: any) => ({
+            components: { IconButton },
+            setup() {
+                args.icon = faFaceSmile;
+                return { args };
+            },
+            template: '<IconButton v-bind="args" />',
+        }),
+    };
 
-export const UnbuttonActive: Story = {
-    args: {
-        // Add props here
-        active: true,
-        small: true,
-        unbutton: true,
-    },
-    render: (args: any) => ({
-        components: { IconButton },
-        setup() {
-            args.icon = faFaceSmile;
-            return { args };
+    export const UnbuttonActive: Story = {
+        args: {
+            // Add props here
+            active: true,
+            small: true,
+            unbutton: true,
         },
-        template: '<IconButton v-bind="args" />',
-    }),
-};
+        render: (args: any) => ({
+            components: { IconButton },
+            setup() {
+                args.icon = faFaceSmile;
+                return { args };
+            },
+            template: '<IconButton v-bind="args" />',
+        }),
+    };

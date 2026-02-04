@@ -1,8 +1,5 @@
-export { default as Alert } from './components/Alert/Alert.vue';
-export { default as LoadingSpinner } from './components/LoadingSpinner/LoadingSpinner.vue';
-export { default as Login } from './components/Login/Login.vue';
-export { default as SlideControl } from './components/Form/SlideControl/SlideControl.vue';
-export { default as EmojiPicker } from './components/EmojiPicker/EmojiPicker.vue';
+// Blocks
+export { default as Login } from './components/Blocks/Login/Login.vue';
 
 // Buttons
 export { default as FabButtonList } from './components/Button/FabButtonList/FabButtonList.vue';
@@ -11,6 +8,13 @@ export { default as LoadingButton } from './components/Button/LoadingButton/Load
 export { default as Toggle } from './components/Button/Toggle/Toggle.vue';
 
 // Form
+
+export { default as EmojiPicker } from './components/Form/EmojiPicker/EmojiPicker.vue';
+export { default as SlideControl } from './components/Form/SlideControl/SlideControl.vue';
+
+// Form / Attributes
+/* The attribute components are very specific. Before changing the name of a more
+general component (e.g. List) suffix the attribute component with Attribute (e.g. ListAttribute). */
 export { default as Attribute } from './components/Form/Attribute/Attribute.vue';
 export { default as Boolean } from './components/Form/Boolean/Boolean.vue';
 export { default as Datepicker } from './components/Form/Datepicker/Datepicker.vue';
@@ -18,7 +22,7 @@ export { default as Dimension } from './components/Form/Dimension/Dimension.vue'
 export { default as Double } from './components/Form/Double/Double.vue';
 export { default as Iconclass } from './components/Form/Iconclass/Iconclass.vue';
 export { default as Integer } from './components/Form/Integer/Integer.vue';
-export { default as List } from './components/Form/List/List.vue';
+export { default as ListAttribute } from './components/Form/List/List.vue';
 export { default as Multiselect } from './components/Form/Multiselect/Multiselect.vue';
 export { default as Range } from './components/Form/Range/Range.vue';
 export { default as Rism } from './components/Form/Rism/Rism.vue';
@@ -33,11 +37,12 @@ export { default as Url } from './components/Form/Url/Url.vue';
 export { default as DotIndicator } from './components/Indicators/Dot/Dot.vue';
 export { default as IconStat } from './components/Indicators/IconStat/IconStat.vue';
 export { default as IconStatsGroup } from './components/Indicators/IconStatGroup/IconStatsGroup.vue';
+export { default as LoadingSpinner } from './components/Indicators/LoadingSpinner/LoadingSpinner.vue';
 
 // Layout
 export { default as Accordion } from './components/Layout/Accordion/Accordion.vue';
 export { default as Container } from './components/Layout/Container/Container.vue';
-export { default as LayoutList } from './components/Layout/List/List.vue';
+export { default as List } from './components/Layout/List/List.vue';
 export { default as Menu } from './components/Layout/Menu/Menu.vue';
 export { default as Sidebar } from './components/Layout/Sidebar/Sidebar.vue';
 export { default as Spacer } from './components/Layout/Spacer/Spacer.vue';
@@ -64,8 +69,13 @@ export { default as TextFile } from './components/Display/TextFile/TextFile.vue'
 // Layout
 export { default as ResizableColumns } from './components/Layout/ResizableColumns/ResizableColumns.vue';
 
+
 // Navigation
 export { default as Breadcrumbs } from './components/Navigation/Breadcrumbs/Breadcrumbs.vue';
+
+// Notifications
+export { default as Alert } from './components/Notifications/Alert/Alert.vue';
+export { default as Toast } from './components/Notifications/Toast/Toast.vue';
 
 // Composables
 export { default as useResizeObserver } from './composables/resize-observer';

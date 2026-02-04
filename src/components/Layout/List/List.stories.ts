@@ -25,6 +25,7 @@ export const Default: Story = {
             },
             {
                 name: 'Logout',
+                class: 'bg-danger text-white',
             }
         ]
     },
@@ -121,7 +122,7 @@ export const Exception: Story = {
         disableAll: true, // Set to true to disable the entire list
         withIcons: true, // Set to true to show icons
         onExecuted: (item: any) => {
-            console.error('An error occurred while executing:', item);
+            alert('An error occurred while executing on: '+ item.name);
         },
         // Add props here
         items: [

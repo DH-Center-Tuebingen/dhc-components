@@ -10,7 +10,7 @@
                 :icons="tool.icons"
                 :disabled="tool.disabled"
                 :title="tool.title"
-                :button-class="getClassFromTool(tool)"
+                :button-class="tool.class ? tool.class.value : undefined"
                 :fixed-width="true"
                 @action="tool.action"
             />
@@ -36,21 +36,5 @@
     defineProps<{
         toolGroups: Tool[][];
     }>();
-
-    // As we need to dynamically change classes
-    // it's most suitable to pass a computed prop.
-    // Therefore we need to extract the value on change
-    // so we use this helper function.
-    const getClassFromTool = (tool: Tool) => {
-        let cssClass = '';
-        if(tool.class) {
-            let cssClassRef = tool.class;
-            if(cssClassRef.value) {
-                cssClass = cssClassRef.value;
-            }
-        }
-
-        return cssClass;
-    };
 
 </script>

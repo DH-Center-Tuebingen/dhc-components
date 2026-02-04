@@ -86,6 +86,7 @@
         en,
     };
     const i18n = initI18n(messages);
+    //@ts-ignore
     const t = i18n.global.t;
     const initialValue = ref<boolean | null>(null);
     const currentValue = ref<boolean | null>(null);

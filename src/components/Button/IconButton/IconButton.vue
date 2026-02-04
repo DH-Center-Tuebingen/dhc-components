@@ -1,8 +1,8 @@
 <template>
     <button
-        class="icon-button"
-        :class="buttonClass"
-        style="user-select: none; cursor: pointer;"
+        class="icon-button user-select-none"
+        :class="buttonClasses"
+        style="cursor: pointer;"
         :aria-pressed="active"
         :disabled="isDisabled"
         :title="title"
@@ -12,25 +12,25 @@
             v-if="loading"
             :size="size"
         />
-        <template v-else>
+        <template v-else-if="hasIcon">
             <!-- Can be used to render your own custom icon, e.g. if you need to create an icon composition.  -->
             <slot
                 name="icon"
                 :active="isActive"
             >
             </slot>
-            <template v-if="!slots.icon">
+            <template v-if="icon &&!slots.icon">
                 <div
                     v-if="!isActive"
                     class="icon"
                 >
                     <div
-                        v-if="hasMultipleIcons"
+                        v-if="hasMultipleIcons && Array.isArray(icon)"
                         class="icon-group d-flex gap-1"
                     >
                         <FontAwesomeIcon
                             v-for="iconPart of icon"
-                            :key="iconPart"
+                            :key="iconPart.iconName"
                             :icon="iconPart"
                             :size="size"
                         />
@@ -53,7 +53,7 @@
                     class="icon"
                 >
                     <FontAwesomeIcon
-                        v-if="!isStackedIcon"
+                        v-if="icon !== undefined && !isStackedIcon"
                         :icon="activeIcon"
                         :size="size"
                         :fixed-width="fixedWidth"
@@ -67,6 +67,9 @@
                 </div>
             </template>
         </template>
+        <span v-if="text">
+            {{ text }}
+        </span>
     </button>
 </template>
 
@@ -78,7 +81,7 @@
     import type { IconDefinition } from '@fortawesome/fontawesome-svg-core';
     import { computed, ModelRef, useSlots } from 'vue';
     import StackedIcon from '@/components/Layout/StackedIcon/StackedIcon.vue';
-    import LoadingSpinner from '@/components/LoadingSpinner/LoadingSpinner.vue';
+    import LoadingSpinner from '@/components/Indicators/LoadingSpinner/LoadingSpinner.vue';
 
     import { IconButtonProps } from './definitions';
 
@@ -97,11 +100,17 @@
         loading: false,
         small: false,
         unbutton: false,
+        outlined: false,
+        text: '',
     });
 
     function resolveIconProp(prop: string | IconDefinition, category: string) {
         if(typeof prop === 'string') {
-            return `${category} fa-fw fa-${prop}`;
+            let stringDefinition = `${category} fa-${prop}`;
+            if(props.fixedWidth) {
+                stringDefinition += ' fa-fw';
+            }
+            return stringDefinition;
         } else {
             return prop;
         }
@@ -140,10 +149,12 @@
         }
     });
 
-    const buttonClass = computed(() => {
+    const buttonClasses = computed(() => {
+        const baseName = props.outlined ? 'btn-outline' : 'btn';
+        const btnColor = isActive.value ? props.activeButtonClass : props.buttonClass;
         const classes = [
             'btn',
-            `btn-${isActive.value ? props.activeButtonClass : props.buttonClass}`,
+            `${baseName}-${btnColor}`,
         ];
 
         if(props.small) {
@@ -163,6 +174,13 @@
             }
         }
 
+        if(props.text) {
+            classes.push('d-flex');
+            classes.push('align-items-center');
+            classes.push('justify-content-center');
+            classes.push('gap-1');
+        }
+
         return classes;
     });
 
@@ -177,4 +195,8 @@
             return props.disabled();
         }
     })
+    
+    const hasIcon = computed(() => {
+        return props.icon !== undefined || slots.icon !== undefined || (props.icons && props.icons.items);
+    });
 </script>

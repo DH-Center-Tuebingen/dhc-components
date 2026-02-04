@@ -44,7 +44,7 @@
 
     import { CommentListProps } from './definitions';
 
-    const repliesShown = ref({});
+    const repliesShown = ref<Record<number, boolean>>({});
 
     const props = withDefaults(defineProps<CommentListProps>(), {
     });
@@ -54,7 +54,7 @@
     };
 
     const toggleReplies = (comment_id: number, status: boolean) => {
-        console.log("show?", comment_id, status);
+        console.log('show?', comment_id, status);
         repliesShown.value[comment_id] = status;
     };
 

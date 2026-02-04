@@ -15,7 +15,7 @@
             class="toast-header"
         >
             <span
-                v-if="icon"
+                v-if="iconDef"
                 class="badge rounded-pill me-2"
                 :class="badgeClass"
             >
@@ -83,7 +83,7 @@
         IconDefinition,
     } from '@fortawesome/free-solid-svg-icons';
 
-    const toastRef = ref({});
+    const toastRef = ref<HTMLElement | null>(null);
 
     const props = withDefaults(defineProps<ToastProps>(), {
         id: 'toast',
@@ -102,7 +102,8 @@
     const TIMEOUT_INTERVAL = 1000; // in ms
 
     nextTick(() => {
-        const toastInstance = new Toast(toastRef.value);
+        // Tells TypeScript that toastRef is not null here
+        const toastInstance = new Toast(toastRef.value!);
         timeoutId = window.setInterval(() => {
             timeoutRemain.value -= TIMEOUT_INTERVAL;
             if(timeoutRemain.value <= 0) {
@@ -118,7 +119,7 @@
 
     const iconDef = computed(() => {
         let definition: IconDefinition | undefined;
-        if(!props.icon) return;
+        if(!props.icon) {return;}
 
         switch(props.channel) {
             case 'success':
@@ -139,7 +140,7 @@
     });
 
     const badgeClass = computed(() => {
-        if(!props.icon) return;
+        if(!props.icon) {return;}
 
         return `bg-${props.channel}`;
     });

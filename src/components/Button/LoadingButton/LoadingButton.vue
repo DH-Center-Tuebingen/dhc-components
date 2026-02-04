@@ -1,6 +1,6 @@
 <template>
     <button
-        class="position-relative d-flex align-items-center justify-content-center"
+        class="d-flex align-items-center justify-content-center gap-1"
         :class="buttonClass"
         role="button"
         :disabled="loading"
@@ -13,16 +13,15 @@
         -->
         <span
             v-if="loading"
-            class="position-absolute top-50 start-50 translate-middle"
         >
-            <LoadingSpinner :size="'lg'" />
+            <LoadingSpinner />
         </span>
         <slot
             v-else
             name="icon"
         ></slot>
 
-        <span :class="contentClass">
+        <span class="loading-button-content">
             <slot></slot>
         </span>
     </button>
@@ -33,8 +32,8 @@
     setup
 >
     import { computed, ref } from 'vue';
-    import LoadingSpinner from '../../LoadingSpinner/LoadingSpinner.vue';
-    import type { ColorName } from 'src/types/Colors';
+    import LoadingSpinner from '@/components/Indicators/LoadingSpinner/LoadingSpinner.vue';
+    import type { ButtonColors } from 'src/types/Colors';
 
     const emits = defineEmits<{
         (e: 'error', message: string): void;
@@ -42,21 +41,12 @@
 
     const props = defineProps<{
         outlined?: boolean
-        color?: ColorName
+        color?: ButtonColors
         loading?: boolean
         action?: Function
     }>();
 
     const currentlyExecuted = ref(false);
-
-    // TODO: [VR]: This hides the whole content if props.loading is true on
-    // component mount. This behaviour is different from what happens when
-    // computed prop `loading` is true.
-    const contentClass = computed(_ => {
-        return {
-            // 'opacity-0': props.loading,
-        };
-    });
 
     const buttonClass = computed(_ => {
         const color = props.color ?? 'dark';
@@ -65,18 +55,17 @@
     })
 
     async function exec() {
-        // TODO: [VR]: Shouldn't this be loading.value to prevent exec if there is already
-        // an action running?
-        if(!props.loading) {
+
+        // If the action is managed via click handlers,
+        // we ignore the exec function.
+        if(!props.action) {
+            return;
+        }
+
+        if(!loading.value) {
             try {
                 currentlyExecuted.value = true;
-                if(props.action) {
-                    await props.action();
-                } else {
-                    // [VR] it either makes no sense to have a loading button without an action
-                    // or it should have a default action that does nothing but shows the loading state
-                    await new Promise(resolve => setTimeout(resolve, 500));
-                }
+                await props.action();
                 currentlyExecuted.value = false;
             } catch(e) {
                 emits('error', e instanceof Error ? e.message : String(e));
@@ -87,5 +76,7 @@
     const loading = computed(() => {
         return props.loading || currentlyExecuted.value;
     });
-
 </script>
+
+<style>
+</style>

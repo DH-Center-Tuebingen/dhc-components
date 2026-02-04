@@ -1,8 +1,8 @@
 <template>
-    <LoadingButton
-        class="btn btn-fab"
+    <IconButton
+        class="btn-fab"
         :class="buttonClass"
-        :color="color"
+        :button-class="color"
         :title="title"
         :outlined="!active"
         :action="action"
@@ -14,7 +14,7 @@
                 />
             </slot>
         </template>
-    </LoadingButton>
+    </IconButton>
 </template>
 
 <script
@@ -28,8 +28,8 @@
     } from '@fortawesome/free-solid-svg-icons';
 
     import { computed } from 'vue';
-    import LoadingButton from '../LoadingButton/LoadingButton.vue';
-    import { ColorName } from 'src/types/Colors';
+    import IconButton from '../IconButton/IconButton.vue';
+    import { ButtonColors } from 'src/types/Colors';
     import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
     /**
@@ -49,7 +49,7 @@
         action: Function;
         size?: FabButtonSize;
         active?: boolean;
-        color?: ColorName
+        color?: ButtonColors;
     }>();
 
     const buttonClass = computed(() => {

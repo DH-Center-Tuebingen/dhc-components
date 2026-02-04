@@ -17,14 +17,14 @@
     setup
     lang="ts"
 >
-    import type { ColorName } from '@/types/Colors';
+    import type { TextColor } from '@/types/Colors';
     import type { IconDefinition } from '@fortawesome/fontawesome-common-types';
 
     import IconStatComponent from '../IconStat/IconStat.vue';
 
     export interface IconStat {
         action?: Function;
-        color?: ColorName;
+        color?: TextColor;
         text: string | number;
         icon: IconDefinition;
         iconOnly?: boolean;

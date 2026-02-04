@@ -13,6 +13,7 @@
             :index="index"
             :with-icons="props.withIcons"
             :disabled="forceDisableAll"
+            :class="item.class"
             @executed="(item, success) => emit('executed', item, success)"
         />
     </div>
@@ -72,13 +73,10 @@
         wrapExecution: async (action: () => Promise<void>) => {
             executionCount.value++;
             try {
-                console.log('START ACTION');
                 await action();
-                console.log('END ACTION');
             }
             finally {
                 executionCount.value--;
-                console.log('END EXECUTION');
             }
         },
     })

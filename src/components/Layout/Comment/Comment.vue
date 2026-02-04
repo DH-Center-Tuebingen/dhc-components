@@ -7,9 +7,7 @@
             name="avatar"
             :user="data.author"
         >
-            <a
-                href="#"
-            >
+            <a href="#">
                 <Avatar
                     :name="data.author.name"
                     :size="48"
@@ -190,9 +188,7 @@
                                 class="btn btn-sm p-0 bg-none badge text-reset"
                                 @click.prevent="setReplyTo()"
                             >
-                                <FontAwesomeIcon
-                                    :icon="faReply"
-                                />
+                                <FontAwesomeIcon :icon="faReply" />
                                 <span class="ms-1">
                                     {{ t('reply') }}
                                 </span>
@@ -204,9 +200,7 @@
                                 class="btn btn-sm p-0 bg-none badge text-reset"
                                 @click.prevent="setEditMode()"
                             >
-                                <FontAwesomeIcon
-                                    :icon="faEdit"
-                                />
+                                <FontAwesomeIcon :icon="faEdit" />
                                 <span class="ms-1">
                                     {{ t('global.edit') }}
                                 </span>
@@ -218,9 +212,7 @@
                                 class="btn btn-sm p-0 bg-none badge text-reset"
                                 @click.prevent="confirmDelete()"
                             >
-                                <FontAwesomeIcon
-                                    :icon="faTrashAlt"
-                                />
+                                <FontAwesomeIcon :icon="faTrashAlt" />
                                 <span class="ms-1">
                                     {{ t('global.delete') }}
                                 </span>
@@ -234,9 +226,7 @@
                                     class="text-decoration-none text-reset"
                                     @click.prevent="toggleReplies()"
                                 >
-                                    <FontAwesomeIcon
-                                        :icon="faCirclePlus"
-                                    />
+                                    <FontAwesomeIcon :icon="faCirclePlus" />
                                     <span v-if="!displayReplies">
                                         show replies
                                         ({{ data.replies_count }})
@@ -336,11 +326,11 @@
 
     const props = withDefaults(defineProps<CommentProps>(), {
         alternate: false,
-        allowedActions: {
+        allowedActions: () => ({
             edit: true,
             delete: true,
             reply: true,
-        },
+        })
     });
 
     const emits = defineEmits<{
@@ -376,7 +366,7 @@
     const isDeleted = computed(() => props.data.deleted_at !== null);
 
     const hasHiddenContent = computed(() => {
-        if(!contentRef.value) return false;
+        if(!contentRef.value) { return false; }
         // A magic 2px offset is needed, because of different css rounding behaviour
         return contentRef.value.scrollHeight > contentRef.value.clientHeight + 2;
     });
