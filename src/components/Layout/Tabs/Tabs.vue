@@ -1,6 +1,9 @@
 <template>
     <div>
-        <ul class="nav nav-tabs">
+        <ul
+            class="nav"
+            :class="layoutClasses"
+        >
             <li
                 v-for="(tab, index) in tabs"
                 :key="`tab-button-${index}`"
@@ -31,29 +34,50 @@
     </div>
 </template>
 
-<script lang="ts">
+<script
+    setup
+    lang="ts"
+>
+    import {
+        computed,
+        ref,
+    } from 'vue';
 
-    import { ref } from 'vue';
+    import { TabsProps } from './definitions';
 
-    export default {
-        props: {
-            tabs: {
-                type: Array,
-                required: true
-            }
-        },
-        setup() {
+    const props = withDefaults(defineProps<TabsProps>(), {
+        direction: 'horizontal',
+        style: 'tabs',
+        width: 'normal',
+    });
 
-            const activeTab = ref(0);
+    const activeTab = ref(0);
 
-            const select = (index: number) => {
-                activeTab.value = index;
-            }
+    const layoutClasses = computed(() => {
+        const classes: Array<string> = [];
 
-            return {
-                activeTab,
-                select,
-            }
+        if(props.direction === 'vertical') {
+            classes.push('flex-column');
         }
-    }
+
+        if(props.style === 'tabs') {
+            classes.push('nav-tabs');
+        } else if(props.style === 'pills') {
+            classes.push('nav-pills');
+        } else if(props.style === 'underline') {
+            classes.push('nav-underline');
+        }
+
+        if(props.width === 'fill') {
+            classes.push('nav-fill');
+        } else if(props.width === 'fill-evenly') {
+            classes.push('nav-justified');
+        }
+
+        return classes;
+    });
+
+    const select = (index: number) => {
+        activeTab.value = index;
+    };
 </script>
