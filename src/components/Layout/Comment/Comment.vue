@@ -439,7 +439,7 @@
     lang="scss"
     scoped
 >
-    @use "@scss/utils.scss";
+    @use "@scss/utils/size";
 
     .white-space-pre {
         white-space: pre;

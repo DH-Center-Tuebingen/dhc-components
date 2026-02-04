@@ -4,7 +4,7 @@ import i18n from "./i18n";
 
 import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import '@/assets/main.css';
+import '@/scss/main.scss';
 import { ColorfullBackground } from "./backgrounds";
 
 setup((app) => {

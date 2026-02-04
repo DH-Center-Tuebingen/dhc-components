@@ -36,6 +36,9 @@
     "vue": "^3.3.0"
   },
   "dependencies": {
+    "@fontsource-variable/figtree": "^5.2.10",
+    "@fontsource-variable/fira-code": "^5.2.7",
+    "@fontsource/zilla-slab": "^5.2.8",
     "@milkdown/core": "^7.5.0",
     "@milkdown/plugin-clipboard": "^7.5.0",
     "@milkdown/plugin-diagram": "^7.5.0",
