@@ -4,8 +4,8 @@ import i18n from "./i18n";
 
 import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-// import '@/assets/main.css';
 import '@/scss/main.scss';
+import { ColorfullBackground } from "./backgrounds";
 
 setup((app) => {
   app.use(i18n)
@@ -18,6 +18,7 @@ const preview: Preview = {
       values: [
         { name: 'gray', value: '#eeeeee' },
         { name: 'dark', value: '#000000' },
+        ColorfullBackground,
       ],
     },
     args: {
