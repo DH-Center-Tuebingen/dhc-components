@@ -44,6 +44,7 @@ export { default as Accordion } from './components/Layout/Accordion/Accordion.vu
 export { default as Container } from './components/Layout/Container/Container.vue';
 export { default as List } from './components/Layout/List/List.vue';
 export { default as Menu } from './components/Layout/Menu/Menu.vue';
+export { default as Modal } from './components/Layout/Modal/Skeleton.vue';
 export { default as Sidebar } from './components/Layout/Sidebar/Sidebar.vue';
 export { default as Spacer } from './components/Layout/Spacer/Spacer.vue';
 export { default as Tabs } from './components/Layout/Tabs/Tabs.vue';
@@ -79,6 +80,7 @@ export { default as Toast } from './components/Notifications/Toast/Toast.vue';
 
 // Composables
 export { default as useResizeObserver } from './composables/resize-observer';
+export { default as useModal } from './composables/modal';
 
 // import './assets/main.css';
 import './scss/main.scss';
