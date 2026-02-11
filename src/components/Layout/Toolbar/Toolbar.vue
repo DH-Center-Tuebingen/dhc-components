@@ -1,17 +1,19 @@
 <template>
     <div
-        class="d-flex flex-row flex-wrap gap-2 align-items-center bg-primary bg-opacity-10 px-2 user-select-none rounded">
+        class="d-flex flex-row flex-wrap gap-2 align-items-center bg-primary bg-opacity-10 px-2 user-select-none rounded"
+    >
         <template v-for="(toolGroup, index) of toolGroups">
             <IconButton
                 v-for="tool of toolGroup"
                 :key="tool.name"
-                class="btn border-0 clickable px-1"
+                class="py-1"
                 :icon="tool.icon"
                 :icons="tool.icons"
                 :disabled="tool.disabled"
                 :title="tool.title"
                 :button-class="tool.class ? tool.class.value : undefined"
                 :fixed-width="true"
+                :unbutton="true"
                 @action="tool.action"
             />
 
@@ -36,5 +38,4 @@
     defineProps<{
         toolGroups: Tool[][];
     }>();
-
 </script>
