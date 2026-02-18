@@ -14,13 +14,14 @@
             />
             <div
                 v-if="comment.replies?.length > 0 && repliesShown[comment.id]"
-                class="list-group rounded-4 ms-4 mt-2"
+                class="ms-4 mt-2"
             >
                 <template
                     v-for="reply in comment.replies"
                     :key="reply.id"
                 >
                     <Comment
+                        class="comment-replies"
                         :data="reply"
                         :alternate="isAlternate(reply.author.id)"
                         @toggle-replies="status => toggleReplies(reply.id, status)"
@@ -36,7 +37,6 @@
     lang="ts"
 >
     import {
-        computed,
         ref,
     } from 'vue';
 
@@ -61,4 +61,10 @@
 </script>
 
 <style lang="scss">
+    .comment-replies:not(:first-child) {
+        margin-top: 0.75rem;
+    }
+    .comment-replies:first-child {
+        margin-top: 1rem;
+    }
 </style>

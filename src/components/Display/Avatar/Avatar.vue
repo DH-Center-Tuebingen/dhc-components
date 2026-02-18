@@ -29,7 +29,8 @@
     import { CSSProperties, computed } from 'vue';
 
     import { AvatarProps } from './definitions';
-    import { User } from '../../../types/User';
+    import { User } from '@/types/User';
+    import { getUserColor } from '@/utils/user';
 
     const props = withDefaults(defineProps<AvatarProps>(), {
         max: 2,
@@ -64,13 +65,7 @@
     });
 
     const backgroundColor = computed(() => {
-        let hue = 0;
-        for(let i=0; i < fullName.value.length; i++) {
-            hue = fullName.value.charCodeAt(i) + ((hue << 5) - hue);
-        }
-
-        hue = hue % 360;
-        return `hsl(${hue}, 32%, 75%)`;
+        return getUserColor(fullName.value);
     });
 
     const classes = computed(() => {

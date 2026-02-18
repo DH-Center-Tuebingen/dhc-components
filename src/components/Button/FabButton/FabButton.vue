@@ -46,7 +46,7 @@
     } = defineProps<{
         icon: IconDefinition;
         title?: string;
-        action: Function;
+        action?: Function;
         size?: FabButtonSize;
         active?: boolean;
         color?: ButtonColors;
