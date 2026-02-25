@@ -25,3 +25,12 @@ export const SquareWarning: Story = {
         classes: '',
   },
 };
+
+export const BlinkingNote: Story = {
+  args: {
+        size: '1rem',
+        type: 'note',
+        opacity: 5,
+        blink: true,
+  },
+};

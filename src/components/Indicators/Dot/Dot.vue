@@ -9,18 +9,14 @@
 <script setup lang="ts">
     import { computed, ModelRef, onMounted } from 'vue';
 
-    export interface DotIndicatorProps {
-        size?: string,
-        type?: string,
-        classes?: string,
-        opacity?: number,
-    }
+    import type { DotIndicatorProps } from './definitions';
 
     const props = withDefaults(defineProps<DotIndicatorProps>(), {
         size: '0.5rem',
         type: 'default',
         classes: 'rounded-circle ratio ratio-1x1',
         opacity: 4,
+        blink: false,
     });
 
     const value: ModelRef<string | undefined> = defineModel();
@@ -82,9 +78,15 @@
                 classes.push('bg-opacity-100');
                 break;
         }
+
+        if(props.blink) {
+            classes.push('fading');
+        }
+
         return classes;
     });
 </script>
 
 <style lang="scss" scoped>
+    @use "@scss/utils/animation";
 </style>

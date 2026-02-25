@@ -1,0 +1,15 @@
+.fading {
+    animation-name: fading;
+    animation-duration: 1.5s;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease-in-out;
+}
+
+@keyframes fading {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.25;
+    }
+}
