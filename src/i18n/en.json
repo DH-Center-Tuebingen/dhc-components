@@ -13,9 +13,14 @@
         "password": "Password",
         "remember_me":"Remember me"
     },
-    "attribute":{
+    "attribute": {
         "wkt": {
             "add": "Add WKT"
         }
+    },
+    "pagination": {
+        "count": "Count",
+        "skip": "Skip",
+        "shown_of": "{from} of {to}"
     }
 }

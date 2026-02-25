@@ -1,0 +1,14 @@
+{
+    "delimiter": "Delimiter",
+    "delimiter_with_info": "Delimiter (',', ';', …)",
+    "has_header": "Has Header Row",
+    "show_linenumbers": "Show Line numbers",
+    "nr_of_shown_rows": "Number of shown rows",
+    "nr_of_skipped_rows": "Number of skipped rows",
+    "skipped_rows": "Skipped rows: {count}",
+    "eof": "End of file",
+    "keyboard": {
+        "tab": "Tab",
+        "space": "Space"
+    }
+}

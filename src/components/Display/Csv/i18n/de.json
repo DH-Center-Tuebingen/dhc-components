@@ -1,0 +1,14 @@
+{
+    "delimiter": "Trennzeichen",
+    "delimiter_with_info": "Trennzeichen (',', ';', …)",
+    "has_header": "Kopfzeile",
+    "show_linenumbers": "Zeilennummern anzeigen",
+    "nr_of_shown_rows": "Anzahl der angezeigten Zeilen",
+    "nr_of_skipped_rows": "Anzahl der übersprungenen Zeilen",
+    "skipped_rows": "Übersprungene Zeilen: {count}",
+    "eof": "Dateiende",
+    "keyboard": {
+        "tab": "Tab",
+        "space": "Leerzeichen"
+    }
+}

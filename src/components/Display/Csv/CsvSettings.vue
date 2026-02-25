@@ -3,7 +3,7 @@
         <div class="line line-top d-flex flex-grow-1 justify-content-start align-items-center gap-2">
             <div class="input-group flex-nowrap">
                 <span class="input-group-text">
-                    {{ t('global.paginator.count') }}
+                    {{ t('pagination.count') }}
                 </span>
                 <input
                     id="row-count"
@@ -13,10 +13,10 @@
                     min="0"
                     step="1"
                     :style="paginatorInputStyle"
-                    :placeholder="t('main.csv.uploader.nr_of_shown_rows')"
+                    :placeholder="t('nr_of_shown_rows')"
                 >
                 <span class="input-group-text">
-                    {{ t('global.paginator.skip') }}
+                    {{ t('pagination.skip') }}
                 </span>
                 <input
                     id="skipped-row-count"
@@ -27,7 +27,7 @@
                     min="0"
                     :max="total"
                     step="1"
-                    :placeholder="t('main.csv.uploader.nr_of_skipped_rows')"
+                    :placeholder="t('nr_of_skipped_rows')"
                 >
                 <span class="input-group-text">
                     {{ rangeInformationText }}
@@ -45,7 +45,7 @@
                     for="delimiter"
                     style="height: 42px;"
                 >
-                    {{ t('main.csv.uploader.delimiter') }}
+                    {{ t('delimiter') }}
                 </label>
                 <input
                     v-if="useCustomDelimiter"
@@ -53,7 +53,7 @@
                     v-model="delimiter"
                     type="text"
                     class="form-control"
-                    :placeholder="t('main.csv.uploader.delimiter_with_info')"
+                    :placeholder="t('delimiter_with_info')"
                     :style="delimiterInputStyle"
                 >
                 <Dropdown
@@ -88,7 +88,7 @@
                     class="form-check-label"
                     for="has-header"
                 >
-                    {{ t('main.csv.uploader.has_header') }}
+                    {{ t('has_header') }}
                 </label>
             </div>
             <div class="form-check form-switch">
@@ -102,7 +102,7 @@
                     class="form-check-label"
                     for="show-linenumbers"
                 >
-                    {{ t('main.csv.uploader.show_linenumbers') }}
+                    {{ t('show_linenumbers') }}
                 </label>
             </div>
 
@@ -115,7 +115,6 @@
             />
 
             <slot name="after" />
-
         </div>
     </form>
 </template>
@@ -124,11 +123,15 @@
     lang="ts"
 >
     import { computed, ModelRef, ref } from 'vue';
-    import { useI18n } from 'vue-i18n';
     import Dropdown from '@/components/Dropdown/Dropdown.vue';
     import IconButton from '@/components/Button/IconButton/IconButton.vue';
     import { faEye, faEyeSlash, faKeyboard, faRectangleList } from '@fortawesome/free-solid-svg-icons';
     import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+
+    import { initI18n } from '@/i18n/i18n';
+
+    import * as de from './i18n/de.json';
+    import * as en from './i18n/en.json';
 
     const props = withDefaults(defineProps<{
         total: number,
@@ -146,7 +149,12 @@
     const skippedCount: ModelRef<number, PropertyKey> = defineModel('skippedCount', { default: 0 });
     // const maxRows: ModelRef<number, PropertyKey> = defineModel('maxRows', { default: 100 });
 
-    const { t } = useI18n();
+    const messages = {
+        de,
+        en,
+    };
+    const i18n = initI18n(messages, true);
+    const t = i18n.global.t;
 
     const delimiterOptions = ref([
         { value: ',', label: ',' },
@@ -163,13 +171,15 @@
     });
 
     const rangeInformationText = computed(() => {
-        const start = skippedCount.value + 1;
+        const start = skippedCount.value;
         let end = skippedCount.value + showCount.value;
         if(end > props.total) {
             end = props.total;
         }
 
-        return `${start}-${end} ${t('global.paginator.of')} ${props.total}`;
+        console.log(start, end);
+
+        return t('pagination.shown_of', { from: end - start, to: props.total });
     });
 
     const paginatorInputStyle = ref({
