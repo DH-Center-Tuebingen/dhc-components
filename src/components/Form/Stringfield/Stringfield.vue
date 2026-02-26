@@ -9,10 +9,14 @@
             @input="handleInput"
         />
         <div
-            v-if="showWordcount"
-            class="text-body-secondary small text-end font-sans-serif"
+            v-if="hasLimit || showWordcount"
+            class="text-body-secondary small font-sans-serif d-flex flex-row justify-content-end gap-1"
         >
-            {{ t('words') }}: {{ wordCount }} ({{ validatedValue.length }})
+            <span>
+                {{ validatedValue.length }}
+                <span v-if="hasLimit">/ {{ maxLength }}</span>
+            </span>
+            <span v-if="showWordcount">({{ t('words', {count: wordCount}) }})</span>
         </div>
         <div class="invalid-feedback">
             <div
@@ -30,7 +34,7 @@
 
     import { useField } from 'vee-validate';
 
-    import { initI18n } from '../../../i18n/i18n';
+    import { initI18n } from '@/i18n/i18n';
 
     import { string } from '../validation/rulesets';
 
@@ -49,6 +53,7 @@
         required: false,
         defaultValue: '',
         showWordcount: true,
+        maxLength: -1,
     });
 
     const emit = defineEmits(['change']);
@@ -63,6 +68,8 @@
     const wordCount = computed(() => {
         return (validatedValue.value.match(/\b\w+\b/g) || []).length;
     });
+
+    const hasLimit = props.maxLength > 0;
 
     const setInitialValue = () => {
         return props.defaultValue || '';
@@ -82,6 +89,10 @@
 
     const handleInput = (event: Event) => {
         const target = event.currentTarget as HTMLInputElement;
+        // make sure that content never exceeds max length value
+        if(hasLimit && target.value.length >= props.maxLength) {
+            target.value = target.value.slice(0, props.maxLength);
+        }
         handleChange(target.value);
         console.log("[Stringfield] changed value to", meta.valid, meta.dirty, validatedValue.value);
         emit('change', {
