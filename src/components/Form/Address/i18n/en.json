@@ -1,0 +1,8 @@
+{
+    "street": "Street",
+    "housenumber": "House Number",
+    "postalcode": "Postal Code",
+    "city": "City",
+    "country": "Country",
+    "state": "State"
+}

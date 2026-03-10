@@ -1,0 +1,8 @@
+{
+    "street": "Straße",
+    "housenumber": "Hausnummer",
+    "postalcode": "Postleitzahl",
+    "city": "Stadt",
+    "country": "Land",
+    "state": "Bundesland"
+}
