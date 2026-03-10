@@ -2,6 +2,7 @@
     <input
         :id="name"
         v-model.number="validatedValue"
+        :class="additionalClasses"
         ref="inputRef"
         class="form-control"
         type="number"
@@ -28,14 +29,15 @@
     import * as de from './i18n/de.json';
     import * as en from './i18n/en.json';
 
-    import { NumberProps } from './definitions';
+    import { BaseNumberProps } from './definitions';
 
-    const props = withDefaults(defineProps<NumberProps>(), {
+    const props = withDefaults(defineProps<BaseNumberProps>(), {
         name: 'NumberBase',
         disabled: false,
         required: false,
         defaultValue: '',
         float: true,
+        hideControls: false,
     });
 
     const emit = defineEmits(['change', 'error']);
@@ -107,6 +109,14 @@
         });
     };
 
+    const additionalClasses = computed(() => {
+        const classes = [];
+        if(props.hideControls) {
+            classes.push('no-controls');
+        }
+        return classes;
+    })
+
     const numberClassStep = computed(() => {
         return props.float ? 'any' : '1';
     });
@@ -135,5 +145,19 @@
     } = useNumberInputHotkeys(validatedValue, props.float);
 </script>
 
-<style scoped>
+<style
+    lang="scss"
+    scoped
+>
+    /* Firefox */
+    input[type=number].no-controls {
+        -moz-appearance: textfield;
+    }
+
+    /* Webkit-based */
+    input::-webkit-outer-spin-button.no-controls ,
+    input::-webkit-inner-spin-button.no-controls  {
+        -webkit-appearance: none;
+        margin: 0;
+    }
 </style>

@@ -25,3 +25,12 @@ export const Integer: Story = {
         float: false,
     },
 };
+
+export const HiddenControls: Story = {
+    args: {
+        disabled: false,
+        defaultValue: 1337,
+        float: false,
+        hideControls: true,
+    },
+};

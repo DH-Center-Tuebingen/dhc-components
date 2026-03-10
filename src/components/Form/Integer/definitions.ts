@@ -1,5 +1,4 @@
-import { baseAttributeProps } from '../Attribute/definitions';
+import { NumberProps } from '../NumberBase/definitions';
 
-export interface IntegerProps extends baseAttributeProps {
-    defaultValue: number | string,
+export interface IntegerProps extends NumberProps {
 }

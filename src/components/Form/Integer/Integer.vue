@@ -6,6 +6,7 @@
             :float="false"
             :disabled="props.disabled"
             :default-value="props.defaultValue"
+            :hide-controls="props.hideControls"
             :name="props.name"
             @change="handleChange"
             @error="updateErrors"
@@ -39,6 +40,7 @@
         disabled: false,
         required: false,
         defaultValue: '',
+        hideControls: false,
     });
 
     const emit = defineEmits(['change']);
