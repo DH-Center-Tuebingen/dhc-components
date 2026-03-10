@@ -16,3 +16,11 @@ export const Default: Story = {
         defaultValue: 'Hello World!',
     },
 };
+
+export const NumberRegExpPattern: Story = {
+    args: {
+        disabled: false,
+        defaultValue: 'Hello World!',
+        pattern: '\\d+',
+    },
+};

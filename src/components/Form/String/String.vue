@@ -6,6 +6,7 @@
             class="form-control"
             type="text"
             placeholder="…"
+            :pattern="pattern"
             :disabled="disabled"
             :name="name"
             @input="handleInput"
@@ -44,6 +45,7 @@
         disabled: false,
         required: false,
         defaultValue: '',
+        pattern: undefined,
     });
 
     const emit = defineEmits(['change']);
@@ -71,6 +73,12 @@
         reset(value);
     };
 
+    const externalChange = (value: string) => {
+        handleChange(value);
+        // TODO emit
+        console.log("externalChange", value);
+    }
+
     const handleInput = (event: Event) => {
         const target = event.currentTarget as HTMLInputElement;
         handleChange(target.value);
@@ -94,6 +102,12 @@
         handleChange,
     } = useField(`string_${props.name}`, rules, {
         initialValue: setInitialValue(),
+    });
+
+    defineExpose({
+        externalChange,
+        undirty,
+        reset,
     });
 </script>
 
