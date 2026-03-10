@@ -9,7 +9,6 @@
         @click="(event: MouseEvent) => exec(event, item)"
     >
         <template v-if="props.withIcons">
-
             <LoadingSpinner
                 v-if="loading"
                 style="width: 16px;"
@@ -28,7 +27,9 @@
             </span>
         </template>
         <span class="flex-grow-1">
-            {{ item.name }}
+            <slot name="item" :item="item">
+                {{ item.name }}
+            </slot>
         </span>
         <LoadingSpinner v-if="!withIcons && loading" />
     </component>
@@ -95,5 +96,4 @@
             }
         }
     }
-
 </script>

@@ -1,7 +1,7 @@
 <template>
     <div class="list-group user-select-none">
         <header
-            class="list-group-item disabled py-1 .text-black-50 fw-bold"
+            class="list-group-item disabled py-1 text-black-50 fw-bold"
             v-if="$slots.default"
         >
             <slot></slot>
@@ -15,7 +15,11 @@
             :disabled="forceDisableAll"
             :class="item.class"
             @executed="(item, success) => emit('executed', item, success)"
-        />
+        >
+            <template #item>
+                <slot name="item" :item="item" />
+            </template>
+        </ListItem>
     </div>
 </template>
 
@@ -79,6 +83,5 @@
                 executionCount.value--;
             }
         },
-    })
-
+    });
 </script>
