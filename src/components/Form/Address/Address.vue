@@ -85,6 +85,9 @@
                 />
             </div>
         </div>
+        <div class="d-flex flex-row justify-content-end small text-secondary mt-1">
+            {{ formatCoordinates(coordiateRef) }}
+        </div>
         <List
             v-if="geocodingResults.length > 0"
             class="position-absolute top-100 mt-1"
@@ -174,6 +177,11 @@
     const cityRef = ref<typeof String | null>(null);
     const countryRef = ref<typeof String | null>(null);
     const stateRef = ref<typeof String | null>(null);
+    const coordiateRef = ref<Array<number|string>>([]);
+
+    const formatCoordinates = (coordinates: Array<number|string>) => {
+        return coordinates.map(coordinate => `${coordinate}°`).join(', ');
+    };
 
     const reset = (value: AddressValue) => {
         value = value || props.defaultValue;
@@ -183,6 +191,7 @@
         cityRef.value?.reset(value.city);
         countryRef.value?.reset(value.country);
         stateRef.value?.reset(value.state);
+        coordiateRef.value = value.coordinates || [];
     };
 
     const undirty = (value: AddressValue) => {
@@ -193,6 +202,7 @@
         cityRef.value?.undirty(value.city);
         countryRef.value?.undirty(value.country);
         stateRef.value?.undirty(value.state);
+        coordiateRef.value = value.coordinates || [];
     };
 
     const handleChange = debounce(async (from: AddressValueKeys, event: ChangeEvent) => {
@@ -233,6 +243,14 @@
                         if(result.address.country) {
                             data.value.country = result.address.country;
                             countryRef.value?.externalChange(result.address.country);
+                        }
+                        if(result.lat && result.lon) {
+                            coordiateRef.value = [
+                                result.lat,
+                                result.lon
+                            ];
+                        } else {
+                            coordiateRef.value = [];
                         }
                     }
                 }

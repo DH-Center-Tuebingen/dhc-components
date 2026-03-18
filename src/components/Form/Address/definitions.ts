@@ -7,7 +7,8 @@ export type AddressValue = {
     postalcode?: string,
     city?: string,
     state?: string,
-    country?: string
+    country?: string,
+    coordinates?: Array<number|string>,
 };
 
 export interface AddressProps extends baseAttributeProps {
