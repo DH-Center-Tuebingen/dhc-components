@@ -9,7 +9,7 @@
                     ref="streetRef"
                     name="street"
                     :disabled="props.disabled"
-                    :default-value="props.defaultValue.street"
+                    :default-value="props.defaultValue.street || ''"
                     @change="handleChange('street', $event)"
                     @error="updateErrors"
                 />
@@ -22,7 +22,7 @@
                     ref="housenumberRef"
                     name="housenumber"
                     :disabled="props.disabled"
-                    :default-value="props.defaultValue.housenumber"
+                    :default-value="props.defaultValue.housenumber || ''"
                     @change="handleChange('housenumber', $event)"
                     @error="updateErrors"
                 />
@@ -37,7 +37,7 @@
                     ref="postalRef"
                     name="postalcode"
                     :disabled="props.disabled"
-                    :default-value="props.defaultValue.postalcode"
+                    :default-value="props.defaultValue.postalcode || ''"
                     :pattern="'\\d{5}'"
                     @change="handleChange('postalcode', $event)"
                     @error="updateErrors"
@@ -51,7 +51,7 @@
                     ref="cityRef"
                     name="city"
                     :disabled="props.disabled"
-                    :default-value="props.defaultValue.city"
+                    :default-value="props.defaultValue.city || ''"
                     @change="handleChange('city', $event)"
                     @error="updateErrors"
                 />
@@ -66,7 +66,7 @@
                     ref="countryRef"
                     name="country"
                     :disabled="props.disabled"
-                    :default-value="props.defaultValue.country"
+                    :default-value="props.defaultValue.country || ''"
                     @change="handleChange('country', $event)"
                     @error="updateErrors"
                 />
@@ -79,7 +79,7 @@
                     ref="stateRef"
                     name="state"
                     :disabled="props.disabled"
-                    :default-value="props.defaultValue.state"
+                    :default-value="props.defaultValue.state || ''"
                     @change="handleChange('state', $event)"
                     @error="updateErrors"
                 />
@@ -92,7 +92,7 @@
                     ref="countyRef"
                     name="county"
                     :disabled="props.disabled"
-                    :default-value="props.defaultValue.county"
+                    :default-value="props.defaultValue.county || ''"
                     @change="handleChange('county', $event)"
                     @error="updateErrors"
                 />
@@ -165,7 +165,7 @@
         defaultValue: {},
     });
 
-    const geocodingResults = ref<typeof NominatimObject[]>([]);
+    const geocodingResults = ref<Partial<NominatimObject>[]>([]);
 
     const emit = defineEmits(['change']);
 
@@ -174,6 +174,7 @@
         en,
     };
     const i18n = initI18n(messages);
+    // @ts-ignore
     const t = i18n.global.t;
 
     const isValid = ref<boolean>(false);
