@@ -84,6 +84,19 @@
                     @error="updateErrors"
                 />
             </div>
+            <div class="flex-fill">
+                <label for="county">
+                    {{ t('county') }}
+                </label>
+                <String
+                    ref="countyRef"
+                    name="county"
+                    :disabled="props.disabled"
+                    :default-value="props.defaultValue.county"
+                    @change="handleChange('county', $event)"
+                    @error="updateErrors"
+                />
+            </div>
         </div>
         <List
             v-if="geocodingResults.length > 0"
@@ -173,6 +186,7 @@
     const postalRef = ref<typeof String | null>(null);
     const cityRef = ref<typeof String | null>(null);
     const countryRef = ref<typeof String | null>(null);
+    const countyRef = ref<typeof String | null>(null);
     const stateRef = ref<typeof String | null>(null);
 
     const reset = (value: AddressValue) => {
@@ -182,6 +196,7 @@
         postalRef.value?.reset(value.postalcode);
         cityRef.value?.reset(value.city);
         countryRef.value?.reset(value.country);
+        countyRef.value?.reset(value.county);
         stateRef.value?.reset(value.state);
     };
 
@@ -192,6 +207,7 @@
         postalRef.value?.undirty(value.postalcode);
         cityRef.value?.undirty(value.city);
         countryRef.value?.undirty(value.country);
+        countyRef.value?.undirty(value.county);
         stateRef.value?.undirty(value.state);
     };
 
@@ -233,6 +249,10 @@
                         if(result.address.country) {
                             data.value.country = result.address.country;
                             countryRef.value?.externalChange(result.address.country);
+                        }
+                        if(result.address.county) {
+                            data.value.county = result.address.county;
+                            countyRef.value?.externalChange(result.address.county);
                         }
                     }
                 }
