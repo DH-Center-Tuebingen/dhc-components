@@ -154,6 +154,7 @@
         en,
     };
     const i18n = initI18n(messages, true);
+    //@ts-ignore
     const t = i18n.global.t;
 
     const delimiterOptions = ref([

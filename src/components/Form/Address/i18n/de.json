@@ -4,5 +4,6 @@
     "postalcode": "Postleitzahl",
     "city": "Stadt",
     "country": "Land",
-    "state": "Bundesland"
+    "state": "Bundesland",
+    "county": "Kreis"
 }

@@ -29,6 +29,10 @@ export const toSearchString = (data: AddressValue, structured: boolean = true) =
             queryParams.push(`country=${encodeURIComponent(data.country)}`);
         }
 
+        if(data.county) {
+            queryParams.push(`county=${encodeURIComponent(data.county)}`);
+        }
+
         return queryParams.join('&');
     } else {
         return Object.values(data).join('+');

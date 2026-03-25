@@ -9,7 +9,7 @@
                     ref="streetRef"
                     name="street"
                     :disabled="props.disabled"
-                    :default-value="props.defaultValue.street"
+                    :default-value="props.defaultValue.street || ''"
                     @change="handleChange('street', $event)"
                     @error="updateErrors"
                 />
@@ -22,7 +22,7 @@
                     ref="housenumberRef"
                     name="housenumber"
                     :disabled="props.disabled"
-                    :default-value="props.defaultValue.housenumber"
+                    :default-value="props.defaultValue.housenumber || ''"
                     @change="handleChange('housenumber', $event)"
                     @error="updateErrors"
                 />
@@ -37,7 +37,7 @@
                     ref="postalRef"
                     name="postalcode"
                     :disabled="props.disabled"
-                    :default-value="props.defaultValue.postalcode"
+                    :default-value="props.defaultValue.postalcode || ''"
                     :pattern="'\\d{5}'"
                     @change="handleChange('postalcode', $event)"
                     @error="updateErrors"
@@ -51,7 +51,7 @@
                     ref="cityRef"
                     name="city"
                     :disabled="props.disabled"
-                    :default-value="props.defaultValue.city"
+                    :default-value="props.defaultValue.city || ''"
                     @change="handleChange('city', $event)"
                     @error="updateErrors"
                 />
@@ -66,7 +66,7 @@
                     ref="countryRef"
                     name="country"
                     :disabled="props.disabled"
-                    :default-value="props.defaultValue.country"
+                    :default-value="props.defaultValue.country || ''"
                     @change="handleChange('country', $event)"
                     @error="updateErrors"
                 />
@@ -79,8 +79,21 @@
                     ref="stateRef"
                     name="state"
                     :disabled="props.disabled"
-                    :default-value="props.defaultValue.state"
+                    :default-value="props.defaultValue.state || ''"
                     @change="handleChange('state', $event)"
+                    @error="updateErrors"
+                />
+            </div>
+            <div class="flex-fill">
+                <label for="county">
+                    {{ t('county') }}
+                </label>
+                <String
+                    ref="countyRef"
+                    name="county"
+                    :disabled="props.disabled"
+                    :default-value="props.defaultValue.county || ''"
+                    @change="handleChange('county', $event)"
                     @error="updateErrors"
                 />
             </div>
@@ -155,7 +168,7 @@
         defaultValue: {},
     });
 
-    const geocodingResults = ref<typeof NominatimObject[]>([]);
+    const geocodingResults = ref<Partial<NominatimObject>[]>([]);
 
     const emit = defineEmits(['change']);
 
@@ -164,6 +177,7 @@
         en,
     };
     const i18n = initI18n(messages);
+    // @ts-ignore
     const t = i18n.global.t;
 
     const isValid = ref<boolean>(false);
@@ -176,6 +190,7 @@
     const postalRef = ref<typeof String | null>(null);
     const cityRef = ref<typeof String | null>(null);
     const countryRef = ref<typeof String | null>(null);
+    const countyRef = ref<typeof String | null>(null);
     const stateRef = ref<typeof String | null>(null);
     const coordiateRef = ref<Array<number|string>>([]);
 
@@ -190,6 +205,7 @@
         postalRef.value?.reset(value.postalcode);
         cityRef.value?.reset(value.city);
         countryRef.value?.reset(value.country);
+        countyRef.value?.reset(value.county);
         stateRef.value?.reset(value.state);
         coordiateRef.value = value.coordinates || [];
     };
@@ -201,6 +217,7 @@
         postalRef.value?.undirty(value.postalcode);
         cityRef.value?.undirty(value.city);
         countryRef.value?.undirty(value.country);
+        countyRef.value?.undirty(value.county);
         stateRef.value?.undirty(value.state);
         coordiateRef.value = value.coordinates || [];
     };
@@ -243,6 +260,10 @@
                         if(result.address.country) {
                             data.value.country = result.address.country;
                             countryRef.value?.externalChange(result.address.country);
+                        }
+                        if(result.address.county) {
+                            data.value.county = result.address.county;
+                            countyRef.value?.externalChange(result.address.county);
                         }
                         if(result.lat && result.lon) {
                             coordiateRef.value = [
