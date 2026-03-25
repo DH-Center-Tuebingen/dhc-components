@@ -110,30 +110,30 @@
             <template #item="{item}">
                 <div>
                     <div
-                        v-if="item.address.building && item.address.building != item.address.house_number"
+                        v-if="item.customData.building && item.customData.building != item.customData.house_number"
                         class="fw-medium"
                     >
-                        {{ item.address.building }}
+                        {{ item.customData.building }}
                     </div>
                     <div
-                        :class="{'small': item.address.building && item.address.building != item.address.house_number}"
+                        :class="{'small': item.customData.building && item.customData.building != item.customData.house_number}"
                         class="d-flex gap-1"
                     >
-                        <span v-if="item.address.road">
-                            {{ item.address.road }} {{ item.address.house_number }}
+                        <span v-if="item.customData.road">
+                            {{ item.customData.road }} {{ item.customData.house_number }}
                         </span>
                         <span
-                            v-if="item.address.road && item.address.postcode"
+                            v-if="item.customData.road && item.customData.postcode"
                             class="text-secondary"
                         >
                             &bull;
                         </span>
                         <span>
-                            {{ item.address.postcode }} {{ item.address.city || item.address.town || item.address.village }}
+                            {{ item.customData.postcode }} {{ item.customData.city || item.customData.town || item.customData.village }}
                         </span>
                     </div>
                     <div class="text-secondary small">
-                        {{ item.address.state }}, {{ item.address.country }}
+                        {{ item.customData.state }}, {{ item.customData.country }}
                     </div>
                 </div>
             </template>
@@ -156,6 +156,9 @@
 
     import String from '../String/String.vue';
     import List from '@/components/Layout/List/List.vue';
+    import type {
+        ListItem,
+    } from '@/types/List';
 
     import { ChangeEvent } from '../Attribute/definitions';
     import { AddressProps, AddressValue, AddressValueKeys } from './definitions';
@@ -165,10 +168,10 @@
         name: 'Address',
         disabled: false,
         required: false,
-        defaultValue: {},
+        defaultValue: () => ({}),
     });
 
-    const geocodingResults = ref<Partial<NominatimObject>[]>([]);
+    const geocodingResults = ref<ListItem[]>([]);
 
     const emit = defineEmits(['change']);
 
@@ -211,7 +214,7 @@
     };
 
     const undirty = (value: AddressValue) => {
-        value = value || validatedValue.value;
+        value = value || {};
         streetRef.value?.undirty(value.street);
         housenumberRef.value?.undirty(value.housenumber);
         postalRef.value?.undirty(value.postalcode);
@@ -224,11 +227,11 @@
 
     const handleChange = debounce(async (from: AddressValueKeys, event: ChangeEvent) => {
         data.value[from] = event.value;
-        console.log();
         const results: NominatimObject[] = await geocodingSearch(toSearchString(data.value));
         geocodingResults.value = results.slice(0, 10).map(result => {
             return {
-                address: result.address,
+                name: result.name,
+                customData: result.address,
                 action: () => {
                     if(result.address) {
                         if(result.address.road) {

@@ -9,6 +9,7 @@ export type ListItem = {
     action?: Function;
     disabled?: boolean;
     loading?: boolean;
+    customData?: any;
 }
 
 export type ListExecutionContext = {

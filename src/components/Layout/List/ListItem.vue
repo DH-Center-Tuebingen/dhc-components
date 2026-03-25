@@ -40,7 +40,7 @@
     lang="ts"
 >
     import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-    import { ListItem, ListExecutionContext } from '@/types/List'
+    import { ListItem, ListExecutionContext } from '@/types/List';
 
     import { computed, ref, inject, type ComputedRef, type Ref } from 'vue';
     import LoadingSpinner from '@/components/Indicators/LoadingSpinner/LoadingSpinner.vue';
