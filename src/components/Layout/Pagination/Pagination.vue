@@ -1,12 +1,12 @@
 <template>
-    <nav v-if="data">
+    <nav>
         <div
             v-if="!hideMetadata && !missingMetadata"
             class="d-flex justify-content-between align-items-center small text-secondary"
         >
 
-            <span>Shown: {{ data.to }} of {{ data.total }} items</span>
-            <span>Page {{ data.current_page }} / {{ data.last_page }}</span>
+            <span>Shown: {{ data?.to }} of {{ data?.total }} items</span>
+            <span>Page {{ data?.current_page }} / {{ data?.last_page }}</span>
         </div>
         <ul class="pagination justify-content-center">
             <li class="page-item">
@@ -29,7 +29,7 @@
                     :class="{ disabled: isFirstPageOrNotSet }"
                     :disabled="isFirstPageOrNotSet"
                     href="#"
-                    @click.prevent="gotoPage(data.current_page - 1)"
+                    @click.prevent="gotoPrevPage()"
                 >
                     <FontAwesomeIcon
                         :icon="faAngleLeft"
@@ -41,12 +41,12 @@
                 v-for="page in displayPages"
                 :key="page"
                 class="page-item"
-                :class="{ active: page === data.current_page }"
+                :class="{ active: page === data?.current_page }"
             >
                 <a
                     class="page-link"
                     href="#"
-                    :disabled="page === data.current_page"
+                    :disabled="page === data?.current_page"
                     @click.prevent="gotoPage(page)"
                 >
                     {{ page }}
@@ -55,10 +55,10 @@
             <li class="page-item">
                 <a
                     class="page-link"
-                    :class="{ disabled: data.current_page === data.last_page }"
-                    :disabled="data.current_page === data.last_page"
+                    :class="{ disabled: data?.current_page === data?.last_page }"
+                    :disabled="data?.current_page === data?.last_page"
                     href="#"
-                    @click.prevent="gotoPage(data.current_page + 1)"
+                    @click.prevent="gotoNextPage()"
                 >
                     <FontAwesomeIcon
                         :icon="faAngleRight"
@@ -69,10 +69,10 @@
             <li class="page-item">
                 <a
                     class="page-link"
-                    :class="{ disabled: data.current_page === data.last_page }"
-                    :disabled="data.current_page === data.last_page"
+                    :class="{ disabled: data?.current_page === data?.last_page }"
+                    :disabled="data?.current_page === data?.last_page"
                     href="#"
-                    @click.prevent="gotoPage(data.last_page)"
+                    @click.prevent="gotoPage(data?.last_page)"
                 >
                     <FontAwesomeIcon
                         :icon="faAngleDoubleRight"
@@ -132,8 +132,22 @@
         return Array.from({ length: end - start + 1 }, (_, i) => start + i);
     });
 
-    const gotoPage = (page: number) => {
+    const gotoPage = (page?: number) => {
+        if(!page) return;
+
         emits('goto', page);
+    };
+
+    const gotoPrevPage = () => {
+        if(!props.data) return;
+
+        gotoPage(props.data.current_page - 1);
+    };
+
+    const gotoNextPage = () => {
+        if(!props.data) return;
+
+        gotoPage(props.data.current_page + 1);
     };
 
     const emits = defineEmits<{

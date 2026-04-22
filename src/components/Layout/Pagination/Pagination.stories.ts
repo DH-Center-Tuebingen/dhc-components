@@ -26,7 +26,7 @@ export const Default: Story = {
 
 export const EmptyData: Story = {
     args: {
-        data: {},
+        data: undefined,
         displayCount: 2,
     },
 };
