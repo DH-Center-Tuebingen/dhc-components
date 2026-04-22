@@ -8,7 +8,10 @@
             <span>Shown: {{ data?.to }} of {{ data?.total }} items</span>
             <span>Page {{ data?.current_page }} / {{ data?.last_page }}</span>
         </div>
-        <ul class="pagination justify-content-center">
+        <ul
+            v-if="!hideNavigation"
+            class="pagination justify-content-center"
+        >
             <li class="page-item">
                 <a
                     class="page-link"

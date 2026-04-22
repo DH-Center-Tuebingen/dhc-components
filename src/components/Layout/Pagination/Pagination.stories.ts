@@ -24,6 +24,36 @@ export const Default: Story = {
     },
 };
 
+export const HiddenNavigation: Story = {
+    args: {
+        data: {
+            total: 125,
+            per_page: 15,
+            current_page: 1,
+            last_page: 9,
+            from: 1,
+            to: 15,
+        },
+        displayCount: 2,
+        hideNavigation: true,
+    },
+};
+
+export const HiddenMetadata: Story = {
+    args: {
+        data: {
+            total: 125,
+            per_page: 15,
+            current_page: 1,
+            last_page: 9,
+            from: 1,
+            to: 15,
+        },
+        displayCount: 2,
+        hideMetadata: true,
+    },
+};
+
 export const EmptyData: Story = {
     args: {
         data: undefined,
