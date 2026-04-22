@@ -19,7 +19,7 @@ export const Default: Story = {
 export const DarkPill: Story = {
     args: {
         content: 'Badge',
-        style: 'pill',
+        styling: 'pill',
         color: 'dark',
     },
 };
@@ -27,7 +27,7 @@ export const DarkPill: Story = {
 export const WarningUnrounded: Story = {
     args: {
         content: 'Badge',
-        style: 'unrounded',
+        styling: 'unrounded',
         color: 'warning',
     },
 };
@@ -35,7 +35,7 @@ export const WarningUnrounded: Story = {
 export const DangerUnroundedOutline: Story = {
     args: {
         content: 'Badge',
-        style: 'unrounded',
+        styling: 'unrounded',
         color: 'danger',
         outline: true,
     },

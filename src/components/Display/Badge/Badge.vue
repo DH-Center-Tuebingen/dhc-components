@@ -16,7 +16,7 @@
     import { BadgeProps } from './definitions';
 
     const props = withDefaults(defineProps<BadgeProps>(), {
-        style: 'rounded',
+        styling: 'rounded',
         color: 'primary',
         outline: false,
     });
@@ -33,9 +33,9 @@
             classList.push(`text-bg-${props.color}`);
         }
 
-        if(props.style == 'pill') {
+        if(props.styling == 'pill') {
             classList.push('rounded-pill');
-        } else if(props.style == 'unrounded') {
+        } else if(props.styling == 'unrounded') {
             classList.push('rounded-0');
         }
 
