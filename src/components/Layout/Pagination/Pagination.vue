@@ -1,7 +1,7 @@
 <template>
-    <nav aria-label="Page navigation example">
+    <nav v-if="data">
         <div
-            v-if="!hideMetadata"
+            v-if="!hideMetadata && !missingMetadata"
             class="d-flex justify-content-between align-items-center small text-secondary"
         >
 
@@ -12,8 +12,8 @@
             <li class="page-item">
                 <a
                     class="page-link"
-                    :class="{ disabled: props.data.current_page === 1 }"
-                    :disabled="props.data.current_page === 1"
+                    :class="{ disabled: isFirstPageOrNotSet }"
+                    :disabled="isFirstPageOrNotSet"
                     href="#"
                     @click.prevent="gotoPage(1)"
                 >
@@ -26,10 +26,10 @@
             <li class="page-item">
                 <a
                     class="page-link"
-                    :class="{ disabled: props.data.current_page === 1 }"
-                    :disabled="props.data.current_page === 1"
+                    :class="{ disabled: isFirstPageOrNotSet }"
+                    :disabled="isFirstPageOrNotSet"
                     href="#"
-                    @click.prevent="gotoPage(props.data.current_page - 1)"
+                    @click.prevent="gotoPage(data.current_page - 1)"
                 >
                     <FontAwesomeIcon
                         :icon="faAngleLeft"
@@ -41,12 +41,12 @@
                 v-for="page in displayPages"
                 :key="page"
                 class="page-item"
-                :class="{ active: page === props.data.current_page }"
+                :class="{ active: page === data.current_page }"
             >
                 <a
                     class="page-link"
                     href="#"
-                    :disabled="page === props.data.current_page"
+                    :disabled="page === data.current_page"
                     @click.prevent="gotoPage(page)"
                 >
                     {{ page }}
@@ -55,10 +55,10 @@
             <li class="page-item">
                 <a
                     class="page-link"
-                    :class="{ disabled: props.data.current_page === props.data.last_page }"
-                    :disabled="props.data.current_page === props.data.last_page"
+                    :class="{ disabled: data.current_page === data.last_page }"
+                    :disabled="data.current_page === data.last_page"
                     href="#"
-                    @click.prevent="gotoPage(props.data.current_page + 1)"
+                    @click.prevent="gotoPage(data.current_page + 1)"
                 >
                     <FontAwesomeIcon
                         :icon="faAngleRight"
@@ -69,10 +69,10 @@
             <li class="page-item">
                 <a
                     class="page-link"
-                    :class="{ disabled: props.data.current_page === props.data.last_page }"
-                    :disabled="props.data.current_page === props.data.last_page"
+                    :class="{ disabled: data.current_page === data.last_page }"
+                    :disabled="data.current_page === data.last_page"
                     href="#"
-                    @click.prevent="gotoPage(props.data.last_page)"
+                    @click.prevent="gotoPage(data.last_page)"
                 >
                     <FontAwesomeIcon
                         :icon="faAngleDoubleRight"
@@ -93,7 +93,7 @@
     import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
     import { faAngleLeft, faAngleRight, faAngleDoubleLeft, faAngleDoubleRight } from '@fortawesome/free-solid-svg-icons';
 
-    import { PaginationProps } from './definitions';
+    import { PaginationProps, PaginationObject } from './definitions';
 
     const props = withDefaults(defineProps<PaginationProps>(), {
         displayCount: 2,
@@ -103,7 +103,29 @@
         hideMetadata: false,
     });
 
+    const missingMetadata = computed(() => {
+        if(!props.data) return true;
+        if(!props.data.current_page) return true;
+        if(!props.data.last_page) return true;
+        if(!props.data.to) return true;
+        if(!props.data.total) return true;
+
+        return false;
+    });
+
+    const isFirstPageOrNotSet = computed(() => {
+        if(!props.data) {
+            return [];
+        }
+
+        return !props.data.current_page || props.data.current_page === 1;
+    });
+
     const displayPages = computed(() => {
+        if(!props.data) {
+            return [];
+        }
+
         let start = Math.max(1, props.data.current_page - props.displayCount);
         let end = Math.min(props.data.last_page, props.data.current_page + props.displayCount);
 

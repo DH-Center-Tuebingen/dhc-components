@@ -12,7 +12,7 @@ export interface PaginationObject {
 }
 
 export interface PaginationProps {
-    data: PaginationObject;
+    data?: PaginationObject;
     displayCount?: number; // number of pages to display on each side of the current page
     hideCurrentPage?: boolean;
     hideNavigation?: boolean;

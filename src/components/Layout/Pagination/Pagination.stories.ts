@@ -23,3 +23,10 @@ export const Default: Story = {
         displayCount: 2,
     },
 };
+
+export const EmptyData: Story = {
+    args: {
+        data: {},
+        displayCount: 2,
+    },
+};
