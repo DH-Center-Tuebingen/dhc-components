@@ -11,6 +11,7 @@
         <ul
             v-if="!hideNavigation"
             class="pagination justify-content-center"
+            :class="sizeClass"
         >
             <li class="page-item">
                 <a
@@ -133,6 +134,12 @@
         let end = Math.min(props.data.last_page, props.data.current_page + props.displayCount);
 
         return Array.from({ length: end - start + 1 }, (_, i) => start + i);
+    });
+
+    const sizeClass = computed(() => {
+        if(!props.size) return;
+
+        return `pagination-${props.size}`;
     });
 
     const gotoPage = (page?: number) => {

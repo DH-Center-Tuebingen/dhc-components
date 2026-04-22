@@ -1,3 +1,5 @@
+import { ReducedSizes } from '@/types/Size';
+
 export interface PaginationObject {
     total: number;
     per_page: number;
@@ -17,4 +19,5 @@ export interface PaginationProps {
     hideCurrentPage?: boolean;
     hideNavigation?: boolean;
     hideMetadata?: boolean;
+    size?: ReducedSizes;
 }
