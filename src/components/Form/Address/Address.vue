@@ -1,5 +1,24 @@
 <template>
     <div class="rounded-3 p-3 border bg-white position-relative">
+        <div>
+            <label for="street">
+                {{ t('search') }}
+            </label>
+            <div class="input-group">
+                <input
+                    ref="searchRef"
+                    name="search"
+                    id="search"
+                    class="form-control"
+                    type="text"
+                    :disabled="props.disabled"
+                    @input="handleChange('search', $event)"
+                />
+                <span class="input-group-text" id="search-icon">
+                    <FontAwesomeIcon :icon="faSearch" />
+                </span>
+            </div>
+        </div>
         <div class="d-flex flex-row gap-2">
             <div class="flex-grow-1">
                 <label for="street">
@@ -146,6 +165,9 @@
 
     import { initI18n } from '@/i18n/i18n';
 
+    import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+    import { faSearch } from '@fortawesome/free-solid-svg-icons';
+
     import { geocodingSearch } from '@/utils/fetch';
     import { debounce } from '@/utils/timing';
 
@@ -225,67 +247,74 @@
         coordiateRef.value = value.coordinates || [];
     };
 
-    const handleChange = debounce(async (from: AddressValueKeys, event: ChangeEvent) => {
-        data.value[from] = event.value;
-        const results: NominatimObject[] = await geocodingSearch(toSearchString(data.value));
-        geocodingResults.value = results.slice(0, 10).map(result => {
-            return {
-                name: result.name,
-                customData: result.address,
-                action: () => {
-                    if(result.address) {
-                        if(result.address.road) {
-                            data.value.street = result.address.road;
-                            streetRef.value?.externalChange(result.address.road);
-                        }
-                        if(result.address.house_number) {
-                            data.value.housenumber = result.address.house_number.toString();
-                            housenumberRef.value?.externalChange(result.address.house_number);
-                        }
-                        if(result.address.postcode) {
-                            data.value.postalcode = result.address.postcode
-                            postalRef.value?.externalChange(result.address.postcode);
-                        }
-                        if(result.address.city) {
-                            data.value.city = result.address.city;
-                            cityRef.value?.externalChange(result.address.city);
-                        } else if(result.address.town) {
-                            data.value.city = result.address.town;
-                            cityRef.value?.externalChange(result.address.town);
-                        } else if(result.address.village) {
-                            data.value.city = result.address.village;
-                            cityRef.value?.externalChange(result.address.village);
-                        }
-                        if(result.address.state) {
-                            data.value.state = result.address.state;
-                            stateRef.value?.externalChange(result.address.state);
-                        }
-                        if(result.address.country) {
-                            data.value.country = result.address.country;
-                            countryRef.value?.externalChange(result.address.country);
-                        }
-                        if(result.address.county) {
-                            data.value.county = result.address.county;
-                            countyRef.value?.externalChange(result.address.county);
-                        }
-                        if(result.lat && result.lon) {
-                            coordiateRef.value = [
-                                result.lat,
-                                result.lon
-                            ];
-                        } else {
-                            coordiateRef.value = [];
+    const handleChange = debounce(async (from: AddressValueKeys | 'search', event: ChangeEvent|InputEvent) => {
+        if(from === 'search') {
+            const elem = (event as InputEvent)?.target as HTMLInputElement;
+            if(!elem) return;
+            const results: NominatimObject[] = await geocodingSearch(encodeURIComponent(elem.value), false);
+            geocodingResults.value = results.slice(0, 10).map(result => {
+                return {
+                    name: result.name,
+                    customData: result.address,
+                    action: () => {
+                        if(result.address) {
+                            if(result.address.road) {
+                                data.value.street = result.address.road;
+                                streetRef.value?.externalChange(result.address.road);
+                            }
+                            if(result.address.house_number) {
+                                data.value.housenumber = result.address.house_number.toString();
+                                housenumberRef.value?.externalChange(result.address.house_number);
+                            }
+                            if(result.address.postcode) {
+                                data.value.postalcode = result.address.postcode
+                                postalRef.value?.externalChange(result.address.postcode);
+                            }
+                            if(result.address.city) {
+                                data.value.city = result.address.city;
+                                cityRef.value?.externalChange(result.address.city);
+                            } else if(result.address.town) {
+                                data.value.city = result.address.town;
+                                cityRef.value?.externalChange(result.address.town);
+                            } else if(result.address.village) {
+                                data.value.city = result.address.village;
+                                cityRef.value?.externalChange(result.address.village);
+                            }
+                            if(result.address.state) {
+                                data.value.state = result.address.state;
+                                stateRef.value?.externalChange(result.address.state);
+                            }
+                            if(result.address.country) {
+                                data.value.country = result.address.country;
+                                countryRef.value?.externalChange(result.address.country);
+                            }
+                            if(result.address.county) {
+                                data.value.county = result.address.county;
+                                countyRef.value?.externalChange(result.address.county);
+                            }
+                            if(result.lat && result.lon) {
+                                coordiateRef.value = [
+                                    result.lat,
+                                    result.lon
+                                ];
+                            } else {
+                                coordiateRef.value = [];
+                            }
                         }
                     }
                 }
-            }
-        });
-        // TODO set correct dirty/valid state
-        emit('change', {
-            valid: event.valid,
-            dirty: event.dirty,
-            value: data.value,
-        });
+            });
+        } else {
+            const changeEvent = (event as ChangeEvent);
+            data.value[from] = changeEvent.value;
+
+            // TODO set correct dirty/valid state
+            emit('change', {
+                valid: changeEvent.valid,
+                dirty: changeEvent.dirty,
+                value: data.value,
+            });
+        }
     });
 
     const updateErrors = (from: AddressValueKeys, errors: string[]) => {
