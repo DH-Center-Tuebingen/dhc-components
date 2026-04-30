@@ -1,13 +1,14 @@
 <template>
     <div
-        :class="[textColor, interactable]"
-        class="d-flex align-items-center"
+        :class="[textColor]"
+        :role="interactable"
+        class="d-flex align-items-center gap-2"
         @click="exec()"
     >
         <FontAwesomeIcon :icon="icon" />
         <span
             v-if="!iconOnly"
-            class="ms-2 fw-bold user-select-none"
+            class="fw-bold user-select-none"
         >{{ text ?? "-" }}</span>
     </div>
 </template>
@@ -32,16 +33,16 @@
     }>();
 
     const interactable = computed(() => {
-        return props.action ? 'cursor-pointer' : '';
+        return props.action ? 'button' : undefined;
     });
 
     const textColor = computed(() => {
         const color = props.color ?? 'secondary';
         return `text-${color}`;
     });
-    
+
     const exec = () => {
-        if (props.action) {
+        if(props.action) {
             props.action();
         }
     };

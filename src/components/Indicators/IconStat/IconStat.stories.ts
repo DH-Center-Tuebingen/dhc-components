@@ -35,7 +35,6 @@ export const WithColor: Story = {
     render: (args: any) => ({
         components: { IconStat },
         setup() {
-            
             const likes = ref(10);
             const incrementLikes = () => {
                 console.log('IconStat clicked');
