@@ -3,7 +3,7 @@ import { fn } from "@storybook/test";
 import i18n from "./i18n";
 
 import 'bootstrap';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/scss/bootstrap.scss';
 import '@/scss/main.scss';
 import { ColorfullBackground } from "./backgrounds";
 
