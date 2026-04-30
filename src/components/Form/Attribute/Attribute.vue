@@ -45,11 +45,6 @@
     import Timeperiod from '../Timeperiod/Timeperiod.vue';
     import Url from '../Url/Url.vue';
 
-    import { initI18n } from '../../../i18n/i18n';
-
-    import * as de from './i18n/de.json';
-    import * as en from './i18n/en.json';
-
     import { AttributeProps, AttributeTypeDef, ChangeEvent } from './definitions';
 
     onMounted(() => {
@@ -88,13 +83,6 @@
         timeperiod: Timeperiod,
         url: Url,
     };
-
-    const messages = {
-        de,
-        en,
-    };
-    const i18n = initI18n(messages);
-    const t = i18n.global.t;
 
     const eventData = ref({
         value: null,
