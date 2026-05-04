@@ -70,6 +70,12 @@
         <span v-if="text">
             {{ text }}
         </span>
+        <span
+            v-if="slots.default"
+            class="button-text-content"
+        >
+            <slot></slot>
+        </span>
     </button>
 </template>
 
@@ -83,13 +89,13 @@
     import StackedIcon from '@/components/Layout/StackedIcon/StackedIcon.vue';
     import LoadingSpinner from '@/components/Indicators/LoadingSpinner/LoadingSpinner.vue';
 
-    import { IconButtonProps } from './definitions';
+    import { ButtonProps } from './definitions';
 
     const slots = useSlots();
     const emit = defineEmits(['action']);
 
     const value: ModelRef<boolean | undefined, string> = defineModel();
-    const props = withDefaults(defineProps<IconButtonProps>(), {
+    const props = withDefaults(defineProps<ButtonProps>(), {
         active: undefined,
         activeButtonClass: 'primary',
         activeIconCategory: 'fas',
@@ -104,7 +110,7 @@
         text: '',
     });
 
-    function resolveIconProp(prop: string | IconDefinition, category: string) {
+    const resolveIconProp = (prop: string | IconDefinition, category: string) => {
         if(typeof prop === 'string') {
             let stringDefinition = `${category} fa-${prop}`;
             if(props.fixedWidth) {
@@ -114,14 +120,14 @@
         } else {
             return prop;
         }
-    }
+    };
 
-    function clicked() {
+    const clicked = () => {
         if(value.value !== undefined) {
             value.value = !value.value;
         }
         emit('action');
-    }
+    };
 
     const hasMultipleIcons = computed(() => {
         return Array.isArray(props.icon) && (typeof props.icon[0] !== 'string');
@@ -194,8 +200,8 @@
         } else {
             return props.disabled();
         }
-    })
-    
+    });
+
     const hasIcon = computed(() => {
         return props.icon !== undefined || slots.icon !== undefined || (props.icons && props.icons.items);
     });

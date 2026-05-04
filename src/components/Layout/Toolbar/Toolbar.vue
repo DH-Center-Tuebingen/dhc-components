@@ -3,7 +3,7 @@
         class="d-flex flex-row flex-wrap gap-2 align-items-center bg-primary bg-opacity-10 px-2 user-select-none rounded"
     >
         <template v-for="(toolGroup, index) of toolGroups">
-            <IconButton
+            <XButton
                 v-for="tool of toolGroup"
                 :key="tool.name"
                 class="py-1"
@@ -32,7 +32,7 @@
 >
     import { Tool } from './definitions';
 
-    import IconButton from '@/components/Button/IconButton/IconButton.vue';
+    import XButton from '@/components/Button/XButton/XButton.vue';
     import Spacer from '@/components/Layout/Spacer/Spacer.vue';
 
     defineProps<{

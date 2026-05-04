@@ -94,12 +94,12 @@
                             </label>
                         </div>
                     </div>
-                    <LoadingButton
+                    <XButton
                         :loading="loading"
-                        :color="'primary'"
+                        :button-class="'primary'"
                     >
                         {{ t('login.title') }}
-                    </LoadingButton>
+                    </XButton>
                 </div>
             </form>
         </div>
@@ -121,7 +121,7 @@
     } from '@fortawesome/free-solid-svg-icons';
 
     import Alert from '@/components/Notifications/Alert/Alert.vue';
-    import LoadingButton from '@/components/Button/LoadingButton/LoadingButton.vue';
+    import XButton from '@/components/Button/XButton/XButton.vue';
 
     const { t } = useI18n();
 

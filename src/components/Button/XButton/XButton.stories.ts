@@ -1,35 +1,35 @@
 import type { Meta, StoryObj } from '@storybook/vue3';
 
-import IconButton from './IconButton.vue';
+import Button from './XButton.vue';
 import { faEnvelope, faEnvelopeOpen, faFaceMehBlank, faFaceSadCry, faFaceSmile, faFaceSmileWink, faCircleCheck } from '@fortawesome/free-solid-svg-icons';
 import { faCircle } from '@fortawesome/free-regular-svg-icons';
 import { onMounted, ref, watch } from 'vue';
 import { FontAwesomeIcon, FontAwesomeLayers, FontAwesomeLayersText } from '@fortawesome/vue-fontawesome';
 
 /**
- * Use the IconButton component if you need a button only with a single icon.
+ * Use the Button component if you need a button only with a single icon.
  * This button supports loading, custom styling and can be used as a toggle, by passing a v-model.
  *
  */
-const meta: Meta<typeof IconButton> = {
-    component: IconButton,
+const meta: Meta<typeof Button> = {
+    component: Button,
 };
 
 export default meta;
 
-type Story = StoryObj<typeof IconButton>;
+type Story = StoryObj<typeof Button>;
 
 export const Default: Story = {
     args: {
         // Add props here
     },
     render: (args: any) => ({
-        components: { IconButton },
+        components: { Button },
         setup() {
             args.icon = faFaceSmile;
             return { args };
         },
-        template: '<IconButton v-bind="args" />',
+        template: '<Button v-bind="args" />',
     }),
 };
 
@@ -53,11 +53,11 @@ export const Stacked: Story = {
         title: 'Stacked Action Button'
     },
     render: (args: any) => ({
-        components: { IconButton },
+        components: { Button },
         setup() {
             return { args };
         },
-        template: '<IconButton v-bind="args" />',
+        template: '<Button v-bind="args" />',
     }),
 };
 
@@ -67,12 +67,12 @@ export const Small: Story = {
         small: true,
     },
     render: (args: any) => ({
-        components: { IconButton },
+        components: { Button },
         setup() {
             args.icon = faFaceSmile;
             return { args };
         },
-        template: '<IconButton v-bind="args" />',
+        template: '<Button v-bind="args" />',
     }),
 };
 
@@ -82,12 +82,12 @@ export const Disabled: Story = {
         disabled: true,
     },
     render: (args: any) => ({
-        components: { IconButton },
+        components: { Button },
         setup() {
             args.icon = faFaceSadCry;
             return { args };
         },
-        template: '<IconButton v-bind="args" />',
+        template: '<Button v-bind="args" />',
     }),
 };
 
@@ -99,12 +99,12 @@ export const DisabledFunction: Story = {
         },
     },
     render: (args: any) => ({
-        components: { IconButton },
+        components: { Button },
         setup() {
             args.icon = faFaceSadCry;
             return { args };
         },
-        template: '<IconButton v-bind="args" />',
+        template: '<Button v-bind="args" />',
     }),
 };
 
@@ -112,7 +112,7 @@ export const Toggle: Story = {
     args: {
     },
     render: (args: any) => ({
-        components: { IconButton },
+        components: { Button },
         setup() {
             args.icon = faFaceMehBlank;
             args.activeIcon = faFaceSmileWink;
@@ -127,8 +127,32 @@ export const Toggle: Story = {
 
             return { args, modelValue };
         },
-        template: '<IconButton v-bind="args" v-model="modelValue" />',
+        template: '<Button v-bind="args" v-model="modelValue" />',
     }),
+};
+
+export const DefaultSlot: Story = {
+    args: {
+        // Add props here
+        text: 'Text from args',
+    },
+    render: (args: any) => ({
+        components: { Button },
+        setup() {
+            args.icon = faFaceSmile;
+            return { args };
+        },
+        template: '<Button v-bind="args"><span class="fw-bold">Text from Default Slot</span></Button>',
+    }),
+    decorators: [
+      (story, context) => ({
+        components: { story },
+        setup() {
+            return { args: context.args };
+        },
+        template: `<div class="xbutton-default-slot-story"><story /></div>`,
+      })
+    ]
 };
 
 export const IconSlot: Story = {
@@ -137,7 +161,7 @@ export const IconSlot: Story = {
     },
     render: (args: any) => ({
         components: {
-            IconButton,
+            Button,
             FontAwesomeIcon,
             FontAwesomeLayers,
             FontAwesomeLayersText
@@ -151,7 +175,7 @@ export const IconSlot: Story = {
             return { args, modelValue, icons };
         },
         template: `
-            <IconButton v-bind="args" v-model="modelValue" >
+            <Button v-bind="args" v-model="modelValue" >
                 <template #icon={active}>
                     <template v-if="active">
                         <FontAwesomeLayers full-width>
@@ -165,7 +189,7 @@ export const IconSlot: Story = {
                         </FontAwesomeLayers>
                     </template>
                 </template>
-            </IconButton>
+            </Button>
         `,
     }),
 };
@@ -205,12 +229,12 @@ const useLoading = (args: any) => {
             loading: true,
         },
         render: (args: any) => ({
-            components: { IconButton },
+            components: { Button },
             setup() {
                 args.icon = faFaceSmile;
                 return { args, ...useLoading(args) };
             },
-            template: '<IconButton v-bind="args" :loading="loading" v-model="modelValue" @action="clicked" />',
+            template: '<Button v-bind="args" :loading="loading" v-model="modelValue" @action="clicked" />',
         }),
     };
 
@@ -220,12 +244,12 @@ const useLoading = (args: any) => {
             text: 'Hello World',
         },
         render: (args: any) => ({
-            components: { IconButton },
+            components: { Button },
             setup() {
                 args.icon = faFaceSmile;
                 return { args, ...useLoading(args) };
             },
-            template: '<IconButton v-bind="args" :loading="loading" v-model="modelValue" @action="clicked" />',
+            template: '<Button v-bind="args" :loading="loading" v-model="modelValue" @action="clicked" />',
         }),
     };
 
@@ -237,11 +261,11 @@ const useLoading = (args: any) => {
             text: 'Hello World',
         },
         render: (args: any) => ({
-            components: { IconButton },
+            components: { Button },
             setup() {
                 return { args, ...useLoading(args) };
             },
-            template: '<IconButton v-bind="args" :loading="loading" :active="active" :disabled="disabled" v-model="modelValue" @action="clicked" />',
+            template: '<Button v-bind="args" :loading="loading" :active="active" :disabled="disabled" v-model="modelValue" @action="clicked" />',
         }),
     };
 
@@ -260,7 +284,7 @@ const useLoading = (args: any) => {
             loading: true,
         },
         render: (args: any) => ({
-            components: { IconButton },
+            components: { Button },
             setup() {
 
                 const icons = [
@@ -278,7 +302,7 @@ const useLoading = (args: any) => {
             template: `
         <div class="d-flex gap-2 align-items-center">
             <div class="d-flex align-items-center text-center fw-bold">{{selectedIcon}}</div>
-            <IconButton v-for="icon in mappedIcons" :key="icon.id" :icon="icon.icon" :key="icon.id" @action="()=>selectedIcon=icon.id" :active="selectedIcon === icon.id"/>
+            <Button v-for="icon in mappedIcons" :key="icon.id" :icon="icon.icon" :key="icon.id" @action="()=>selectedIcon=icon.id" :active="selectedIcon === icon.id"/>
         </div>`,
         }),
     };
@@ -290,12 +314,12 @@ const useLoading = (args: any) => {
             unbutton: true,
         },
         render: (args: any) => ({
-            components: { IconButton },
+            components: { Button },
             setup() {
                 args.icon = faFaceSmile;
                 return { args };
             },
-            template: '<IconButton v-bind="args" />',
+            template: '<Button v-bind="args" />',
         }),
     };
 
@@ -307,11 +331,11 @@ const useLoading = (args: any) => {
             unbutton: true,
         },
         render: (args: any) => ({
-            components: { IconButton },
+            components: { Button },
             setup() {
                 args.icon = faFaceSmile;
                 return { args };
             },
-            template: '<IconButton v-bind="args" />',
+            template: '<Button v-bind="args" />',
         }),
     };

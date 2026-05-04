@@ -4,7 +4,7 @@ import { StackedIcon } from '@/components/Layout/StackedIcon/definitions';
 
 import { ButtonColors } from '@/types/Colors';
 
-export interface IconButtonProps {
+export interface ButtonProps {
     active?: boolean;
     activeButtonClass?: ButtonColors;
     activeIcon?: string | IconDefinition | IconDefinition[];

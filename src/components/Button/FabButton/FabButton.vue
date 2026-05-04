@@ -1,5 +1,5 @@
 <template>
-    <IconButton
+    <XButton
         class="btn-fab"
         :class="buttonClass"
         :button-class="color"
@@ -14,7 +14,7 @@
                 />
             </slot>
         </template>
-    </IconButton>
+    </XButton>
 </template>
 
 <script
@@ -28,7 +28,7 @@
     } from '@fortawesome/free-solid-svg-icons';
 
     import { computed } from 'vue';
-    import IconButton from '../IconButton/IconButton.vue';
+    import XButton from '@/components/Button/XButton/XButton.vue';
     import { ButtonColors } from 'src/types/Colors';
     import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 

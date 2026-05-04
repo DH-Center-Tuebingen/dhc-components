@@ -4,8 +4,7 @@ export { default as Login } from './components/Blocks/Login/Login.vue';
 // Buttons
 export { default as FabButton } from './components/Button/FabButton/FabButton.vue';
 export { default as FabButtonList } from './components/Button/FabButtonList/FabButtonList.vue';
-export { default as IconButton } from './components/Button/IconButton/IconButton.vue';
-export { default as LoadingButton } from './components/Button/LoadingButton/LoadingButton.vue';
+export { default as XButton } from './components/Button/XButton/XButton.vue';
 export { default as Toggle } from './components/Button/Toggle/Toggle.vue';
 
 // Form

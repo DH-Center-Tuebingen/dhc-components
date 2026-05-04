@@ -7,8 +7,10 @@ import 'bootstrap/scss/bootstrap.scss';
 import '@/scss/main.scss';
 import { ColorfullBackground } from "./backgrounds";
 
+import './story.css';
+
 setup((app) => {
-  app.use(i18n)
+    app.use(i18n)
 })
 
 const preview: Preview = {

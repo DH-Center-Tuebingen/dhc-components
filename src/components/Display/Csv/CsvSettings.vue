@@ -106,7 +106,7 @@
                 </label>
             </div>
 
-            <IconButton
+            <XButton
                 v-if="showPreviewButton"
                 :small="true"
                 :icon="faEyeSlash"
@@ -124,7 +124,7 @@
 >
     import { computed, ModelRef, ref } from 'vue';
     import Dropdown from '@/components/Dropdown/Dropdown.vue';
-    import IconButton from '@/components/Button/IconButton/IconButton.vue';
+    import XButton from '@/components/Button/XButton/XButton.vue';
     import { faEye, faEyeSlash, faKeyboard, faRectangleList } from '@fortawesome/free-solid-svg-icons';
     import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
@@ -177,8 +177,6 @@
         if(end > props.total) {
             end = props.total;
         }
-
-        console.log(start, end);
 
         return t('pagination.shown_of', { from: end - start, to: props.total });
     });

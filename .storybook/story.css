@@ -1,0 +1,4 @@
+/* Used in XButton.stories.ts */
+.xbutton-default-slot-story .button-text-content {
+    text-transform: uppercase;
+}
