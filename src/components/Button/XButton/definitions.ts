@@ -22,4 +22,6 @@ export interface ButtonProps {
     outlined?: boolean;
     title?: string;
     text?: string;
+    textOnHover?: boolean;
+    textFirst?: boolean;
 }

@@ -6,6 +6,8 @@
         :aria-pressed="active"
         :disabled="isDisabled"
         :title="title"
+        @mouseenter="isHovered = true"
+        @mouseleave="isHovered = false"
         @click="clicked()"
     >
         <LoadingSpinner
@@ -67,15 +69,21 @@
                 </div>
             </template>
         </template>
-        <span v-if="text">
-            {{ text }}
-        </span>
-        <span
-            v-if="slots.default"
-            class="button-text-content"
-        >
-            <slot></slot>
-        </span>
+        <Transition name="fade-hover-text">
+            <span
+                v-if="text && showHoveredText"
+            >
+                {{ text }}
+            </span>
+        </Transition>
+        <Transition name="fade-hover-text">
+            <span
+                v-if="slots.default && showHoveredText"
+                class="button-text-content"
+            >
+                <slot></slot>
+            </span>
+        </Transition>
     </button>
 </template>
 
@@ -83,9 +91,14 @@
     setup
     lang="ts"
 >
+    import {
+        computed,
+        ModelRef,
+        ref,
+        useSlots
+    } from 'vue';
     import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
     import type { IconDefinition } from '@fortawesome/fontawesome-svg-core';
-    import { computed, ModelRef, useSlots } from 'vue';
     import StackedIcon from '@/components/Layout/StackedIcon/StackedIcon.vue';
     import LoadingSpinner from '@/components/Indicators/LoadingSpinner/LoadingSpinner.vue';
 
@@ -108,6 +121,8 @@
         unbutton: false,
         outlined: false,
         text: '',
+        textOnHover: false,
+        textFirst: false,
     });
 
     const resolveIconProp = (prop: string | IconDefinition, category: string) => {
@@ -121,6 +136,8 @@
             return prop;
         }
     };
+
+    const isHovered = ref(false);
 
     const clicked = () => {
         if(value.value !== undefined) {
@@ -155,6 +172,10 @@
         }
     });
 
+    const showHoveredText = computed(() => {
+        return !props.textOnHover || isHovered.value;
+    });
+
     const buttonClasses = computed(() => {
         const baseName = props.outlined ? 'btn-outline' : 'btn';
         const btnColor = isActive.value ? props.activeButtonClass : props.buttonClass;
@@ -185,6 +206,10 @@
             classes.push('align-items-center');
             classes.push('justify-content-center');
             classes.push('gap-1');
+
+            if(props.textFirst) {
+                classes.push('flex-row-reverse');
+            }
         }
 
         return classes;
@@ -206,3 +231,19 @@
         return props.icon !== undefined || slots.icon !== undefined || (props.icons && props.icons.items);
     });
 </script>
+
+<style scoped>
+    .fade-hover-text-enter-active,
+    .fade-hover-text-leave-active {
+        transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+
+    .fade-hover-text-enter-from {
+        opacity: 0;
+        transform: translateX(-5px);
+    }
+
+    .fade-hover-text-leave-to  {
+        opacity: 0;
+    }
+</style>

@@ -33,6 +33,39 @@ export const Default: Story = {
     }),
 };
 
+export const OnHover: Story = {
+    args: {
+        // Add props here
+        text: 'Hello World',
+        textOnHover: true,
+    },
+    render: (args: any) => ({
+        components: { Button },
+        setup() {
+            args.icon = faFaceSmile;
+            return { args };
+        },
+        template: '<Button v-bind="args" />',
+    }),
+};
+
+export const OnHoverReverse: Story = {
+    args: {
+        // Add props here
+        text: 'Hello World',
+        textOnHover: true,
+        textFirst: true,
+    },
+    render: (args: any) => ({
+        components: { Button },
+        setup() {
+            args.icon = faFaceSmile;
+            return { args };
+        },
+        template: '<Button v-bind="args" />',
+    }),
+};
+
 export const Stacked: Story = {
     args: {
         icons: {
@@ -135,6 +168,7 @@ export const DefaultSlot: Story = {
     args: {
         // Add props here
         text: 'Text from args',
+        textOnHover: true,
     },
     render: (args: any) => ({
         components: { Button },
@@ -143,6 +177,32 @@ export const DefaultSlot: Story = {
             return { args };
         },
         template: '<Button v-bind="args"><span class="fw-bold">Text from Default Slot</span></Button>',
+    }),
+    decorators: [
+      (story, context) => ({
+        components: { story },
+        setup() {
+            return { args: context.args };
+        },
+        template: `<div class="xbutton-default-slot-story"><story /></div>`,
+      })
+    ]
+};
+
+export const DefaultSlotReverse: Story = {
+    args: {
+        // Add props here
+        text: 'Text from args',
+        textOnHover: true,
+        textFirst: true,
+    },
+    render: (args: any) => ({
+        components: { Button },
+        setup() {
+            args.icon = faFaceSmile;
+            return { args };
+        },
+        template: '<Button v-bind="args"><span class="fw-bold">Reverse Default Slot</span></Button>',
     }),
     decorators: [
       (story, context) => ({
@@ -242,6 +302,22 @@ const useLoading = (args: any) => {
         args: {
             loading: false,
             text: 'Hello World',
+        },
+        render: (args: any) => ({
+            components: { Button },
+            setup() {
+                args.icon = faFaceSmile;
+                return { args, ...useLoading(args) };
+            },
+            template: '<Button v-bind="args" :loading="loading" v-model="modelValue" @action="clicked" />',
+        }),
+    };
+
+    export const LoadingWithTextReverse: Story = {
+        args: {
+            loading: false,
+            text: 'Hello World',
+            textFirst: true,
         },
         render: (args: any) => ({
             components: { Button },
