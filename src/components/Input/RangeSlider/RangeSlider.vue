@@ -1,7 +1,6 @@
 <template>
     <div class="range-slider">
         <div class="range-slider-track">
-
             <div
                 ref="innerTrack"
                 class="range-slider-inner-track"
@@ -10,9 +9,7 @@
                     class="range-slider-active-track"
                     :style="activeTrackStyle"
                     @pointerdown.prevent="(event) => startDrag(event, [0, 1])"
-                ></div>
-
-
+                />
                 <div
                     class="range-slider-caret-container range-slider-start user-select-none"
                     role="button"
@@ -22,15 +19,12 @@
                     <div
                         class="range-slider-caret"
                         :class="getDraggedClass(0)"
-                    >
-                    </div>
+                    />
 
                     <span class="range-slider-caret-value">
                         {{ startLabelText }}
                     </span>
                 </div>
-
-
                 <div
                     class="range-slider-caret-container range-slider-end user-select-none"
                     role="button"
@@ -40,16 +34,12 @@
                     <div
                         class="range-slider-caret"
                         :class="getDraggedClass(1)"
-                    >
-
-                    </div>
+                    />
                     <span class="range-slider-caret-value">
                         {{ endLabelText }}
                     </span>
                 </div>
             </div>
-
-
             <canvas
                 ref="canvas"
                 v-if="requireCanvas"
@@ -63,7 +53,6 @@
 <script setup lang="ts">
     import { Ruler } from 'src/types/Graphics';
     import { computed, onMounted, ref, useTemplateRef } from 'vue';
-
 
     type Range = [number, number];
 
@@ -97,12 +86,12 @@
         if (!props.rulers) { return false; }
         if (!Array.isArray(props.rulers)) { return true; }
         else { return props.rulers?.length > 0; }
-    })
+    });
     const rulerArray = computed<Array<Ruler>>(() => {
         if (!props.rulers) { return []; }
         if (Array.isArray(props.rulers)) { return props.rulers; }
         else { return [props.rulers]; }
-    })
+    });
 
     function makeTextLabel(value: number): string {
         return (props.step <= 0) ? value.toFixed(2) : value.toFixed(0);
@@ -119,7 +108,7 @@
         return dragging.value === index ? 'dragged' : '';
     }
 
-    function getPosition(value: number): number {
+    const getPosition = (value: number): number => {
         const range = props.max - props.min;
         const percentage = (value - props.min) / range;
         return Math.max(0, Math.min(100, percentage * 100));
@@ -145,20 +134,22 @@
     });
 
     const dragging = ref<Array<0 | 1> | null>(null);
-    const startValue = ref<number>(0)
+    const startValue = ref<number>(0);
     const caretStartValues = ref<[number, number]>([0, 0])
     const innerTrack = useTemplateRef('innerTrack');
     const canvas = useTemplateRef('canvas');
 
     function updateCanvas() {
-        if (!canvas.value || !requireCanvas.value) { return; }
+        if(!canvas.value || !requireCanvas.value) {
+            return;
+        }
 
-        const bb = canvas.value.getBoundingClientRect()
+        const bb = canvas.value.getBoundingClientRect();
 
         let requiredHeight = rulerArray.value.reduce((max, ruler) => {
             let fontSize = defaultFontSize;
             let labelPadding = defaultLabelPadding;
-            if (typeof (ruler?.label) === 'object') {
+            if(typeof (ruler?.label) === 'object') {
                 fontSize = ruler?.label?.size ?? fontSize
                 labelPadding = ruler?.label?.padding ?? labelPadding
             }
@@ -170,7 +161,7 @@
             const safetyPaddedFontSize = fontSize * 1.2;
             const totalLength = safetyPaddedFontSize + labelPadding + length;
             return (totalLength > max) ? totalLength : max
-        }, 0)
+        }, 0);
 
         const canvasHeight = requiredHeight;
         canvas.value.height = canvasHeight;
@@ -186,106 +177,116 @@
         updateCanvas();
 
         if (canvas.value) {
-            const obs = new ResizeObserver(() => updateCanvas())
-            obs.observe(canvas.value)
+            const obs = new ResizeObserver(() => updateCanvas());
+            obs.observe(canvas.value);
         } else {
-            console.error('Could not attach resize observer to canvas!')
+            console.error('Could not attach resize observer to canvas!');
         }
-    })
+    });
 
     function applyStep(value: number, step: number | null = null): number {
-        if (!step) { step = props.step; }
+        if(!step) {
+            step = props.step;
+        }
         // normalize the offset to -step/2 < 0 < step/2
-        let offset = Math.abs(value % step)
-        const sign = Math.sign(value)
-        if (offset > step / 2) { offset = offset - step }
-        offset *= sign
+        let offset = Math.abs(value % step);
+        const sign = Math.sign(value);
+        if(offset > step / 2) {
+            offset -= step
+        }
+        offset *= sign;
 
         // Remove the existing offset from the value
-        // which wil always between 
-        return value - offset
+        // which wil always between
+        return value - offset;
     }
 
     function getValue(x: number) {
-        if (!innerTrack.value) { return 0; }
+        if(!innerTrack.value) {
+            return 0;
+        }
         const track = innerTrack.value.getBoundingClientRect();
         const percentage = (x - track.left) / track.width;
         return props.min + percentage * (props.max - props.min);
     }
 
     const performDrag = (event: PointerEvent) => {
-        if (!model.value || dragging.value == null || !innerTrack.value) { return; }
+        if(!model.value || dragging.value == null || !innerTrack.value) {
+            return;
+        }
 
-        let value = getValue(event.clientX)
-        const offset = startValue.value - value
+        let value = getValue(event.clientX);
+        const offset = startValue.value - value;
 
         dragging.value.forEach((caret) => {
+            let caretValue = caretStartValues.value[caret] - offset;
 
-            let caretValue = caretStartValues.value[caret] - offset
-
-            if (event.shiftKey) {
-                caretValue = applyStep(caretValue, props.shiftSnap)
-            } else if (event.ctrlKey) {
-                caretValue = applyStep(caretValue, props.ctrlSnap)
-            } else if (event.altKey) {
-                caretValue = applyStep(caretValue, props.altSnap)
+            if(event.shiftKey) {
+                caretValue = applyStep(caretValue, props.shiftSnap);
+            } else if(event.ctrlKey) {
+                caretValue = applyStep(caretValue, props.ctrlSnap);
+            } else if(event.altKey) {
+                caretValue = applyStep(caretValue, props.altSnap);
             }
 
-            if (props.step != 0) {
-                caretValue = applyStep(caretValue)
+            if(props.step != 0) {
+                caretValue = applyStep(caretValue);
             }
 
-            caretValue = enforceLimit(caretValue)
-            caretValue = enforceLimit(caretValue, true)
+            caretValue = enforceLimit(caretValue);
+            caretValue = enforceLimit(caretValue, true);
 
             model.value[caret] = caretValue;
 
-            if (dragging.value?.length == 1) {
-                swapCaretWhenCrossing(caretValue)
+            if(dragging.value?.length == 1) {
+                swapCaretWhenCrossing(caretValue);
             }
-        })
+        });
     }
 
     function enforceLimit(value: number, upper = false): number {
         const step = props.step;
-        const doesViolate = (val: number) => (upper) ? (val > props.max) : (val < props.min)
+        const doesViolate = (val: number) => (upper) ? (val > props.max) : (val < props.min);
 
-        if (doesViolate(value)) {
-            if (step && !props.enforceMinMax) {
-                while (doesViolate(value)) {
-                    const fstep = (upper) ? -step : step
-                    value += fstep
+        if(doesViolate(value)) {
+            if(step && !props.enforceMinMax) {
+                while(doesViolate(value)) {
+                    const fstep = (upper) ? -step : step;
+                    value += fstep;
                 }
             } else {
-                value = (upper) ? props.max : props.min
+                value = (upper) ? props.max : props.min;
             }
         }
         return value;
     }
 
     function swapCaretWhenCrossing(value: number): (-1 | 0 | 1) {
-        if (!model.value || dragging.value == null || dragging.value.length > 1) { return }
-        const activeIndex = dragging.value[0]
+        if(!model.value || dragging.value == null || dragging.value.length > 1) {
+            return;
+        }
+        const activeIndex = dragging.value[0];
         const otherIndex = activeIndex === 0 ? 1 : 0;
-        const otherValue = model.value[otherIndex]
+        const otherValue = model.value[otherIndex];
 
-
-        if ((activeIndex === 0 && value > model.value[1]) || (activeIndex === 1 && value < model.value[0])) {
+        if((activeIndex === 0 && value > model.value[1]) || (activeIndex === 1 && value < model.value[0])) {
             model.value[activeIndex] = otherValue;
-            startValue.value = otherValue
-            caretStartValues.value[otherIndex] = otherValue
-            const newTarget = activeIndex === 1 ? 0 : 1
-            dragging.value = [newTarget]
+            startValue.value = otherValue;
+            caretStartValues.value[otherIndex] = otherValue;
+            const newTarget = activeIndex === 1 ? 0 : 1;
+            dragging.value = [newTarget];
             return newTarget;
         }
         return -1;
     }
 
     function startDrag(event: MouseEvent, target: Array<0 | 1>) {
-        if (!model.value) { return; }
+        if(!model.value) {
+            return;
+        }
         dragging.value = target;
-        startValue.value = getValue(event.clientX)
-        caretStartValues.value = [...model.value]
+        startValue.value = getValue(event.clientX);
+        caretStartValues.value = [...model.value];
         window.addEventListener('pointermove', performDrag);
         window.addEventListener('pointerup', endDrag);
         window.addEventListener('pointercancel', endDrag);
@@ -295,42 +296,44 @@
         dragging.value = null;
         window.removeEventListener('pointermove', performDrag);
         window.removeEventListener('pointerup', endDrag);
-        window.removeEventListener('pointercancel', endDrag() });
+        window.removeEventListener('pointercancel', endDrag);
     }
 
     function drawRulers(ctx: CanvasRenderingContext2D) {
-        if (!props.rulers || !canvas.value) { return; }
+        if(!props.rulers || !canvas.value) {
+            return;
+        }
 
         const halfCircleSize = 10;
-        const pxPerStep = (canvas.value.width - 2 * halfCircleSize) / (props.max - props.min)
-        const rulers = (!Array.isArray(props.rulers)) ? [props.rulers] : props.rulers
-        let biggerSteps = rulers.toSorted((a, b) => b.step - a.step).map(sd => sd.step)
+        const pxPerStep = (canvas.value.width - 2 * halfCircleSize) / (props.max - props.min);
+        const rulers = (!Array.isArray(props.rulers)) ? [props.rulers] : props.rulers;
+        let biggerSteps = rulers.toSorted((a, b) => b.step - a.step).map(sd => sd.step);
         rulers.forEach(({ step, length, width: configWidth, color, label }) => {
-            let width = configWidth ? configWidth : 1
+            let width = configWidth ? configWidth : 1;
             biggerSteps.pop();
-            if ((pxPerStep * step) > 5 * width) {
-                let startOffset = props.min % step
+            if((pxPerStep * step) > 5 * width) {
+                let startOffset = props.min % step;
+                const startPosition = props.min - startOffset;
 
-
-                const startPosition = props.min - startOffset
-
-                for (let stepPosition = startPosition; stepPosition <= (props.max - props.min); stepPosition += step) {
-                    let skipPaint = false
-                    for (let beforeStep of biggerSteps) {
-                        if (stepPosition % beforeStep === 0) {
+                for(let stepPosition = startPosition; stepPosition <= (props.max - props.min); stepPosition += step) {
+                    let skipPaint = false;
+                    for(let beforeStep of biggerSteps) {
+                        if(stepPosition % beforeStep === 0) {
                             skipPaint = true;
                         }
                     }
 
-                    if (skipPaint) { continue }
+                    if (skipPaint) {
+                        continue;
+                    }
 
                     const lastStyle = ctx.fillStyle;
                     ctx.fillStyle = color ?? 'black';
 
-                    const xPosition = halfCircleSize + (stepPosition - props.min) * pxPerStep
-                    ctx?.fillRect(xPosition - width / 2, 0, width, length)
+                    const xPosition = halfCircleSize + (stepPosition - props.min) * pxPerStep;
+                    ctx?.fillRect(xPosition - width / 2, 0, width, length);
 
-                    if (label) {
+                    if(label) {
                         const textContent = stepPosition.toString();
 
                         let size = defaultFontSize;
@@ -339,7 +342,7 @@
                         let italic = false;
                         let padding = defaultLabelPadding;
 
-                        if (typeof (label) === 'object') {
+                        if(typeof (label) === 'object') {
                             ({
                                 size,
                                 family,
@@ -355,23 +358,22 @@
                             }, label))
                         }
 
-                        ctx.font = `${italic ? 'italic' : ''} ${weight} ${size}px ${family}`
-                        const { width } = ctx.measureText(textContent)
-                        let xLabelStart = xPosition - width / 2
+                        ctx.font = `${italic ? 'italic' : ''} ${weight} ${size}px ${family}`;
+                        const { width } = ctx.measureText(textContent);
+                        let xLabelStart = xPosition - width / 2;
 
-                        const canvasWidth = canvas.value?.width ?? 0
+                        const canvasWidth = canvas.value?.width ?? 0;
                         const safetyPadding = size * 0.1;
                         // If the label is outside the canvas we move it inside the canvas with the offset of fixedXLabelStart
-                        if (xLabelStart < safetyPadding) {
-                            xLabelStart = safetyPadding
-                        } else if (xLabelStart + width + safetyPadding > canvasWidth) {
+                        if(xLabelStart < safetyPadding) {
+                            xLabelStart = safetyPadding;
+                        } else if(xLabelStart + width + safetyPadding > canvasWidth) {
                             xLabelStart = canvasWidth - width - safetyPadding;
                         }
 
-                        ctx.fillText(textContent, xLabelStart, length + size + padding)
+                        ctx.fillText(textContent, xLabelStart, length + size + padding);
                     }
                     ctx.fillStyle = lastStyle;
-
                 }
             }
         })

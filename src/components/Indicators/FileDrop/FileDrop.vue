@@ -39,13 +39,11 @@
     }>(), {
         active: true,
         text: 'Drop files here',
-        animation: 'zoom'
+        animation: 'zoom',
     });
-
 </script>
 
 <style scoped>
-
     .zoom-enter-active {
         animation: zoom 0.5s cubic-bezier(1, 0.5, 0.8, 1);
     }
@@ -59,7 +57,6 @@
         opacity: 0;
     }
 
-
     @keyframes zoom {
         0% {
             transform: scale(50%) Rotate(3deg);
@@ -71,5 +68,4 @@
             opacity: 1;
         }
     }
-
 </style>

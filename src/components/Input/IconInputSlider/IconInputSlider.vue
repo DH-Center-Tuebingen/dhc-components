@@ -59,7 +59,7 @@
 
     const model = defineModel({
         type: Number,
-        required: true
+        required: true,
     });
 
     const defaultColor = '#dddddd';
@@ -69,27 +69,27 @@
     const props = defineProps({
         color: {
             type: String,
-            default: null
+            default: null,
         },
         icon: {
             type: String,
-            required: false
+            required: false,
         },
         min: {
             type: Number,
-            default: 0
+            default: 0,
         },
         max: {
             type: Number,
-            default: 1
-        }
+            default: 1,
+        },
     });
 
     const emits = defineEmits([
         'update:modelValue'
     ]);
 
-    function toCssPercentage(value) {
+    function toCssPercentage(value: number) {
         return Math.floor(value * 100) + '%';
     }
 
@@ -115,7 +115,6 @@
 
         diffValue.value += movementX * 0.005;
         let effectiveValue = startValue.value + diffValue.value;
-
 
         // Overshoot Preventions: When we exceed the threshold, we reset the value
         // excactly to that threshold to prevent the value to grow indefinetely
