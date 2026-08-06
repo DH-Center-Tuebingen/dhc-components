@@ -38,7 +38,7 @@
         faExclamationCircle,
         IconDefinition
     } from '@fortawesome/free-solid-svg-icons';
-    
+
 
     const props = defineProps<{
         message: string
@@ -69,7 +69,7 @@
         return hasIcon.value && props.icontext;
     });
 
-    const classes = computed(_ => {
+    const classes = computed<String[]>(_ => {
         let classes = [];
 
         type Map = {
@@ -91,7 +91,6 @@
         let typeClass = `alert-${classType}`;
         classes.push(typeClass);
 
-
         if (hasIcon.value) {
             classes.push('d-flex');
             if (hasIconText.value) {
@@ -104,7 +103,7 @@
         return classes;
     });
 
-    const icon = computed<IconDefinition>(() => { 
+    const icon = computed<IconDefinition>(() => {
         switch (props.type) {
             case 'success':
                 return faCheckCircle;
@@ -121,7 +120,7 @@
         }
     })
 
-    const iconWrapperClasses = computed(_ => {
+    const iconWrapperClasses = computed<String[]>(_ => {
         let classes: String[] = [];
         if (!hasIcon.value) { return classes; }
         if (!hasIconText.value) {
