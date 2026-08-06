@@ -100,11 +100,11 @@
     const startValue = ref(0);
     const diffValue = ref(0);
     const moving = ref(false);
-    const move = (event) => {
+    const move = (event: MouseEvent) => {
         // Skip moves while waiting for pointer lock to be established.
         // requestPointerLock() is async; the first events before the lock
         // is granted can carry a large movementX jump that snaps the value to 0.
-        if(document.exitPointerLock && !document.pointerLockElement) {
+        if(/*document.exitPointerLock && */!document.pointerLockElement) {
             return;
         }
 
@@ -140,8 +140,8 @@
         document.body.removeEventListener('mouseleave', endMove);
     };
 
-    const startMove = (event) => {
-        const target = event.currentTarget;
+    const startMove = (event: MouseEvent) => {
+        const target = event.currentTarget as Element;
         // Only 'requestPoitnerLock' if the browser implements it.
         if(target.requestPointerLock) {
             target.requestPointerLock();
@@ -159,10 +159,7 @@
         endMove();
     });
 
-    const fixedColor = computed(() => {
-        if(!props.color) { return defaultColor; }
-        return props.color;
-    });
+    const fixedColor = computed(() => props.color || defaultColor);
 
     // When the brightness of the text on the background is too
     // bright, we must use the dark color instead of the current
@@ -172,17 +169,25 @@
         return brightness > 0.6 ? darkColor : fixedColor.value;
     });
 
-    function getBrightness(color) {
+    function getBrightness(color: string) {
         if(!color.startsWith('#')) {
             console.error('Color format is not supported: ' + color);
+            return 1;
         }
-        const [R, G, B] = color.match(/\w\w/g).map(x => parseInt(x, 16) / 255);
+        const matches = color.match(/\w\w/g);
+        if(!matches || matches.length !== 3) {
+            console.error('Color format is not supported: ' + color);
+            return 1;
+        }
+        const [R, G, B] = matches.map((x: string) => parseInt(x, 16) / 255);
         return 0.2126 * R + 0.7152 * G + 0.0722 * B;
     }
 
     const differenceColor = computed(() => {
         let color = fixedColor.value;
-        if(!color) { return darkColor; }
+        if(!color) {
+            return darkColor;
+        }
         const brightness = getBrightness(color);
         return brightness > 0.5 ? darkColor : lightColor;
     });

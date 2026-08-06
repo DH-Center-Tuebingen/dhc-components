@@ -105,7 +105,7 @@
     });
 
     function getDraggedClass(index: number): string {
-        return dragging.value === index ? 'dragged' : '';
+        return dragging.value && dragging.value[0] === index ? 'dragged' : '';
     }
 
     const getPosition = (value: number): number => {
@@ -136,8 +136,8 @@
     const dragging = ref<Array<0 | 1> | null>(null);
     const startValue = ref<number>(0);
     const caretStartValues = ref<[number, number]>([0, 0])
-    const innerTrack = useTemplateRef('innerTrack');
-    const canvas = useTemplateRef('canvas');
+    const innerTrack = useTemplateRef<HTMLDivElement>('innerTrack');
+    const canvas = useTemplateRef<HTMLCanvasElement>('canvas');
 
     function updateCanvas() {
         if(!canvas.value || !requireCanvas.value) {
@@ -176,7 +176,7 @@
     onMounted(() => {
         updateCanvas();
 
-        if (canvas.value) {
+        if(canvas.value) {
             const obs = new ResizeObserver(() => updateCanvas());
             obs.observe(canvas.value);
         } else {
@@ -236,7 +236,9 @@
             caretValue = enforceLimit(caretValue);
             caretValue = enforceLimit(caretValue, true);
 
-            model.value[caret] = caretValue;
+            if(model.value) {
+                model.value[caret] = caretValue;
+            }
 
             if(dragging.value?.length == 1) {
                 swapCaretWhenCrossing(caretValue);
@@ -261,7 +263,7 @@
         return value;
     }
 
-    function swapCaretWhenCrossing(value: number): (-1 | 0 | 1) {
+    function swapCaretWhenCrossing(value: number): (-1 | 0 | 1 | undefined) {
         if(!model.value || dragging.value == null || dragging.value.length > 1) {
             return;
         }
