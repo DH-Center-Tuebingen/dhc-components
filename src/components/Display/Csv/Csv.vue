@@ -50,7 +50,7 @@
                             :key="i"
                             :class="cellClass"
                         >
-                            {{ StringUtils.capitalize(header) }}
+                            {{ capitalize(header) }}
                         </th>
                     </tr>
                 </thead>
@@ -134,7 +134,6 @@
     } from 'vue';
 
     import CsvSettings from './CsvSettings.vue';
-    import { StringUtils } from 'dhc-utils';
     import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
     import { faCircleDown, faCircleUp, faTriangleExclamation } from '@fortawesome/free-solid-svg-icons';
 
@@ -142,6 +141,7 @@
 
     import * as de from './i18n/de.json';
     import * as en from './i18n/en.json';
+    import { capitalize } from '@/utils/string';
 
     const messages = {
         de,

@@ -9,7 +9,7 @@
             class="bg-white pb-2 text-secondary"
         >
             <span v-if="showName">{{ name }}</span>
-            <span v-if="showLanguage">{{ capitalize(highlightedValue.language) }}</span>
+            <span v-if="showLanguage && highlightedValue.language">{{ capitalize(highlightedValue.language) }}</span>
         </header>
         <pre
             class="hljs overflow-auto flex-fill m-0"
@@ -24,7 +24,7 @@
     lang="ts"
 >
     import hljs from 'highlight.js/lib/common';
-    import { capitalize } from 'lodash';
+    import { capitalize } from '@/utils/string';
     import { computed } from 'vue';
 
 
