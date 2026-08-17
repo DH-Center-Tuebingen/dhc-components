@@ -16,13 +16,13 @@
 
     import { initI18n } from '../../../i18n/i18n';
 
-    import Multiselect from '../../Multiselect/Multiselect.vue';
+    import Multiselect from '../../Input/Multiselect/Multiselect.vue';
 
     import * as de from './i18n/de.json';
     import * as en from './i18n/en.json';
 
     import { MultiselectProps } from './definitions';
-    import { MultiSelectOptions } from '../../Multiselect/definitions';
+    import { MultiSelectOptions } from '../../Input/Multiselect/definitions';
 
     onMounted(() => {
         setInitialValue();

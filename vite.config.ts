@@ -1,50 +1,75 @@
 import { fileURLToPath, URL } from 'node:url'
-import path from 'path'
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
+import { globSync } from 'tinyglobby'
+import { extname, relative, resolve } from 'node:path'
 
 const __dirname = fileURLToPath(new URL('.', import.meta.url))
-const name = 'dhc-components'
+const srcDir = resolve(__dirname, 'src')
+const componentsDir = resolve(srcDir, 'components')
 
+const entries = Object.fromEntries(
+    globSync('src/components/**/*.vue').map(file => {
+        const absolutePath = resolve(file)
 
-// https://vitejs.dev/config/
+        const relativePath = relative(
+            srcDir,
+            absolutePath
+        ).replaceAll('\\', '/')
+
+        return [
+            relativePath,
+            absolutePath
+        ]
+    })
+)
+
+entries.index = resolve(srcDir, 'index.ts')
+
 export default defineConfig({
-    plugins: [vue()],
+    plugins: [
+        vue(),
+    ],
+
     resolve: {
         alias: {
-            '@': path.resolve(__dirname, 'src'),
-            '@scss': path.resolve(__dirname, 'src', 'scss'),
-            '§': path.resolve(__dirname, 'src', 'types'),
-            '$': path.resolve(__dirname, 'src', '.storybook'),
+            '@': srcDir,
+            '@scss': resolve(srcDir, 'scss'),
+            '§': resolve(srcDir, 'types'),
+            '$': resolve(srcDir, '.storybook'),
         },
     },
+
     build: {
         target: 'esnext',
-        minify: true,
+        minify: false,
         cssCodeSplit: true,
         sourcemap: true,
-        lib: {
-            entry: path.resolve(__dirname, 'src/index.ts'),
-            name,
-            fileName: (format) => `${name}.${format}.js`
-        },
+
         rollupOptions: {
+            input: entries,
+
+            preserveEntrySignatures: 'exports-only',
+
             external: [
                 'vue',
-                't',
+                'lodash',
+                'dayjs',
+                'dayjs/plugin/utc',
+                'dayjs/plugin/relativeTime',
+                'dayjs/plugin/customParseFormat',
                 'bootstrap',
-                ///^@milkdown(\/.*)?$/  // Would be good to exclude milkdown as it takes up a lot of space:
-                                        // With Milkdown: 1MB
-                                        // Without Milkdown: 0.3MB
             ],
+
             output: {
-                globals: {
-                    vue: 'Vue',
-                    t: 't',
-                    'vue-i18n': 'VueI18n',
-                    bootstrap: 'bootstrap',
-                }
+                format: 'es',
+                preserveModules: true,
+                preserveModulesRoot: 'src',
+
+                entryFileNames: '[name].js',
+                chunkFileNames: '_chunks/[name]-[hash].js',
+                assetFileNames: 'assets/[name][extname]',
             }
         }
-    }
-});
+    },
+})

@@ -12,7 +12,7 @@
         :name="name"
         @input="handleTextInput"
         @keydown="handleNumberInput"
-    >
+    />
 </template>
 
 <script setup lang="ts">

@@ -42,6 +42,11 @@ export { default as IconStat } from './components/Indicators/IconStat/IconStat.v
 export { default as IconStatsGroup } from './components/Indicators/IconStatGroup/IconStatsGroup.vue';
 export { default as LoadingSpinner } from './components/Indicators/LoadingSpinner/LoadingSpinner.vue';
 
+// Input
+export { default as IconInputSlider } from './components/Input/IconInputSlider/IconInputSlider.vue'
+export { default as RangeSlider } from './components/Input/RangeSlider/RangeSlider.vue';
+
+
 // Layout
 export { default as Accordion } from './components/Layout/Accordion/Accordion.vue';
 export { default as Comment } from './components/Layout/Comment/Comment.vue';

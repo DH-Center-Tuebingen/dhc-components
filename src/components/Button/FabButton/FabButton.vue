@@ -61,5 +61,5 @@
     lang="scss"
     scoped
 >
-    @use "@scss/utils/shape";
+    @use "../../../scss/utils/shape";
 </style>

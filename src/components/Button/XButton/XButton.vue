@@ -52,7 +52,7 @@
                 </div>
                 <div
                     v-else
-                    class="icon"
+                    class="icon d-flex align-items-center"
                 >
                     <FontAwesomeIcon
                         v-if="icon !== undefined && !isStackedIcon"

@@ -4,7 +4,7 @@
         <input
             id="input"
             type="text"
-            v-model="value"
+            v-model="modelValue"
         />
     </div>
 </template>
@@ -19,7 +19,7 @@
         label: TextWithIcon;
     }>()
     
-    defineModel<string>('value', {
+    const modelValue = defineModel<string>({
         required: true
     })
 

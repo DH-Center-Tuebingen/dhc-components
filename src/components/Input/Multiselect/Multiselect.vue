@@ -39,7 +39,7 @@
 <script setup lang="ts">
     import { useField } from 'vee-validate';
 
-    import { mixed } from '../Form/validation/rulesets';
+    import { mixed } from '../../Form/validation/rulesets';
 
     import { MultiSelectOptions } from './definitions';
 
