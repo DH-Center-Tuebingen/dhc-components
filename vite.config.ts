@@ -40,6 +40,7 @@ let inputs = Object.fromEntries(
             path.relative('src', file.slice(0, file.length - path.extname(file).length))
                 .split(path.sep)
                 .filter((_, i, arr) => i !== arr.length - 2)
+                .filter((_, i, arr) => i !== 0)
                 .join('/')
             ,
             path.resolve(file),
@@ -90,7 +91,7 @@ export default defineConfig({
 
             output: {
                 format: "es",
-                chunkFileNames: "chunks/[name]-[hash].js",
+                chunkFileNames: "_chunks/[name]-[hash].js",
                 globals: {
                     vue: 'Vue',
                 },
