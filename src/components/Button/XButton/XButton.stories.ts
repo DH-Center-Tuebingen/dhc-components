@@ -68,26 +68,27 @@ export const OnHoverReverse: Story = {
 
 export const Stacked: Story = {
     args: {
-        icons: {
-            type: 'fa-layers',
-            classes: ['fa-fw'],
-            items: [
-                {
-                    icon: faCircle,
-                    transforms: ['shrink-2', 'up-1', 'left-2'],
-                    style: { opacity: 0.5 },
-                },
-                {
-                    icon: faCircleCheck,
-                    transforms: ['shrink-2', 'down-1', 'right-2'],
-                }
-            ]
-        },
+
         title: 'Stacked Action Button'
     },
     render: (args: any) => ({
         components: { Button },
         setup() {
+            args.icons = {
+                type: 'fa-layers',
+                classes: ['fa-fw'],
+                items: [
+                    {
+                        icon: faCircle,
+                        transforms: ['shrink-2', 'up-1', 'left-2'],
+                        style: { opacity: 0.5 },
+                    },
+                    {
+                        icon: faCircleCheck,
+                        transforms: ['shrink-2', 'down-1', 'right-2'],
+                    }
+                ]
+            }
             return { args };
         },
         template: '<Button v-bind="args" />',
@@ -179,13 +180,13 @@ export const DefaultSlot: Story = {
         template: '<Button v-bind="args"><span class="fw-bold">Text from Default Slot</span></Button>',
     }),
     decorators: [
-      (story, context) => ({
-        components: { story },
-        setup() {
-            return { args: context.args };
-        },
-        template: `<div class="xbutton-default-slot-story"><story /></div>`,
-      })
+        (story, context) => ({
+            components: { story },
+            setup() {
+                return { args: context.args };
+            },
+            template: `<div class="xbutton-default-slot-story"><story /></div>`,
+        })
     ]
 };
 
@@ -205,13 +206,13 @@ export const DefaultSlotReverse: Story = {
         template: '<Button v-bind="args"><span class="fw-bold">Reverse Default Slot</span></Button>',
     }),
     decorators: [
-      (story, context) => ({
-        components: { story },
-        setup() {
-            return { args: context.args };
-        },
-        template: `<div class="xbutton-default-slot-story"><story /></div>`,
-      })
+        (story, context) => ({
+            components: { story },
+            setup() {
+                return { args: context.args };
+            },
+            template: `<div class="xbutton-default-slot-story"><story /></div>`,
+        })
     ]
 };
 
@@ -283,135 +284,135 @@ const useLoading = (args: any) => {
     return { loading, clicked };
 };
 
-    export const Loading: Story = {
-        args: {
-            // Add props here
-            loading: true,
+export const Loading: Story = {
+    args: {
+        // Add props here
+        loading: true,
+    },
+    render: (args: any) => ({
+        components: { Button },
+        setup() {
+            args.icon = faFaceSmile;
+            return { args, ...useLoading(args) };
         },
-        render: (args: any) => ({
-            components: { Button },
-            setup() {
-                args.icon = faFaceSmile;
-                return { args, ...useLoading(args) };
-            },
-            template: '<Button v-bind="args" :loading="loading" v-model="modelValue" @action="clicked" />',
-        }),
-    };
+        template: '<Button v-bind="args" :loading="loading" v-model="modelValue" @action="clicked" />',
+    }),
+};
 
-    export const LoadingWithText: Story = {
-        args: {
-            loading: false,
-            text: 'Hello World',
+export const LoadingWithText: Story = {
+    args: {
+        loading: false,
+        text: 'Hello World',
+    },
+    render: (args: any) => ({
+        components: { Button },
+        setup() {
+            args.icon = faFaceSmile;
+            return { args, ...useLoading(args) };
         },
-        render: (args: any) => ({
-            components: { Button },
-            setup() {
-                args.icon = faFaceSmile;
-                return { args, ...useLoading(args) };
-            },
-            template: '<Button v-bind="args" :loading="loading" v-model="modelValue" @action="clicked" />',
-        }),
-    };
+        template: '<Button v-bind="args" :loading="loading" v-model="modelValue" @action="clicked" />',
+    }),
+};
 
-    export const LoadingWithTextReverse: Story = {
-        args: {
-            loading: false,
-            text: 'Hello World',
-            textFirst: true,
+export const LoadingWithTextReverse: Story = {
+    args: {
+        loading: false,
+        text: 'Hello World',
+        textFirst: true,
+    },
+    render: (args: any) => ({
+        components: { Button },
+        setup() {
+            args.icon = faFaceSmile;
+            return { args, ...useLoading(args) };
         },
-        render: (args: any) => ({
-            components: { Button },
-            setup() {
-                args.icon = faFaceSmile;
-                return { args, ...useLoading(args) };
-            },
-            template: '<Button v-bind="args" :loading="loading" v-model="modelValue" @action="clicked" />',
-        }),
-    };
+        template: '<Button v-bind="args" :loading="loading" v-model="modelValue" @action="clicked" />',
+    }),
+};
 
-    export const LoadingWithoutIcon: Story = {
-        args: {
-            loading: false,
-            active: true,
-            disabled: false,
-            text: 'Hello World',
+export const LoadingWithoutIcon: Story = {
+    args: {
+        loading: false,
+        active: true,
+        disabled: false,
+        text: 'Hello World',
+    },
+    render: (args: any) => ({
+        components: { Button },
+        setup() {
+            return { args, ...useLoading(args) };
         },
-        render: (args: any) => ({
-            components: { Button },
-            setup() {
-                return { args, ...useLoading(args) };
-            },
-            template: '<Button v-bind="args" :loading="loading" :active="active" :disabled="disabled" v-model="modelValue" @action="clicked" />',
-        }),
-    };
+        template: '<Button v-bind="args" :loading="loading" :active="active" :disabled="disabled" v-model="modelValue" @action="clicked" />',
+    }),
+};
 
-    export const Iconless: Story = {
-        args: {
-            text: 'No Icon Button',
+export const Iconless: Story = {
+    args: {
+        text: 'No Icon Button',
+    },
+};
+
+/**
+ *
+ */
+export const Active: Story = {
+    args: {
+        // Add props here
+        loading: true,
+    },
+    render: (args: any) => ({
+        components: { Button },
+        setup() {
+
+            const icons = [
+                faFaceSmile,
+                faFaceSmileWink,
+                faFaceSadCry,
+                faFaceMehBlank,
+            ]
+            const mappedIcons = icons.map((icon, id) => ({ id, icon }));
+
+            const selectedIcon = ref(0);
+
+            return { args, mappedIcons, selectedIcon };
         },
-    };
-
-    /**
-     *
-     */
-    export const Active: Story = {
-        args: {
-            // Add props here
-            loading: true,
-        },
-        render: (args: any) => ({
-            components: { Button },
-            setup() {
-
-                const icons = [
-                    faFaceSmile,
-                    faFaceSmileWink,
-                    faFaceSadCry,
-                    faFaceMehBlank,
-                ]
-                const mappedIcons = icons.map((icon, id) => ({ id, icon }));
-
-                const selectedIcon = ref(0);
-
-                return { args, mappedIcons, selectedIcon };
-            },
-            template: `
+        template: `
         <div class="d-flex gap-2 align-items-center">
             <div class="d-flex align-items-center text-center fw-bold">{{selectedIcon}}</div>
             <Button v-for="icon in mappedIcons" :key="icon.id" :icon="icon.icon" :key="icon.id" @action="()=>selectedIcon=icon.id" :active="selectedIcon === icon.id"/>
         </div>`,
-        }),
-    };
+    }),
+};
 
-    export const Unbutton: Story = {
-        args: {
-            // Add props here
-            small: true,
-            unbutton: true,
+export const Unbutton: Story = {
+    args: {
+        // Add props here
+        small: true,
+        unbutton: true,
+    },
+    render: (args: any) => ({
+        components: { Button },
+        setup() {
+            args.icon = faFaceSmile;
+            return { args };
         },
-        render: (args: any) => ({
-            components: { Button },
-            setup() {
-                args.icon = faFaceSmile;
-                return { args };
-            },
-            template: '<Button v-bind="args" />',
-        }),
-    };
+        template: '<Button v-bind="args" />',
+    }),
+};
 
-    export const UnbuttonActive: Story = {
-        args: {
-            // Add props here
-            active: true,
-            small: true,
-            unbutton: true,
+export const UnbuttonActive: Story = {
+    args: {
+        // Add props here
+        active: true,
+        small: true,
+        unbutton: true,
+    },
+    render: (args: any) => ({
+        components: { Button },
+        setup() {
+            args.icon = faFaceSmile;
+            return { args };
         },
-        render: (args: any) => ({
-            components: { Button },
-            setup() {
-                args.icon = faFaceSmile;
-                return { args };
-            },
-            template: '<Button v-bind="args" />',
-        }),
-    };
+        template: '<Button v-bind="args" />',
+    }),
+};

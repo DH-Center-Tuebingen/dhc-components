@@ -86,7 +86,3 @@
         return classes;
     });
 </script>
-
-<style lang="scss" scoped>
-    @use "../../../scss/utils/animation";
-</style>

@@ -1,21 +1,19 @@
-import type { StorybookConfig } from "@storybook/vue3-vite";
+import type { StorybookConfig } from '@storybook/vue3-vite';
 
 const config: StorybookConfig = {
-  stories: ["../src/**/*.mdx", "../src/**/*.stories.@(js|jsx|ts|tsx|vue)"],
-  addons: [
-    "storybook-addon-vue-slots",
-    "@storybook/addon-links",
-    "@storybook/addon-essentials",
-    "@storybook/addon-interactions",
-    "@chromatic-com/storybook",
-  ],
-  framework: {
-    name: "@storybook/vue3-vite",
-    options: {},
-  },
-  core: {
-    disableTelemetry: true
-  },
-  docs: {},
+    "stories": [
+        "../src/**/*.mdx",
+        "../src/**/*.stories.@(js|jsx|mjs|ts|tsx)"
+    ],
+    "addons": [
+        "@chromatic-com/storybook",
+        "@storybook/addon-vitest",
+        "@storybook/addon-a11y",
+        "@storybook/addon-docs"
+    ],
+    "framework": "@storybook/vue3-vite",
+    core: {
+        disableTelemetry: true, // 👈 Disables telemetry
+    },
 };
 export default config;

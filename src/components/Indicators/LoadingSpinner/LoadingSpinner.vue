@@ -15,8 +15,8 @@
     import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
     import { faCircleNotch } from '@fortawesome/free-solid-svg-icons'
     import { computed } from 'vue';
-    import { SizeProp } from '@fortawesome/fontawesome-svg-core';
-    import { useDhcClasses } from '../../../composables/dhc';
+    import { type SizeProp } from '@fortawesome/fontawesome-svg-core';
+    import { useDhcClasses } from '@/composables/dhc';
 
     const props = defineProps<{
         size?: SizeProp;

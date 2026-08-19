@@ -6,8 +6,8 @@
         :aria-pressed="active"
         :disabled="isDisabled"
         :title="title"
-        @mouseenter="isHovered = true"
-        @mouseleave="isHovered = false"
+        @mouseenter="startHover"
+        @mouseleave="endHover"
         @click="clicked()"
     >
         <LoadingSpinner
@@ -17,73 +17,45 @@
         <template v-else-if="hasIcon">
             <!-- Can be used to render your own custom icon, e.g. if you need to create an icon composition.  -->
             <slot
+                v-if="slots.icon"
                 name="icon"
                 :active="isActive"
             >
             </slot>
-            <template v-if="icon &&!slots.icon">
-                <div
-                    v-if="!isActive"
-                    class="icon"
-                >
-                    <div
-                        v-if="hasMultipleIcons && Array.isArray(icon)"
-                        class="icon-group d-flex gap-1"
-                    >
-                        <FontAwesomeIcon
-                            v-for="iconPart of icon"
-                            :key="iconPart.iconName"
-                            :icon="iconPart"
-                            :size="size"
-                        />
-                    </div>
+            <template v-else-if="icon">
+
+                <div class="icon">
                     <FontAwesomeIcon
-                        v-else-if="!isStackedIcon"
-                        :icon="icon"
+                        v-if="!isStackedIcon"
+                        :icon="active && activeIcon ? activeIcon : icon"
                         :size="size"
                         :fixed-width="fixedWidth"
                     />
                     <StackedIcon
-                        v-else
+                        v-else-if="icons"
                         :data="icons"
                         :size="size"
                         :fixed-width="fixedWidth"
                     />
                 </div>
-                <div
-                    v-else
-                    class="icon d-flex align-items-center"
-                >
-                    <FontAwesomeIcon
-                        v-if="icon !== undefined && !isStackedIcon"
-                        :icon="activeIcon"
-                        :size="size"
-                        :fixed-width="fixedWidth"
-                    />
-                    <StackedIcon
-                        v-else
-                        :data="icons"
-                        :size="size"
-                        :fixed-width="fixedWidth"
-                    />
-                </div>
+
             </template>
         </template>
-        <Transition name="fade-hover-text">
-            <span
-                v-if="text && showHoveredText"
-            >
-                {{ text }}
-            </span>
-        </Transition>
-        <Transition name="fade-hover-text">
-            <span
-                v-if="slots.default && showHoveredText"
-                class="button-text-content"
-            >
-                <slot></slot>
-            </span>
-        </Transition>
+        <template v-if="hasText">
+            <Transition name="fade-hover-text">
+                <span
+                    v-show="showHoveredText"
+                    class="button-text-content"
+                    ref="text-content"
+                >
+                    <slot v-if="slots.default">
+                    </slot>
+                    <template v-else-if="text">
+                        {{ text }}
+                    </template>
+                </span>
+            </Transition>
+        </template>
     </button>
 </template>
 
@@ -91,31 +63,53 @@
     setup
     lang="ts"
 >
+    import type { IconDefinition, SizeProp } from '@fortawesome/fontawesome-svg-core';
+    import type { ButtonColors } from 'src/types/Colors';
+
     import {
         computed,
-        ModelRef,
+        onMounted,
         ref,
-        useSlots
+        useSlots,
+        useTemplateRef
     } from 'vue';
     import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-    import type { IconDefinition } from '@fortawesome/fontawesome-svg-core';
     import StackedIcon from '@/components/Layout/StackedIcon/StackedIcon.vue';
     import LoadingSpinner from '@/components/Indicators/LoadingSpinner/LoadingSpinner.vue';
-
-    import { ButtonProps } from './definitions';
 
     const slots = useSlots();
     const emit = defineEmits(['action']);
 
-    const value: ModelRef<boolean | undefined, string> = defineModel();
-    const props = withDefaults(defineProps<ButtonProps>(), {
+    const value = defineModel<boolean | undefined
+    >();
+    const props = withDefaults(defineProps<{
+        active?: boolean;
+        activeButtonClass?: ButtonColors;
+        activeIcon?: string | IconDefinition;
+        activeIcons?: typeof StackedIcon;
+        buttonClass?: ButtonColors;
+        disabled?: boolean | Function;
+        fixedWidth?: boolean;
+        hoverTransitionTime?: number
+        icon?: string | IconDefinition;
+        icons?: typeof StackedIcon;
+        loading?: boolean;
+        outlined?: boolean;
+        size?: SizeProp;
+        small?: boolean;
+        text?: string;
+        textFirst?: boolean;
+        textOnHover?: boolean;
+        title?: string;
+        unbutton?: boolean;
+    }
+    >(), {
         active: undefined,
         activeButtonClass: 'primary',
-        activeIconCategory: 'fas',
         buttonClass: 'secondary',
         disabled: false,
         fixedWidth: true,
-        iconCategory: 'fas',
+        hoverTransitionTime: 300,
         loading: false,
         small: false,
         unbutton: false,
@@ -125,51 +119,38 @@
         textFirst: false,
     });
 
-    const resolveIconProp = (prop: string | IconDefinition, category: string) => {
-        if(typeof prop === 'string') {
-            let stringDefinition = `${category} fa-${prop}`;
-            if(props.fixedWidth) {
-                stringDefinition += ' fa-fw';
-            }
-            return stringDefinition;
-        } else {
-            return prop;
-        }
-    };
-
-    const isHovered = ref(false);
-
+    
     const clicked = () => {
-        if(value.value !== undefined) {
+        if (value.value !== undefined) {
             value.value = !value.value;
         }
         emit('action');
     };
+    
+    const textContentRef = useTemplateRef("text-content")
+    const isHovered = ref(false);
+    const startHover = () => {
+        isHovered.value = true;
+    }
 
-    const hasMultipleIcons = computed(() => {
-        return Array.isArray(props.icon) && (typeof props.icon[0] !== 'string');
-    });
+    const endHover = () => {
+        isHovered.value = false;
+    }
 
-    const isStackedIcon = computed(() => {
-        return !props.icon && props.icons?.items;
-    });
+    const isStackedIcon = computed(() => Boolean(props.icons?.items));
+
+    onMounted(() => {
+
+    })
 
     const icon = computed(() => {
-        if(Array.isArray(props.icon)) {
-            return props.icon;
-        } else {
-            return resolveIconProp(props.icon ?? '', props.iconCategory);
+        if (props.active) {
+            if (props.activeIcons) return props.activeIcons;
+            if (props.activeIcon) return props.activeIcon
         }
-    });
 
-    const activeIcon = computed(() => {
-        if(props.activeIcon && Array.isArray(props.activeIcon)) {
-            return props.activeIcon;
-        } else if(props.icon && Array.isArray(props.icon)) {
-            return props.icon;
-        } else {
-            return resolveIconProp(props.activeIcon ?? props.icon ?? '', props.activeIconCategory);
-        }
+        if (props.icons) return props.icons;
+        if (props.icon) return props.icon;
     });
 
     const showHoveredText = computed(() => {
@@ -184,30 +165,30 @@
             `${baseName}-${btnColor}`,
         ];
 
-        if(props.small) {
+        if (props.small) {
             classes.push('btn-sm');
         }
 
-        if(isActive.value) {
+        if (isActive.value) {
             classes.push('active');
         }
 
-        if(props.unbutton) {
+        if (props.unbutton) {
             classes.push('bg-transparent border-0 p-0');
-            if(!isActive.value) {
+            if (!isActive.value) {
                 classes.push(`text-${props.buttonClass}`);
             } else {
                 classes.push(`text-${props.activeButtonClass}`);
             }
         }
 
-        if(props.text) {
+        if (props.text) {
             classes.push('d-flex');
             classes.push('align-items-center');
             classes.push('justify-content-center');
             classes.push('gap-1');
 
-            if(props.textFirst) {
+            if (props.textFirst) {
                 classes.push('flex-row-reverse');
             }
         }
@@ -220,7 +201,7 @@
     });
 
     const isDisabled = computed(() => {
-        if(typeof props.disabled === 'boolean') {
+        if (typeof props.disabled === 'boolean') {
             return props.disabled;
         } else {
             return props.disabled();
@@ -230,9 +211,14 @@
     const hasIcon = computed(() => {
         return props.icon !== undefined || slots.icon !== undefined || (props.icons && props.icons.items);
     });
+    
+    const hasText = computed(() => {
+        return props.text !== undefined || slots.default !== undefined;
+    });
 </script>
 
 <style scoped>
+
     .fade-hover-text-enter-active,
     .fade-hover-text-leave-active {
         transition: opacity 0.3s ease, transform 0.3s ease;
@@ -243,7 +229,7 @@
         transform: translateX(-5px);
     }
 
-    .fade-hover-text-leave-to  {
+    .fade-hover-text-leave-to {
         opacity: 0;
     }
 </style>

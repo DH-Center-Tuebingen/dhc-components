@@ -1,11 +1,10 @@
 import { setup, type Preview } from "@storybook/vue3";
-import { fn } from "@storybook/test";
-import i18n from "./i18n";
+import i18n from "./i18n.ts";
 
 import 'bootstrap';
 import 'bootstrap/scss/bootstrap.scss';
 import '@/scss/main.scss';
-import { ColorfullBackground } from "./backgrounds";
+import { ColorfullBackground } from "./backgrounds.ts";
 
 import './story.css';
 
@@ -14,27 +13,24 @@ setup((app) => {
 })
 
 const preview: Preview = {
-  parameters: {
-    backgrounds: {
-      default: 'gray',
-      values: [
-        { name: 'gray', value: '#eeeeee' },
-        { name: 'dark', value: '#000000' },
-        ColorfullBackground,
-      ],
+    parameters: {
+        backgrounds: {
+            default: 'gray',
+            values: [
+                { name: 'gray', value: '#eeeeee' },
+                { name: 'dark', value: '#000000' },
+                ColorfullBackground,
+            ],
+        },
+        controls: {
+            matchers: {
+                color: /(background|color)$/i,
+                date: /Date$/i,
+            },
+        },
     },
-    args: {
-      onClick: fn(),
-    },
-    controls: {
-      matchers: {
-        color: /(background|color)$/i,
-        date: /Date$/i,
-      },
-    },
-  },
 
-  tags: ["autodocs"]
+    tags: ["autodocs"]
 };
 
 export default preview;

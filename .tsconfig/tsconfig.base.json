@@ -5,13 +5,14 @@
         "esModuleInterop": true,
         "isolatedModules": true,
         "jsx": "preserve",
-        "module": "esnext",
-        "moduleResolution": "node",
+        "module": "nodenext",
+        "moduleResolution": "nodenext",
         "resolveJsonModule": true,
         "sourceMap": true,
         "strict": true,
         "target": "esnext",
         "useDefineForClassFields": true,
+        "allowImportingTsExtensions": true,
         "paths": {
             "*": [
                 "*",

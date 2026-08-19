@@ -383,6 +383,8 @@
 </script>
 
 <style lang="scss">
+    @use 'sass:math';
+
     $size: 20px;
 
     canvas {
@@ -401,7 +403,7 @@
     .range-slider-track {
         position: absolute;
         bottom: 0;
-        height: $size/2;
+        height: math.div($size, 2);
         width: 100%;
         border-radius: 5px;
         background-color: white;
@@ -411,7 +413,7 @@
     .range-slider-inner-track {
         position: absolute;
         background-color: rgb(255, 255, 255);
-        left: $size/2;
+        left: math.div($size, 2);
         width: calc(100% - #{$size});
         height: 100%;
     }

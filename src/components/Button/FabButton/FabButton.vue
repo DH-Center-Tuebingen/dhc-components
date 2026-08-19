@@ -9,9 +9,7 @@
     >
         <template #icon>
             <slot name="icon">
-                <FontAwesomeIcon
-                    :icon="icon"
-                />
+                <FontAwesomeIcon :icon="icon" />
             </slot>
         </template>
     </XButton>
@@ -29,7 +27,7 @@
 
     import { computed } from 'vue';
     import XButton from '@/components/Button/XButton/XButton.vue';
-    import { ButtonColors } from 'src/types/Colors';
+    import { type ButtonColors } from '§/Colors';
     import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
     /**
@@ -61,5 +59,13 @@
     lang="scss"
     scoped
 >
-    @use "../../../scss/utils/shape";
+    .btn-fab {
+        height: calc((2*var(--bs-btn-padding-y)) + (var(--bs-btn-font-size) * var(--bs-btn-line-height)) + (2*var(--bs-btn-border-width)));
+        width: calc((2*var(--bs-btn-padding-y)) + (var(--bs-btn-font-size) * var(--bs-btn-line-height)) + (2*var(--bs-btn-border-width)));
+        border-radius: 50%;
+        padding: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
 </style>

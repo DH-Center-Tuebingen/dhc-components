@@ -116,3 +116,17 @@ export const Overflow: Story = {
         template: '<Code v-bind="args" style="height:250px" />',
     }),
 };
+
+export const DarkTheme: Story = {
+    args: {
+        value: exampleCode,
+        dark: true,
+    },
+    render: (args: any) => ({
+        components: { Code },
+        setup() {
+            return { args };
+        },
+        template: '<Code v-bind="args" />',
+    }),
+};

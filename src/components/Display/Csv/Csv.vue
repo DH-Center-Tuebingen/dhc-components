@@ -35,9 +35,7 @@
                 as the modals, which doesn't make sense in the table context.
                 We reset it to the minimum value here.
                 -->
-                <thead
-                    class="table-light sticky-top z-1"
-                >
+                <thead class="table-light sticky-top z-1">
                     <tr>
                         <th
                             v-if="csvSettings.showLinenumbers"
@@ -50,7 +48,7 @@
                             :key="i"
                             :class="cellClass"
                         >
-                            {{ StringUtils.capitalize(header) }}
+                            {{ capitalize(header) }}
                         </th>
                     </tr>
                 </thead>
@@ -134,14 +132,14 @@
     } from 'vue';
 
     import CsvSettings from './CsvSettings.vue';
-    import { StringUtils } from 'dhc-utils';
     import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
     import { faCircleDown, faCircleUp, faTriangleExclamation } from '@fortawesome/free-solid-svg-icons';
-
+    
     import { initI18n } from '@/i18n/i18n';
-
     import * as de from './i18n/de.json';
     import * as en from './i18n/en.json';
+    
+    import { capitalize } from '@/utils/string';
 
     const messages = {
         de,
@@ -166,17 +164,17 @@
     // FUNCTIONS
     const toggleWrapping = (row: number, col: number) => {
         // do not toggle if user selects (part of) the content
-        if(window.getSelection()?.toString()) {
+        if (window.getSelection()?.toString()) {
             return;
         }
-        if(!state.wrapClass[`${row}_${col}`]) {
+        if (!state.wrapClass[`${row}_${col}`]) {
             state.wrapClass[`${row}_${col}`] = 'text-wrap';
         } else {
             state.wrapClass[`${row}_${col}`] = '';
         }
     };
     const recomputeRows = (internal = false) => {
-        if(!props.content || !dsv.value) {
+        if (!props.content || !dsv.value) {
             state.computedRows = {};
             return;
         }
@@ -192,26 +190,26 @@
         };
         const headerRow = props.content.split('\n')[0];
         const header = dsv.value.parseRows(headerRow)[0];
-        if(csvSettings.hasHeaderRow) {
+        if (csvSettings.hasHeaderRow) {
             res.header = header;
             res.data = dsv.value.parse(props.content);
         }
         else {
             const headerPlaceholder = [];
-            for(let i = 0; i < header.length; i++) {
+            for (let i = 0; i < header.length; i++) {
                 headerPlaceholder.push(`#${i + 1}`);
             }
             res.data = dsv.value.parseRows(props.content);
             res.header = headerPlaceholder;
         }
         state.computedRows = res;
-        if(res.data === null || res.data.length === 0) {
+        if (res.data === null || res.data.length === 0) {
             state.computedRows.striped_data = [];
         } else {
             state.computedRows.striped_data = res.data.slice(stripedStart.value, stripedEnd.value);
         }
 
-        if(!internal) {
+        if (!internal) {
             emit('parse', state.computedRows);
         }
     };
@@ -257,23 +255,23 @@
     });
 
     watch(() => csvSettings.hasHeaderRow, (newVal, oldVal) => {
-        if(oldVal !== newVal) {
+        if (oldVal !== newVal) {
             recomputeRows();
         }
     });
     watch(() => csvSettings.showCount, (newVal, oldVal) => {
-        if(oldVal !== newVal) {
+        if (oldVal !== newVal) {
             recomputeRows(true);
         }
     });
     watch(() => csvSettings.skippedCount, (newVal, oldVal) => {
-        if(oldVal !== newVal) {
+        if (oldVal !== newVal) {
             recomputeRows(true);
         }
     });
 
     watch(() => csvSettings.delimiter, (newVal, oldVal) => {
-        if(oldVal !== newVal) {
+        if (oldVal !== newVal) {
             recomputeRows();
         }
     });

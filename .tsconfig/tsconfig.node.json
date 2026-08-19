@@ -1,6 +1,9 @@
 {
     "extends": "./tsconfig.base.json",
     "compilerOptions": {
+        "ignoreDeprecations": "6.0",
+        "allowImportingTsExtensions": true,
+        "noEmit": true,
         "typeRoots": [
             "../node_modules/@types",
             "../src/types"
@@ -8,6 +11,7 @@
     },
     "include": [
         "../.storybook/*",
+        "../global.d.ts",
         "../vite.config.ts",
         "../cypress.config.ts"
     ]

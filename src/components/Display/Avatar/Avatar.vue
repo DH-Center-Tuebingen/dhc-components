@@ -2,12 +2,14 @@
     <span class="d-inline-flex">
         <!-- :src="`api/download/avatar?path=${user.avatar}`" -->
         <img
-            v-if="hasImage"
+            v-if="imageAvailable"
             alt="user avatar"
             :width="size"
             :height="size"
             :class="classes"
             class="object-fit-cover"
+            :src="image"
+            @error="imageNotFound = true"
         >
         <div
             v-else
@@ -26,36 +28,29 @@
     setup
     lang="ts"
 >
-    import { CSSProperties, computed } from 'vue';
+    import { CSSProperties, computed, ref } from 'vue';
+    import { getUserColor } from '@/utils/user.ts';
 
-    import { AvatarProps } from './definitions';
-    import { User } from '@/types/User';
-    import { getUserColor } from '@/utils/user';
-
-    const props = withDefaults(defineProps<AvatarProps>(), {
+    const props = withDefaults(defineProps<{
+        name: string,
+        image?: string,
+        max?: number,
+        rounded?: boolean,
+        shadow?: boolean,
+        size?: number,
+    }>(), {
         max: 2,
         rounded: true,
         shadow: false,
         size: 64,
     });
-
-    const hasImage = (props.name as User && !!(props.name as User).avatar_url);
-
-    const fullName = computed(() => {
-        let name : string;
-        if(typeof props.name === 'string') {
-            name = props.name;
-        } else {
-            name = (props.name as User).name;
-        }
-        return name;
-    });
+    
 
     const initials = computed(() => {
-        const upperInitials = fullName.value.split(' ').map(word => word.charAt(0));
-        if(upperInitials.length == 1) {
+        const upperInitials = props.name.split(' ').map(word => word.charAt(0));
+        if (upperInitials.length == 1) {
             return upperInitials.pop();
-        } else if(upperInitials.length > props.max) {
+        } else if (upperInitials.length > props.max) {
             // if name has more initials than max property, prioritize last name
             // instead of middle names (e.g. John van Doe with a default max of 2)
             // would result in 'JD' instead of 'Jv';
@@ -65,26 +60,29 @@
     });
 
     const backgroundColor = computed(() => {
-        return getUserColor(fullName.value);
+        return getUserColor(props.name);
     });
 
     const classes = computed(() => {
-        const classes : Array<string> = [];
-        if(props.rounded) {
+        const classes: Array<string> = [];
+        if (props.rounded) {
             classes.push('rounded-circle');
         }
         return classes;
     });
+    
+    const imageNotFound = ref(false);
+    const imageAvailable = computed(() => props.image && !imageNotFound.value)
 
     const initialsStyles = computed(() => {
         const halfSize = props.size / 2;
 
-        const containerStyles : CSSProperties = {
+        const containerStyles: CSSProperties = {
             height: `${props.size}px`,
             width: `${props.size}px`,
             'background-color': backgroundColor.value,
         };
-        const textStyles : CSSProperties = {
+        const textStyles: CSSProperties = {
             'font-weight': 'bold',
             'font-size': `${halfSize}px`,
             'line-height': `${halfSize}px`,
@@ -99,5 +97,4 @@
     });
 </script>
 
-<style lang="scss">
-</style>
+<style lang="scss"></style>

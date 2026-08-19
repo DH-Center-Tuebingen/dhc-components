@@ -2,6 +2,9 @@ import type { Meta, StoryObj } from '@storybook/vue3';
 
 import Avatar from './Avatar.vue';
 
+import image from "_/.storybook/assets/Dummy.png"
+console.log(image)
+
 const meta: Meta<typeof Avatar> = {
     component: Avatar,
 };
@@ -14,6 +17,7 @@ export const Default: Story = {
     args: {
         name: 'John Doe',
         max: 2,
+        image,
     },
 };
 
@@ -21,6 +25,7 @@ export const Square: Story = {
     args: {
         name: 'John Doe',
         rounded: false,
+        image,
     },
 };
 
@@ -57,5 +62,13 @@ export const WithMiddleName: Story = {
         name: 'John van Doe',
         max: 3,
         shadow: true,
+    },
+};
+
+export const FallbackIfImageNotFound: Story = {
+    args: {
+        name: 'John Doe',
+        max: 2,
+        image: "DoesNotExist.jpg",
     },
 };

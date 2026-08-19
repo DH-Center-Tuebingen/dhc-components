@@ -12,7 +12,7 @@ export const usePreventContextDecorator = (callback: Function) => {
 
 export const preventBrowserContextMenu = function (callback: Function) {
 
-    return (_) => {
+    return () => {
         return {
             //// Sadly the following does not have any effect and you should use the 'usePreventContextDecorator' utility function instead!
             // parameters:{

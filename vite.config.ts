@@ -1,75 +1,136 @@
-import { fileURLToPath, URL } from 'node:url'
-import { defineConfig } from 'vite'
-import vue from '@vitejs/plugin-vue'
-import { globSync } from 'tinyglobby'
-import { extname, relative, resolve } from 'node:path'
+/// <reference types="vitest/config" />
+import { fileURLToPath, URL } from 'node:url';
+import { defineConfig } from 'vite';
+import vue from '@vitejs/plugin-vue';
+import vueDevTools from 'vite-plugin-vue-devtools';
 
-const __dirname = fileURLToPath(new URL('.', import.meta.url))
-const srcDir = resolve(__dirname, 'src')
-const componentsDir = resolve(srcDir, 'components')
+// https://vite.dev/config/
+import path from 'node:path';
+import { storybookTest } from '@storybook/addon-vitest/vitest-plugin';
+import { playwright } from '@vitest/browser-playwright';
+import { globSync } from 'node:fs';
+const dirname = path.dirname(fileURLToPath(import.meta.url));
 
-const entries = Object.fromEntries(
-    globSync('src/components/**/*.vue').map(file => {
-        const absolutePath = resolve(file)
+const normalizePath = (file: string) => {
+    const normalized = file.replaceAll("\\", "/")
+    const name = normalized.split("/").at(-1)
+    if(!name) return "";
+    return name.replace(/\.vue$/g, "")
+}
 
-        const relativePath = relative(
-            srcDir,
-            absolutePath
-        ).replaceAll('\\', '/')
+const exclude = ["Attribute", "Datepicker", "Markdown", "MarkdownEditor", "MarkdownToolbar", "EmojiPicker", "Csv", "CsvSetting", "Richtext", "App"]
+const include: string[] = []
+let inputs = Object.fromEntries(
+    globSync('src/components/**/*.vue')
+        //Exclude
+        .filter((item) => {
+            const filename = normalizePath(item)
+            return !exclude.includes(filename)
+        })
+        //Include
+        .filter((item) => {
+            if(include.length === 0) return true;
+            const normalized = item.replaceAll("\\", "/")
+            for(const text of include) {
+                if(normalized.includes(text)) return true
+            }
+            return false;
+        })
+        .map(file => [
+            path.relative('src', file.slice(0, file.length - path.extname(file).length))
+                .split(path.sep)
+                .filter((_, i, arr) => i !== arr.length - 2)
+                .join('/')
+            ,
+            path.resolve(file),
+        ]));
 
-        return [
-            relativePath,
-            absolutePath
-        ]
-    })
-)
+const additionalDirectories = ["composables", "utils"]
+additionalDirectories.forEach((dir) => {
+    const entries = Object.fromEntries(
+        globSync(`src/${dir}/**/*.ts`).map((file) => [
+            path.relative('src', file.slice(0, file.length - path.extname(file).length))
+                .split(path.sep)
+                .join('/')
+            ,
+            path.resolve(file)])
+    )
+    inputs = {
+        ...inputs,
+        ...entries
+    }
+})
 
-entries.index = resolve(srcDir, 'index.ts')
 
+// More info at: https://storybook.js.org/docs/next/writing-tests/integrations/vitest-addon
 export default defineConfig({
-    plugins: [
-        vue(),
-    ],
-
+    plugins: [vue(), vueDevTools()],
     resolve: {
         alias: {
-            '@': srcDir,
-            '@scss': resolve(srcDir, 'scss'),
-            '§': resolve(srcDir, 'types'),
-            '$': resolve(srcDir, '.storybook'),
-        },
-    },
-
-    build: {
-        target: 'esnext',
-        minify: false,
-        cssCodeSplit: true,
-        sourcemap: true,
-
-        rollupOptions: {
-            input: entries,
-
-            preserveEntrySignatures: 'exports-only',
-
-            external: [
-                'vue',
-                'lodash',
-                'dayjs',
-                'dayjs/plugin/utc',
-                'dayjs/plugin/relativeTime',
-                'dayjs/plugin/customParseFormat',
-                'bootstrap',
-            ],
-
-            output: {
-                format: 'es',
-                preserveModules: true,
-                preserveModulesRoot: 'src',
-
-                entryFileNames: '[name].js',
-                chunkFileNames: '_chunks/[name]-[hash].js',
-                assetFileNames: 'assets/[name][extname]',
-            }
+            '_': fileURLToPath(new URL('.', import.meta.url)),
+            '@': fileURLToPath(new URL('./src', import.meta.url)),
         }
     },
-})
+    build: {
+        lib: {
+            entry: {
+                index: path.resolve(dirname, 'src/index.ts'),
+            },
+            formats: ['es'],
+            fileName: (_, entryName) => `${entryName}.js`,
+        },
+
+        rollupOptions: {
+            external: [
+                'vue',
+                'bootstrap'
+            ],
+
+            input: inputs,
+
+            output: {
+                format: "es",
+                chunkFileNames: "chunks/[name]-[hash].js",
+                globals: {
+                    vue: 'Vue',
+                },
+            },
+
+        },
+
+        sourcemap: true,
+        emptyOutDir: true,
+    },
+    test: {
+        projects: [{
+            extends: true,
+            plugins: [
+                // The plugin will run tests for the stories defined in your Storybook config
+                // See options at: https://storybook.js.org/docs/next/writing-tests/integrations/vitest-addon#storybooktest
+                storybookTest({
+                    configDir: path.join(dirname, '.storybook')
+                })],
+            test: {
+                name: 'storybook',
+                browser: {
+                    enabled: true,
+                    headless: true,
+                    provider: playwright({}),
+                    instances: [{
+                        browser: 'chromium'
+                    }]
+                }
+            }
+        }]
+    },
+    css: {
+        preprocessorOptions: {
+            scss: {
+                // The current Bootstrap version (5.3.8) uses a Dart version and features that produce
+                // a bunch of annoying deprecation warnings, we cannot do anything about. That's why
+                // we disable them here. Remove after bootstrap manages this appropriately.
+                silenceDeprecations: ['color-functions', 'global-builtin', 'import', 'if-function']
+            },
+        }
+    }
+});

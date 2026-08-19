@@ -123,7 +123,7 @@
     lang="ts"
 >
     import { computed, ModelRef, ref } from 'vue';
-    import Dropdown from '@/components/Dropdown/Dropdown.vue';
+    import Dropdown from '@/components/Input/Dropdown/Dropdown.vue';
     import XButton from '@/components/Button/XButton/XButton.vue';
     import { faEye, faEyeSlash, faKeyboard, faRectangleList } from '@fortawesome/free-solid-svg-icons';
     import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';

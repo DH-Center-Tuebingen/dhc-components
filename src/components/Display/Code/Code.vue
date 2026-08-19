@@ -2,14 +2,15 @@
     <div
         class="code position-relative form-control d-flex flex-column"
         :data-theme="dark ? 'dark' : 'light'"
+        :data-bs-theme="dark ? 'dark' : 'light'"
     >
         <header
             v-if="showName || showLanguage"
             style="font-size: 0.8rem;"
-            class="bg-white pb-2 text-secondary"
+            class="bg-body pb-2 text-body"
         >
             <span v-if="showName">{{ name }}</span>
-            <span v-if="showLanguage">{{ capitalize(highlightedValue.language) }}</span>
+            <span v-if="showLanguage && highlightedValue?.language">{{ capitalize(highlightedValue.language) }}</span>
         </header>
         <pre
             class="hljs overflow-auto flex-fill m-0"
@@ -24,8 +25,8 @@
     lang="ts"
 >
     import hljs from 'highlight.js/lib/common';
-    import { capitalize } from 'lodash';
     import { computed } from 'vue';
+    import { capitalize } from '@/utils/string.ts';
 
 
     const props = withDefaults(defineProps<{
@@ -44,7 +45,7 @@
 
     const contentClasses = computed(() => {
         const classes = ['p-2'];
-        if(props.rounded) {
+        if (props.rounded) {
             classes.push('rounded');
         }
         return classes;
