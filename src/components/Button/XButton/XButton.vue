@@ -3,6 +3,7 @@
         class="icon-button user-select-none"
         :class="buttonClasses"
         style="cursor: pointer;"
+        type="button"
         :aria-pressed="active"
         :disabled="isDisabled"
         :title="title"

@@ -5,8 +5,8 @@
 </template>
 
 <script
-lang="ts"
-setup
+    lang="ts"
+    setup
 >
     import { ButtonColors } from '§/Colors';
     import {
