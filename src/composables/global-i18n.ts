@@ -1,8 +1,14 @@
+declare global {
+    interface Window {
+        useI18n: any
+    }
+} 
+
 export function useGlobalI18n() {
     
     const missingTranslation = () => {
         return {
-            t: (msg)=>{
+            t: (msg: string)=>{
                 console.warn("Could not find the 't' function of 'vue-18n' on the window object!")
                 return msg;
             }

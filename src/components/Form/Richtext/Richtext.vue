@@ -77,6 +77,7 @@
     import MarkdownEditor from '../../Display/Markdown/Markdown.vue';
 
     import { initI18n } from '../../../i18n/i18n';
+    import { useI18n } from 'vue-i18n'
 
     import {
         mixed,
@@ -87,8 +88,6 @@
     import * as en from './i18n/en.json';
 
     import { RichtextProps } from './definitions';
-    
-    const t = window.t;
 
     onMounted(() => {
         setInitialValue();
@@ -114,6 +113,10 @@
         en,
     };
     const i18n = initI18n(messages);
+    const t = i18n.global.t;
+    const {
+        t: globalT,
+    } = useI18n();
 
     const classes = 'mt-0 bg-none h-100 form-control px-4 py-3';
 

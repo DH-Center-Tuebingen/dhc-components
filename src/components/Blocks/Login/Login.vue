@@ -119,7 +119,7 @@
 
     import Alert from '@/components/Notifications/Alert/Alert.vue';
     import XButton from '@/components/Button/XButton/XButton.vue';
-    import { useGlobalI18n } from '@/composables/i18n'
+    import { useGlobalI18n } from '@/composables/global-i18n'
     
     const { t } = useGlobalI18n();
 
