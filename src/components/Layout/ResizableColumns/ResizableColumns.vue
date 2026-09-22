@@ -22,8 +22,8 @@
                 </div>
                 <ColumnSeparator
                     v-if="columnIndex !== columns.length - 1"
-                    @mousedown.stop.prevent="e => startMoveColumn(e, columnIndex)"
-                    @mouseup="e => endMoveColumn(e)"
+                    @mousedown.stop.prevent="startMoveColumn($event, columnIndex)"
+                    @mouseup="endMoveColumn"
                     @click.stop.prevent
                 />
             </div>

@@ -1,8 +1,9 @@
-import { createI18n } from "vue-i18n";
+import { createI18n, useI18n } from "vue-i18n";
 
 import * as en from "@/i18n/en.json";
 import * as de from "@/i18n/de.json";
 
+window.useI18n = useI18n;
 
 const messages = {
     en,

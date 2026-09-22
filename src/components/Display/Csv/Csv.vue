@@ -85,7 +85,7 @@
                             :key="`csv-preview-col-${i}-${j}`"
                             :class="[...cellClass, state.wrapClass[`${i}_${j}`]]"
                             :title="column"
-                            @click="toggleWrapping(i, j)"
+                            @click="toggleWrapping(i, Number(j))"
                         >
                             {{ column }}
                         </td>

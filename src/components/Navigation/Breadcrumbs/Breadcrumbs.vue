@@ -55,8 +55,6 @@
     lang="ts"
     setup
 >
-    import { defineProps} from 'vue';
-
     const emits = defineEmits<{
         (e: 'navigate', index: number): void
     }>();

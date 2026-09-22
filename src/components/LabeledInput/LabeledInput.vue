@@ -19,7 +19,7 @@
         label: TextWithIcon;
     }>()
     
-    defineModel<string>('value', {
+    const value = defineModel<string>('value', {
         required: true
     })
 

@@ -9,6 +9,7 @@
     },
     "login": {
         "title": "Login",
+        "submit": "Login",
         "email_or_nick": "Email or Nickname",
         "password": "Password",
         "remember_me":"Remember me"

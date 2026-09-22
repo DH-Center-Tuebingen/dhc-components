@@ -7,6 +7,9 @@ import Sidebar from './Sidebar.vue';
 
 const meta: Meta<typeof Sidebar> = {
   component: Sidebar,
+    parameters: {
+    layout: 'fullscreen'
+  },
   args: {
     options: {
       minWidth: '300px',
@@ -20,7 +23,7 @@ const meta: Meta<typeof Sidebar> = {
     },
     template: `
     <div class="d-flex position-relative bg-white">
-      <div class="p-4 flex-grow-1 bg-warning overflow-y-auto">
+      <div class="p-4 flex-grow-1 bg-warning overflow-y-auto" style="max-height: 100vh;">
       <h1>Main Content</h1>
           Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
 <br>

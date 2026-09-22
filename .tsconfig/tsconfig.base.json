@@ -6,12 +6,13 @@
         "isolatedModules": true,
         "jsx": "preserve",
         "module": "esnext",
-        "moduleResolution": "node",
+        "moduleResolution": "bundler",
         "resolveJsonModule": true,
         "sourceMap": true,
         "strict": true,
         "target": "esnext",
         "useDefineForClassFields": true,
+        "allowImportingTsExtensions": true,
         "paths": {
             "*": [
                 "*",

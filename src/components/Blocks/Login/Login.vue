@@ -15,9 +15,7 @@
                         for="username"
                         class="mb-1 d-flex flex-row align-items-center gap-2 text-secondary fw-bold"
                     >
-                        <FontAwesomeIcon
-                            :icon="faUser"
-                        />
+                        <FontAwesomeIcon :icon="faUser" />
                         {{ t('login.email_or_nick') }}
                     </label>
 
@@ -42,9 +40,7 @@
                         for="password"
                         class="mb-1 d-flex flex-row align-items-center gap-2 text-secondary fw-bold"
                     >
-                        <FontAwesomeIcon
-                            :icon="faLock"
-                        />
+                        <FontAwesomeIcon :icon="faLock" />
                         {{ t('login.password') }}
                     </label>
 
@@ -98,7 +94,7 @@
                         :loading="loading"
                         :button-class="'primary'"
                     >
-                        {{ t('login.title') }}
+                        {{ t('login.submit') }}
                     </XButton>
                 </div>
             </form>
@@ -106,13 +102,14 @@
     </div>
 </template>
 
-<script lang='ts' setup>
+<script
+    lang='ts'
+    setup
+>
     import {
         computed,
         ref
     } from 'vue';
-
-    import { useI18n } from 'vue-i18n';
 
     import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
     import {
@@ -122,8 +119,9 @@
 
     import Alert from '@/components/Notifications/Alert/Alert.vue';
     import XButton from '@/components/Button/XButton/XButton.vue';
-
-    const { t } = useI18n();
+    import { useGlobalI18n } from '@/composables/i18n'
+    
+    const { t } = useGlobalI18n();
 
     const props = withDefaults(defineProps<{
         invalidClass?: string;
@@ -147,7 +145,7 @@
         const form: HTMLFormElement = event.currentTarget as HTMLFormElement;
 
         validated.value = true;
-        if(form.checkValidity()) {
+        if (form.checkValidity()) {
             login();
         }
     };
@@ -165,4 +163,7 @@
     });
 </script>
 
-<style lang='scss' scoped></style>
+<style
+    lang='scss'
+    scoped
+></style>

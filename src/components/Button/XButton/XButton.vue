@@ -1,6 +1,6 @@
 <template>
     <button
-        class="icon-button user-select-none"
+        class="icon-button user-select-none d-flex no-wrap gap-1"
         :class="buttonClasses"
         style="cursor: pointer;"
         type="button"

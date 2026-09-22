@@ -80,6 +80,7 @@
         >
             <Multiselect
                 :default-value="epochValue"
+                mode="single"
                 :options="metadata.epochs"
                 @change="handleEpochChange"
             />
