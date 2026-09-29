@@ -16,7 +16,7 @@ const normalizePath = (file: string) => {
     return name.replace(/\.vue$/g, "")
 }
 
-const exclude = ["Attribute", "Datepicker", "Markdown", "MarkdownEditor", "MarkdownToolbar", "EmojiPicker", "Csv", "CsvSetting", "Richtext", "App"]
+const exclude:string[] = []
 const include: string[] = []
 let inputs = Object.fromEntries(
     globSync('src/components/**/*.vue')
