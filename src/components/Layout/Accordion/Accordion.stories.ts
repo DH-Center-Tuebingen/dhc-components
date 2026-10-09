@@ -106,15 +106,14 @@ export const Dynamic: Story = {
     items,
   },
   play: async ({ canvas }) => {
-    
     const homeContent = canvas.getByText(/Home content/i);
     const aboutContent = canvas.getByText(/Storybook/i);
     const contactContent = canvas.getByText(/Contact content/i);
-    
+
     const home = canvas.getByText(/home/i, { selector: 'h2 > .accordion-button' });
     await home.click();
     await sleep(accordionDelay);
-    
+
     expect(homeContent).toBeVisible();
     expect(aboutContent).not.toBeVisible();
     expect(contactContent).not.toBeVisible();
@@ -132,7 +131,7 @@ export const Dynamic: Story = {
     const contact = canvas.getByText(/contact/i, { selector: 'h2 > .accordion-button' });
     await contact.click();
     await sleep(accordionDelay);
-    
+
     expect(homeContent).toBeVisible();
     expect(aboutContent).toBeVisible();
     expect(contactContent).toBeVisible();
@@ -140,23 +139,23 @@ export const Dynamic: Story = {
     await sleep(accordionDelay);
     await contact.click();
     await sleep(accordionDelay);
-    
+
     expect(homeContent).toBeVisible();
     expect(aboutContent).toBeVisible();
     expect(contactContent).not.toBeVisible();
-    
+
     await sleep(accordionDelay);
     await about.click();
     await sleep(accordionDelay);
-    
+
     expect(homeContent).toBeVisible();
     expect(aboutContent).not.toBeVisible();
     expect(contactContent).not.toBeVisible();
-    
+
     await sleep(accordionDelay);
     await home.click();
     await sleep(accordionDelay);
-    
+
     expect(homeContent).not.toBeVisible();
     expect(aboutContent).not.toBeVisible();
     expect(contactContent).not.toBeVisible();
