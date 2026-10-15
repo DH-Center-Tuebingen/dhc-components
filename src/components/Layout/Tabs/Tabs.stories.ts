@@ -4,15 +4,17 @@ import type { Meta, StoryObj } from '@storybook/vue3';
 import Tabs from './Tabs.vue';
 
 const tabContent = {
-    Home: '<h1>Home</h1><p>Home content</p>',
-    About: '<h1>About</h1> <ul><li>Storybook</li><li>Component: Tabs</li></ul>',
-    Contact: '<h1>Contact</h1><p>Contact content</p>',
+    home: '<h3>Home</h3><p>Home content</p>',
+    about: '<h3>About</h3> <ul><li>Storybook</li><li>Component: Tabs</li></ul>',
+    contact: '<h3>Contact</h3><p>Contact content</p>',
+    long: '<h3>Very Long Tab Name That Will Definitly Cause A Line Break</h3><p>... for visualizing the different width properties.</p>'
 };
 
 function createSlotsFromObject(obj: { [key: string]: string }) {
     return Object.keys(obj).map((key) => (
         `<template v-slot:${key} :key="${key}">
         ${obj[key]}
+        </div>
     </template>`
     )).join('\n\n');
 }
@@ -35,12 +37,16 @@ const meta: Meta<typeof Tabs> = {
 export default meta;
 type Story = StoryObj<typeof Tabs>;
 
+const tabs = [
+    {key: 'home', label: 'Home'},
+    {key: 'about', label: 'About'},
+    {key: 'contact', label: 'Contact'},
+    {key: 'long', label: 'Very Long Tab Name That Will Definitly Cause A Line Break'}
+]
+
 export const Dynamic: Story = {
     args: {
-        tabs: ['Home', 'About', 'Contact'],
-        direction: 'vertical',
-        style: 'tabs',
-        width: 'fill-evenly',
+        tabs,
     },
     play: async ({ canvas }) => {
         const home = canvas.getByText(/home/i, { selector: 'li>a' });
@@ -69,3 +75,31 @@ export const Dynamic: Story = {
         expect(contactContent).toBeVisible();
     }
 };
+
+export const Pills: Story = {
+    args: {
+        tabs,
+        style: 'pills'
+    },
+}
+
+export const Underline: Story = {
+    args: {
+        tabs,
+        style: 'underline'
+    },
+}
+
+export const Fill: Story = {
+    args: {
+        tabs,
+        width: 'fill'
+    },
+}
+
+export const FillEvenly: Story = {
+    args: {
+        tabs,
+        width: 'fill-evenly'
+    },
+}
