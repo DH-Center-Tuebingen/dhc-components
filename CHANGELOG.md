@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.4
+
++ Added icon picker
+
 ## 0.1.2
 
 - Edited _Tab_ component:
