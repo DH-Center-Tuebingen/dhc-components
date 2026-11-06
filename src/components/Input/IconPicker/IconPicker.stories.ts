@@ -126,8 +126,8 @@ export const Default: Story = {
         components: { IconPicker },
         setup() {
 
-            const activeIcon = ref(null);
-            function setActive(icon) {
+            const activeIcon: Ref<IconDefinition | null> = ref(null);
+            function setActive(icon: IconDefinition) {
                 activeIcon.value = icon;
             }
 
