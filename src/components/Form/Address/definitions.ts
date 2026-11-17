@@ -10,6 +10,8 @@ export type AddressValue = {
     country?: string,
     coordinates?: Array<number|string>,
     county?: string,
+    suburb?: string,
+    neighbourhood?: string,
 };
 
 export interface AddressProps extends baseAttributeProps {

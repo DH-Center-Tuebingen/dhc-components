@@ -2,6 +2,8 @@
     "street": "Straße",
     "housenumber": "Hausnummer",
     "postalcode": "Postleitzahl",
+    "neighbourhood": "Wohnviertel",
+    "suburb": "Stadtteil",
     "city": "Stadt",
     "country": "Land",
     "state": "Bundesland",

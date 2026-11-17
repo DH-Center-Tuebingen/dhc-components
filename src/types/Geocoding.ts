@@ -26,6 +26,8 @@ export interface NominatimObject {
         'postcode': string;
         'country': string;
         'country_code': string;
+        'suburb': string;
+        'neighbourhood': string;
     };
     'boundingbox': string[];
 }

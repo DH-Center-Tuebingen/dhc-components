@@ -77,6 +77,34 @@
             </div>
         </div>
         <div class="d-flex flex-row gap-2">
+            <div class="col">
+                <label for="suburb">
+                    {{ t('suburb') }}
+                </label>
+                <String
+                    ref="suburbRef"
+                    name="suburb"
+                    :disabled="props.disabled"
+                    :default-value="props.defaultValue.suburb || ''"
+                    @change="handleChange('suburb', $event)"
+                    @error="updateErrors"
+                />
+            </div>
+            <div class="col">
+                <label for="neighbourhood">
+                    {{ t('neighbourhood') }}
+                </label>
+                <String
+                    ref="neighbourRef"
+                    name="neighbourhood"
+                    :disabled="props.disabled"
+                    :default-value="props.defaultValue.neighbourhood || ''"
+                    @change="handleChange('neighbourhood', $event)"
+                    @error="updateErrors"
+                />
+            </div>
+        </div>
+        <div class="d-flex flex-row gap-2">
             <div class="flex-fill">
                 <label for="country">
                     {{ t('country') }}
@@ -140,6 +168,19 @@
                     >
                         <span v-if="item.customData.road">
                             {{ item.customData.road }} {{ item.customData.house_number }}
+                        </span>
+                        <span
+                            v-if="item.customData.suburb || item.customData.quarter"
+                            class="d-flex flex-row"
+                        >
+                            <span>(</span>
+                            <span>
+                                {{ item.customData.suburb || item.customData.quarter }}
+                            </span>
+                            <span v-if="item.customData.neighbourhood">
+                                /{{ item.customData.neighbourhood }}
+                            </span>
+                            <span>)</span>
                         </span>
                         <span
                             v-if="item.customData.road && item.customData.postcode"
@@ -215,6 +256,8 @@
     const postalRef = ref<typeof String | null>(null);
     const cityRef = ref<typeof String | null>(null);
     const countryRef = ref<typeof String | null>(null);
+    const suburbRef = ref<typeof String | null>(null);
+    const neighbourRef = ref<typeof String | null>(null);
     const countyRef = ref<typeof String | null>(null);
     const stateRef = ref<typeof String | null>(null);
     const coordiateRef = ref<Array<number|string>>([]);
@@ -230,6 +273,8 @@
         postalRef.value?.reset(value.postalcode);
         cityRef.value?.reset(value.city);
         countryRef.value?.reset(value.country);
+        suburbRef.value?.undirty(value.suburb);
+        neighbourRef.value?.undirty(value.neighbourhood);
         countyRef.value?.reset(value.county);
         stateRef.value?.reset(value.state);
         coordiateRef.value = value.coordinates || [];
@@ -242,6 +287,8 @@
         postalRef.value?.undirty(value.postalcode);
         cityRef.value?.undirty(value.city);
         countryRef.value?.undirty(value.country);
+        suburbRef.value?.undirty(value.suburb);
+        neighbourRef.value?.undirty(value.neighbourhood);
         countyRef.value?.undirty(value.county);
         stateRef.value?.undirty(value.state);
         coordiateRef.value = value.coordinates || [];
@@ -279,6 +326,17 @@
                             } else if(result.address.village) {
                                 data.value.city = result.address.village;
                                 cityRef.value?.externalChange(result.address.village);
+                            }
+                            if(result.address.suburb) {
+                                data.value.suburb = result.address.suburb;
+                                suburbRef.value?.externalChange(result.address.suburb);
+                            } else if(result.address.quarter) {
+                                data.value.suburb = result.address.quarter;
+                                suburbRef.value?.externalChange(result.address.quarter);
+                            }
+                            if(result.address.neighbourhood) {
+                                data.value.neighbourhood = result.address.neighbourhood;
+                                neighbourRef.value?.externalChange(result.address.neighbourhood);
                             }
                             if(result.address.state) {
                                 data.value.state = result.address.state;
@@ -320,6 +378,12 @@
     const updateErrors = (from: AddressValueKeys, errors: string[]) => {
         validationErrors.value[from] = errors.slice();
     };
+
+    defineExpose({
+        data,
+        undirty,
+        reset,
+    });
 </script>
 
 <style scoped>

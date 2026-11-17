@@ -2,6 +2,8 @@
     "street": "Street",
     "housenumber": "House Number",
     "postalcode": "Postal Code",
+    "neighbourhood": "Neighbourhood",
+    "suburb": "Suburb",
     "city": "City",
     "country": "Country",
     "state": "State",
